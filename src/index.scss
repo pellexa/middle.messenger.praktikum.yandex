@@ -1,0 +1,80 @@
+@use '../static/variables.scss' as variables;
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    src: local(''),
+         url('../static/fonts/inter-v12-latin_cyrillic/inter-v12-latin_cyrillic-500.woff2') format('woff2'),
+         url('../static/fonts/inter-v12-latin_cyrillic/inter-v12-latin_cyrillic-500.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    src: local(''),
+         url('../static/fonts/inter-v12-latin_cyrillic/inter-v12-latin_cyrillic-600.woff2') format('woff2'),
+         url('../static/fonts/inter-v12-latin_cyrillic/inter-v12-latin_cyrillic-600.woff') format('woff');
+  }
+
+:root {
+    font: 500 13px/1 Inter;
+    box-sizing: border-box;
+    background-color: variables.$bg-color;
+    color: variables.$text-color;
+}
+
+*,
+::before,
+::after {
+    box-sizing: inherit;
+}
+
+::placeholder {
+    color: #999;
+}
+
+a {
+    display: inline-block;
+    color: variables.$button-bg-accept;
+    text-decoration: none;
+    &::first-letter {
+        text-transform: uppercase;
+    }
+}
+
+// form
+.form-box {
+    position: absolute;
+    overflow: hidden;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+    border-radius: 12px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.form-box__header {
+    font-size: 20px;
+    padding: 50px 145px 40px;
+}
+
+.form-box__header {
+    text-align: center;
+}
+
+.buttons {
+    text-align: center;
+}
+
+.hr {
+    background-color: #EAEAEA;
+    height: 1px;
+    border: none;
+}
+
+.avatar {
+    border-radius: 50%;
+    background-color: #EFEFEF;
+}
