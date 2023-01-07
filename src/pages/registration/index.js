@@ -1,11 +1,12 @@
 import registration from "./registration.tmpl.js";
-import input from '../../components/formInput/index.js'
+import formInputComponent from '../../components/formInput/index.js'
 import acceptButtonComponent from '../../components/buttons/acceptButton/index.js';
 import Handlebars from 'handlebars';
 
-const inputEmail = Handlebars.compile(input)({
+const formInputEmail = Handlebars.compile(formInputComponent)({
     input: {
         id: 'email',
+        name: 'email',
         type: 'email',
         label: {
             value: 'Почта',
@@ -16,9 +17,10 @@ const inputEmail = Handlebars.compile(input)({
     }
 })
 
-const inputLogin = Handlebars.compile(input)({
+const formInputLogin = Handlebars.compile(formInputComponent)({
     input: {
-        id: 'name',
+        id: 'login',
+        name: 'login',
         type: 'text',
         label: {
             value: 'Логин',
@@ -26,9 +28,10 @@ const inputLogin = Handlebars.compile(input)({
     }
 })
 
-const inputFirstName = Handlebars.compile(input)({
+const formInputFirstName = Handlebars.compile(formInputComponent)({
     input: {
         id: 'first_name',
+        name: 'first_name',
         type: 'text',
         label: {
             value: 'Имя',
@@ -36,9 +39,10 @@ const inputFirstName = Handlebars.compile(input)({
     }
 })
 
-const inputSecondName = Handlebars.compile(input)({
+const formInputSecondName = Handlebars.compile(formInputComponent)({
     input: {
         id: 'second_name',
+        name: 'second_name',
         type: 'text',
         label: {
             value: 'Фамилия',
@@ -46,9 +50,10 @@ const inputSecondName = Handlebars.compile(input)({
     }
 })
 
-const inputPhone = Handlebars.compile(input)({
+const formInputPhone = Handlebars.compile(formInputComponent)({
     input: {
         id: 'phone',
+        name: 'phone',
         type: 'text',
         label: {
             value: 'Телефон',
@@ -56,9 +61,10 @@ const inputPhone = Handlebars.compile(input)({
     }
 })
 
-const inputPassword = Handlebars.compile(input)({
+const formInputPassword = Handlebars.compile(formInputComponent)({
     input: {
         id: 'password',
+        name: 'password',
         type: 'password',
         label: {
             value: 'Пароль',
@@ -66,9 +72,10 @@ const inputPassword = Handlebars.compile(input)({
     }
 })
 
-const inputPasswordAgain = Handlebars.compile(input)({
+const formInputPasswordAgain = Handlebars.compile(formInputComponent)({
     input: {
-        id: 'password',
+        id: 'password_again',
+        name: 'password_again',
         type: 'password',
         label: {
             value: 'Пароль (ещё раз)',
@@ -79,18 +86,18 @@ const inputPasswordAgain = Handlebars.compile(input)({
 const acceptButton = Handlebars.compile(acceptButtonComponent)({
     button: {
         type: 'submit',
-        text: 'зарегистрироваться'
+        text: 'зарегистрироваться',
     }
 })
 
 const registrationHTML = Handlebars.compile(registration)({
-    inputEmail,
-    inputLogin,
-    inputFirstName,
-    inputSecondName,
-    inputPhone,
-    inputPassword,
-    inputPasswordAgain,
+    formInputEmail,
+    formInputLogin,
+    formInputFirstName,
+    formInputSecondName,
+    formInputPhone,
+    formInputPassword,
+    formInputPasswordAgain,
     acceptButton,
 })
 

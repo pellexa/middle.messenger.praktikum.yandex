@@ -5,13 +5,13 @@ export default registration = `
     <div class="form-box__header">Вход</div>
 
     <form class="form-box__form">
-        {{{ inputEmail }}}
-        {{{ inputLogin }}}
-        {{{ inputFirstName }}}
-        {{{ inputSecondName }}}
-        {{{ inputPhone }}}
-        {{{ inputPassword }}}
-        {{{ inputPasswordAgain }}}
+        {{{ formInputEmail }}}
+        {{{ formInputLogin }}}
+        {{{ formInputFirstName }}}
+        {{{ formInputSecondName }}}
+        {{{ formInputPhone }}}
+        {{{ formInputPassword }}}
+        {{{ formInputPasswordAgain }}}
 
         <div class="buttons buttons_margin-registration">
             {{{ acceptButton }}}

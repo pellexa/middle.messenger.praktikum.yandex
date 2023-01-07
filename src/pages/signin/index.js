@@ -1,11 +1,12 @@
 import signin from './signin.tmpl.js'
-import input from '../../components/formInput/index.js'
+import formInputComponent from '../../components/formInput/index.js'
 import acceptButtonComponent from '../../components/buttons/acceptButton/index.js';
 import Handlebars from 'handlebars';
 
-const inputLogin = Handlebars.compile(input)({
+const formInputLogin = Handlebars.compile(formInputComponent)({
     input: {
-        id: 'name',
+        id: 'login',
+        name: 'login',
         type: 'text',
         label: {
             value: 'Логин',
@@ -16,9 +17,10 @@ const inputLogin = Handlebars.compile(input)({
     }
 })
 
-const inputPassword = Handlebars.compile(input)({
+const formInputPassword = Handlebars.compile(formInputComponent)({
     input: {
         id: 'password',
+        name: 'password',
         type: 'password',
         label: {
             value: 'Пароль',
@@ -34,8 +36,8 @@ const acceptButton = Handlebars.compile(acceptButtonComponent)({
 })
 
 const signinHTML = Handlebars.compile(signin)({
-    inputLogin,
-    inputPassword,
+    formInputLogin,
+    formInputPassword,
     acceptButton,
 })
 

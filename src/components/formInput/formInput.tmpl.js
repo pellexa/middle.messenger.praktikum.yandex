@@ -1,4 +1,4 @@
-import './input.scss'
+import './formInput.scss'
 
 /**
  * input.label.value = name or password
@@ -17,7 +17,7 @@ export default formInput = `
 
     <input 
         class="input-row__field" id="{{ input.id }}"
-        name="login" type="{{ input.type }}"
+        name="{{ input.name }}" type="{{ input.type }}"
         placeholder="{{ input.label.value }}"
     />
 

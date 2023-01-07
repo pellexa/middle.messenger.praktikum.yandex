@@ -5,8 +5,8 @@ export default signin = `
     <div class="form-box__header">Вход</div>
 
     <form class="form-box__form">
-        {{{ inputLogin }}}
-        {{{ inputPassword }}}
+        {{{ formInputLogin }}}
+        {{{ formInputPassword }}}
 
         <div class="buttons buttons_margin-singin">
             {{{ acceptButton }}}

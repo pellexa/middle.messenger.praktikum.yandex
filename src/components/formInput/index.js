@@ -1,3 +1,3 @@
-import formInput from './input.tmpl.js'
+import formInput from './formInput.tmpl.js'
 
 export default formInput
