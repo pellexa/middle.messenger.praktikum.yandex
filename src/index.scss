@@ -64,6 +64,13 @@ a {
     text-align: center;
 }
 
+.input {
+    flex: 1;
+    font-size: 12px;
+    border: none;
+    padding: 10px 20px;
+}
+
 .buttons {
     text-align: center;
 }
@@ -77,4 +84,10 @@ a {
 .avatar {
     border-radius: 50%;
     background-color: #EFEFEF;
+    overflow: hidden;
+}
+
+.title {
+    font-weight: 600;
+    color: variables.$text-color;
 }
