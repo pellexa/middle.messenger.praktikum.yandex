@@ -29,9 +29,7 @@ export default main = `
                     </div>
                 </div>
 
-                <div class="menu-dot-wrapper">
-                    <div class="menu-dot"></div>
-                </div>
+                {{{ menuDotHeader }}}
             </div>
 
             <hr class="hr hr_margin-content" />

@@ -5,6 +5,7 @@ import chatListComponent from '../../components/chatList/index.js';
 import message from '../../components/message/index.js';
 import IconAttachSvg from '../../components/icons/IconAttach.svg.js';
 import IconSendSvg from '../../components/icons/IconSend.svg.js';
+import menuDotHeaderComponent from '../../components/menuDotHeader/index.js';
 import Handlebars from 'handlebars';
 
 const IconSearch = Handlebars.compile(IconSearchSvg)
@@ -125,13 +126,16 @@ const listMessage = apiResponseMessages.messages.map((msg, index, array) => {
   })
 }).join('')
 
+const menuDotHeader = Handlebars.compile(menuDotHeaderComponent)
+
 const mainHTML = Handlebars.compile(main)({
     inputSearch,
     chatList,
     selectedChat: Object.keys(apiResponseSelectedChat).length > 0 ? apiResponseSelectedChat : false,
     messages: listMessage,
     IconAttachSvg,
-    IconSendSvg
+    IconSendSvg,
+    menuDotHeader,
 })
 
 export default mainHTML

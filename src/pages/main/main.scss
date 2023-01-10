@@ -57,20 +57,6 @@
     height: 34px;
 }
 
-.menu-dot-wrapper {
-    position: relative;
-    padding: 10px;
-    cursor: pointer;
-}
-
-.menu-dot {
-    width: 3px;
-    height: 3px;
-    background-color: variables.$text-color;
-    border-radius: 50%;
-    box-shadow: 0 -6px variables.$text-color, 0 6px variables.$text-color;
-}
-
 .hr_margin-content {
     margin: 0 20px;
 }
