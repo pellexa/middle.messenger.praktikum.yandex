@@ -15,7 +15,37 @@ const app = document.getElementById('app');
 // app.innerHTML = registration
 // app.innerHTML = error404
 // app.innerHTML = error500
-app.innerHTML = main
+// app.innerHTML = main
 // app.innerHTML = profileDetailed
 // app.innerHTML = profileEdit
 // app.innerHTML = profilePasswordEdit
+
+
+const routes = {
+    '/singin': signin,
+    '/': registration,
+    '/registration': registration,
+    '/chat': main,
+    '/profile/detailed': profileDetailed,
+    '/profile/edit': profileEdit,
+    '/profile/password/edit': profilePasswordEdit,
+    '/404': error404,
+    '/500': error500,
+};
+
+app.innerHTML = routes[window.location.pathname]
+
+const pagesHTML = `
+<ul class="tmp-pages">
+    <li><a href="/singin">Singin</a></li>
+    <li><a href="/registration">Registration</a></li>
+    <li><a href="/chat">Chat</a></li>
+    <li><a href="/profile/detailed">Profile detailed</a></li>
+    <li><a href="/profile/edit">Profile edit</a></li>
+    <li><a href="/profile/password/edit">Profile password edit</a></li>
+    <li><a href="/404">404</a></li>
+    <li><a href="/500">500</a></li>
+</ul>
+`
+
+app.innerHTML += pagesHTML
