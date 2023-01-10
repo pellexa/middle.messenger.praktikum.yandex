@@ -5,18 +5,22 @@ setTimeout(() => {
     const elemMenuItems = document.querySelector('.menu-dot__items')
 
     // Open menu items
-    elemMenu.addEventListener('click', elemMenuClick)
+    if (elemMenu) {
+        elemMenu.addEventListener('click', elemMenuClick)
 
-    function elemMenuClick() {
-        elemMenuItems.style.display = 'block'
+        function elemMenuClick() {
+            elemMenuItems.style.display = 'block'
+        }
     }
 
     // Close menu items
-    document.addEventListener('click', closeMemuItems)
+    if (elemMenuItems) {
+        document.addEventListener('click', closeMemuItems)
 
-    function closeMemuItems(event) {
-        if (!event.target.closest('.menu-dot')) {
-            elemMenuItems.style.display = "none";
+        function closeMemuItems(event) {
+            if (!event.target.closest('.menu-dot')) {
+                elemMenuItems.style.display = "none";
+            }
         }
     }
 })
