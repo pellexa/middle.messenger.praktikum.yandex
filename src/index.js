@@ -6,6 +6,7 @@ import error404 from './pages/error/404'
 import error500 from './pages/error/5xx'
 import main from './pages/main'
 import profileDetailed from './pages/profile/profileDetailed/index.js'
+import profileEdit from './pages/profile/profileEdit/index.js'
 
 const app = document.getElementById('app');
 // app.innerHTML = signin
@@ -13,4 +14,6 @@ const app = document.getElementById('app');
 // app.innerHTML = error404
 // app.innerHTML = error500
 // app.innerHTML = main
-app.innerHTML = profileDetailed
+// app.innerHTML = profileDetailed
+app.innerHTML = profileEdit
+
