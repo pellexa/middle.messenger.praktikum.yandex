@@ -34,10 +34,13 @@ const profileEditHTML = Handlebars.compile(profileEdit)({
 setTimeout(() => {
     const elemAvatar = document.querySelector('.avatar')
     const elemModal = document.querySelector('.modal')
-    elemAvatar.addEventListener('click', buttonClick)
 
-    function buttonClick() {
-        elemModal.style.display = "block";
+    if (elemAvatar) {
+        elemAvatar.addEventListener('click', buttonClick)
+
+        function buttonClick() {
+            elemModal.style.display = "block";
+        }
     }
 })
 

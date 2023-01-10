@@ -8,6 +8,7 @@ import main from './pages/main'
 import profileDetailed from './pages/profile/profileDetailed/index.js'
 import profileEdit from './pages/profile/profileEdit/index.js'
 import profilePasswordEdit from './pages/profile/profilePasswordEdit/index.js'
+import profileUploadAvatar from './pages/profile/profileUploadAvatar/index.js'
 
 const app = document.getElementById('app');
 // app.innerHTML = signin
@@ -16,5 +17,5 @@ const app = document.getElementById('app');
 // app.innerHTML = error500
 // app.innerHTML = main
 // app.innerHTML = profileDetailed
-// app.innerHTML = profileEdit
-app.innerHTML = profilePasswordEdit
+app.innerHTML = profileEdit
+// app.innerHTML = profilePasswordEdit
