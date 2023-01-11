@@ -1,6 +1,6 @@
 import './signin.scss'
 
-export default signin = `
+export default signinTmpl = `
 <div class="form-box">
     <div class="form-box__header">Вход</div>
 
