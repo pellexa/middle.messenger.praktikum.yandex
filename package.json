@@ -1,7 +1,7 @@
 {
-  "name": "chat",
+  "name": "messenger",
   "version": "1.0.0",
-  "description": "chat",
+  "description": "Messenger is the first project of the PracticumYandex.",
   "scripts": {
     "clean": "rm -rf .parcel-cache && rm -rf dist",
     "dev": "npm run clean && parcel src/index.html",
