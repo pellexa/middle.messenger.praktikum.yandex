@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "Messenger is the first project of the PracticumYandex.",
   "scripts": {
-    "clean": "rm -rf .parcel-cache && rm -rf dist",
-    "dev": "npm run clean && parcel src/index.html",
-    "build": "npm run clean && parcel build src/index.html",
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html",
     "start": "node server.js"
   },
   "repository": {
@@ -19,12 +18,12 @@
   },
   "homepage": "https://github.com/pellexa/middle.messenger.praktikum.yandex.git#readme",
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.8.2",
-    "express": "^4.18.2",
-    "parcel": "^2.8.2"
+    "@parcel/transformer-sass": "2.8.2",
+    "express": "4.18.2",
+    "parcel": "2.8.2"
   },
   "dependencies": {
-    "handlebars": "^4.7.7"
+    "handlebars": "4.7.7"
   },
   "targets": {
     "default": {
