@@ -4,8 +4,8 @@
   "description": "chat",
   "scripts": {
     "clean": "rm -rf .parcel-cache && rm -rf dist",
-    "dev": "npm run clean && parcel index.html",
-    "build": "npm run clean && parcel build index.html",
+    "dev": "npm run clean && parcel src/index.html",
+    "build": "npm run clean && parcel build src/index.html",
     "start": "node server.js"
   },
   "repository": {
@@ -29,9 +29,7 @@
   "targets": {
     "default": {
       "sourceMap": false,
-      "engines": {
-        "browsers": ">=50%"
-      }
+      "context": "browser"
     }
   },
   "engines": {
