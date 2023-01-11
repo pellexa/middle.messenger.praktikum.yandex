@@ -19,3 +19,5 @@ http://localhost:1234/
 `npm run start`
 
 http://localhost:3000/
+
+##### Design [here](https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0%3A1&t=hIQYbJRUQXfQOe13-0)
