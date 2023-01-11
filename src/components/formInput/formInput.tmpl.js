@@ -6,7 +6,7 @@ import './formInput.scss'
  * input.type = text or password
  * input.validationErrors.error = ...
  */
-export default formInput = `
+export default `
 <div class="input-row">
     <label 
         class="input-row__label input-row__label_displayed"

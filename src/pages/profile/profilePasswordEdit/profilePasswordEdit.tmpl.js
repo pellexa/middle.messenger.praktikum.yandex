@@ -13,7 +13,7 @@ import './profilePasswordEdit.scss'
     "avatar": "/path/to/avatar.jpg"
 }
 */
-export default profilePasswordEdit = `
+export default `
 <div class="profile">
     <div class="profile__left-side">
         {{{ IconBack }}}

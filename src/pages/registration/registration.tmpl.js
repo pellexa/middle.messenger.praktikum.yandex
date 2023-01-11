@@ -1,6 +1,6 @@
 import './registration.scss'
 
-export default registration = `
+export default `
 <div class="form-box">
     <div class="form-box__header">Вход</div>
 

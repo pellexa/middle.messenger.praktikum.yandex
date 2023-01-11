@@ -1,6 +1,6 @@
 import './error.scss'
 
-export default theError = `
+export default `
 <div class="error-box">
     <div class="error-box__status">
         {{{ error.status }}}

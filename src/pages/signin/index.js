@@ -1,4 +1,4 @@
-import signinTmpl from './signin.tmpl.js'
+import signin from './signin.tmpl.js'
 import formInputComponent from '../../components/formInput/index.js'
 import acceptButtonComponent from '../../components/buttons/acceptButton/index.js';
 import Handlebars from 'handlebars';
@@ -35,7 +35,7 @@ const acceptButton = Handlebars.compile(acceptButtonComponent)({
     }
 })
 
-const signinHTML = Handlebars.compile(signinTmpl)({
+const signinHTML = Handlebars.compile(signin)({
     formInputLogin,
     formInputPassword,
     acceptButton,

@@ -1,6 +1,6 @@
 import './message.scss'
 
-export default message = `
+export default `
 {{# if date }}
     <div class="messages-date">
         {{ date }}

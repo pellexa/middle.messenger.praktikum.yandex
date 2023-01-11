@@ -23,7 +23,7 @@ import './chatList.scss'
 ]
 */
 
-export default chatList = `
+export default `
 <div class="chat-list">
     {{# each data }}
         <div class="chat">

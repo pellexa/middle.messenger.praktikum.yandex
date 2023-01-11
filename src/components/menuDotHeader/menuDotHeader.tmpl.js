@@ -1,6 +1,6 @@
 import './menuDotHeader.scss'
 
-export default menuDotHeader = `
+export default `
 <div class="menu-dot">
     <div class="menu-dot__wrapper">
         <div class="menu-dot__dot"></div>

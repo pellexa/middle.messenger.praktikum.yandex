@@ -13,7 +13,7 @@ import './profileDetailed.scss'
     "avatar": "/path/to/avatar.jpg"
 }
 */
-export default profileDetailed = `
+export default `
 <div class="profile">
     <div class="profile__left-side">
         {{{ IconBack }}}

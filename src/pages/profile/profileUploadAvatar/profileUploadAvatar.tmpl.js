@@ -1,6 +1,6 @@
 import './profileUploadAvatar.scss'
 
-export default profileUploadAvatar = `
+export default `
 <div class="modal">
     <div class="modal__content">
         <h2 class="modal__title-upload">загрузите файл</h2>

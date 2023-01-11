@@ -1,6 +1,6 @@
 import './main.scss'
 
-export default main = `
+export default `
 <div class="main">
     <div class="left-side">
         <div class="left-side__header">
