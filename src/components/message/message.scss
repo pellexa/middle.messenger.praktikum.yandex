@@ -1,6 +1,7 @@
 @use '../../../static/variables.scss' as variables;
 
 .messages-date {
+    display: block;
     font-weight: 500;
     font-size: 12px;
     line-height: 12px;
@@ -27,6 +28,7 @@
 }
 
 .message__time {
+    display: block;
     font-weight: 500;
     font-size: 9px;
     line-height: 9px;

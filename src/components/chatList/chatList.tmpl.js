@@ -24,37 +24,37 @@ import './chatList.scss'
 */
 
 export default `
-<div class="chat-list">
+<ul class="chat-list">
     {{# each data }}
-        <div class="chat">
+        <li class="chat">
             <div class="avatar avatar_size-chat-list">
                 <img src="{{ this.avatar }}" alt="avatar">
             </div>
 
             <div class="chat__content">
                 <div class="chat__header">
-                    <div class="title">
+                    <h6 class="title">
                         {{ this.title }}
-                    </div>
+                    </h6>
 
-                    <div class="chat__time">
+                    <time class="chat__time">
                         {{ this.last_message.time }}
-                    </div>
+                    </time>
                 </div>
 
                 <div class="chat__message">
-                    <div class="chat__brief">
+                    <p class="chat__brief">
                         {{ this.last_message.content }} 
-                    </div>
+                    </p>
 
-                    <div class="chat__unread">
+                    <p class="chat__unread">
                         <span class="unread_count">{{ this.unread_count }}</span>
-                    </div>
+                    </p>
                 </div>
             </div>
-        </div>
+        </li>
 
         <hr class="hr hr_margin-left-side" />
     {{/ each }}
-</div>
+</ul>
 `

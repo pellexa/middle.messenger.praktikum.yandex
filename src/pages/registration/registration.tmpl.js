@@ -1,7 +1,7 @@
 import './registration.scss'
 
 export default `
-<div class="form-box">
+<main class="form-box">
     <div class="form-box__header">Вход</div>
 
     <form class="form-box__form">
@@ -18,5 +18,5 @@ export default `
             <a href="#" class="link">войти</a>
         </div>
     </form>
-</div>
+</main>
 `

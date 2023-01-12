@@ -29,8 +29,8 @@ export default `
         </h1>
 
         <form class="form-box__form">
-            <div class="profile-properties">
-                <div class="profile-properties__row">
+            <ul class="profile-properties">
+                <li class="profile-properties__row">
                     <label for="old_password" class="profile-key profile_margin-data profile__label">старый пароль</label>
                     <input
                         id="old_password"
@@ -38,9 +38,9 @@ export default `
                         name="old_password"
                         class="profile-value profile_margin-data profile__input"
                     />
-                </div>
+                </li>
 
-                <div class="profile-properties__row">
+                <li class="profile-properties__row">
                     <label for="new_password" class="profile-key profile_margin-data profile__label">новый пароль</label>
                     <input
                         id="new_password"
@@ -48,9 +48,9 @@ export default `
                         name="new_password"
                         class="profile-value profile_margin-data profile__input"
                     />
-                </div>
+                </li>
 
-                <div class="profile-properties__row">
+                <li class="profile-properties__row">
                     <label for="new_password_again" class="profile-key profile_margin-data profile__label">повторите новый пароль</label>
                     <input
                         id="new_password_again"
@@ -58,8 +58,8 @@ export default `
                         name="new_password_again"
                         class="profile-value profile_margin-data profile__input"
                     />
-                </div>
-            </div>
+                </li>
+            </ul>
 
             <div class="buttons buttons_margin-registration">
                 {{{ acceptButton }}}

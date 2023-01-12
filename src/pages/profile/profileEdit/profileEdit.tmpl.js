@@ -31,8 +31,8 @@ export default `
         </h1>
 
         <form class="form-box__form">
-            <div class="profile-properties">
-                <div class="profile-properties__row">
+            <ul class="profile-properties">
+                <li class="profile-properties__row">
                     <label for="email" class="profile-key profile_margin-data profile__label">почта</label>
                     <input
                         id="email"
@@ -40,9 +40,9 @@ export default `
                         name="email"
                         class="profile-value profile_margin-data profile__input"
                         value="{{ apiResponseProfile.email }}" />
-                </div>
+                </li>
 
-                <div class="profile-properties__row">
+                <li class="profile-properties__row">
                     <label for="login" class="profile-key profile_margin-data profile__label">логин</label>
                     <input
                         id="login"
@@ -50,9 +50,9 @@ export default `
                         name="login"
                         class="profile-value profile_margin-data profile__input"
                         value="{{ apiResponseProfile.login }}" />
-                </div>
+                </li>
 
-                <div class="profile-properties__row">
+                <li class="profile-properties__row">
                     <label for="first_name" class="profile-key profile_margin-data profile__label">имя</label>
                     <input
                         id="first_name"
@@ -60,9 +60,9 @@ export default `
                         name="first_name"
                         class="profile-value profile_margin-data profile__input"
                         value="{{ apiResponseProfile.first_name }}" />
-                </div>
+                </li>
 
-                <div class="profile-properties__row">
+                <li class="profile-properties__row">
                     <label for="second_name" class="profile-key profile_margin-data">фамилия</label>
                     <input
                         id="second_name"
@@ -70,9 +70,9 @@ export default `
                         name="second_name"
                         class="profile-value profile_margin-data profile__input profile__label"
                         value="{{ apiResponseProfile.second_name }}" />
-                </div>
+                </li>
 
-                <div class="profile-properties__row">
+                <li class="profile-properties__row">
                     <label for="name_in_chat" class="profile-key profile_margin-data profile__label">имя в чате</label>
                     <input
                         id="name_in_chat"
@@ -80,9 +80,9 @@ export default `
                         name="name_in_chat"
                         class="profile-value profile_margin-data profile__input"
                         value="{{ apiResponseProfile.first_name }}" />
-                </div>
+                </li>
 
-                <div class="profile-properties__row">
+                <li class="profile-properties__row">
                     <label for="phone" class="profile-key profile_margin-data profile__label">телефон</label>
                     <input
                         id="phone"
@@ -90,8 +90,8 @@ export default `
                         name="phone"
                         class="profile-value profile_margin-data profile__input"
                         value="{{ apiResponseProfile.phone }}" />
-                </div>
-            </div>
+                </li>
+            </ul>
 
             <div class="buttons buttons_margin-registration">
                 {{{ acceptButton }}}

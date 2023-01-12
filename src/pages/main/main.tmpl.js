@@ -1,11 +1,11 @@
 import './main.scss'
 
 export default `
-<div class="main">
+<main class="main">
     <div class="left-side">
-        <div class="left-side__header">
+        <p class="left-side__header">
             профиль >
-        </div>
+        </p>
 
         <div class="left-side__search">
             {{{ inputSearch }}}
@@ -24,9 +24,9 @@ export default `
                         <img src="{{ selectedChat.avatar }}" alt="avatar">
                     </div>
 
-                    <div class="title">
+                    <h6 class="title">
                         {{ selectedChat.title }}
-                    </div>
+                    </h6>
                 </div>
 
                 {{{ menuDotHeader }}}
@@ -46,8 +46,8 @@ export default `
                 <div class="icon">{{{ IconSendSvg }}}</div>
             </div>
         {{ else }}
-            <div class="content__no-data">Выберите чат чтобы отправить сообщение</div>
+            <p class="content__no-data">Выберите чат чтобы отправить сообщение</p>
         {{/ if }}
     </div>
-</div>
+</main>
 `

@@ -6,13 +6,13 @@ export default `
         <div class="menu-dot__dot"></div>
     </div>
 
-    <div class="menu-dot__items">
-        <div class="menu-dot__item">
+    <ul class="menu-dot__items">
+        <li class="menu-dot__item">
             <a href="#">мой профиль</a>
-        </div>
-        <div class="menu-dot__item">
+        </li>
+        <li class="menu-dot__item">
             <a href="#">выйти</a>
-        </div>
-    </div>
+        </li>
+    </ul>
 </div>
 `

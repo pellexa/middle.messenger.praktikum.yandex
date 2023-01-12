@@ -2,9 +2,9 @@ import './message.scss'
 
 export default `
 {{# if date }}
-    <div class="messages-date">
+    <time class="messages-date">
         {{ date }}
-    </div>
+    </time>
 {{/ if}}
 
 
@@ -14,13 +14,13 @@ export default `
             <img src="{{ msg.content.image }}" alt="image">
         </div>
     {{ else }}
-        <div class="message__text">
+        <p class="message__text">
             {{ msg.content}}
-        </div>
+        </p>
     {{/ if }}
 
-    <div class="message__time">
+    <time class="message__time">
         11:56
-    </div>
+    </time>
 </div>
 `
