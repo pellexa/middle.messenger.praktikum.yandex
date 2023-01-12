@@ -2,9 +2,9 @@ import './error.scss'
 
 export default `
 <main class="error-box">
-    <p class="error-box__status">
+    <h1 class="error-box__status">
         {{{ error.status }}}
-    </p>
+    </h1>
     <p class="error-box__text">
         {{{ error.text }}}
     </p>
