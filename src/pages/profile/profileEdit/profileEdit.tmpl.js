@@ -73,11 +73,11 @@ export default `
                 </li>
 
                 <li class="profile-properties__row">
-                    <label for="name_in_chat" class="profile-key profile_margin-data profile__label">имя в чате</label>
+                    <label for="display_name" class="profile-key profile_margin-data profile__label">имя в чате</label>
                     <input
-                        id="name_in_chat"
+                        id="display_name"
                         type="text"
-                        name="name_in_chat"
+                        name="display_name"
                         class="profile-value profile_margin-data profile__input"
                         value="{{ apiResponseProfile.first_name }}" />
                 </li>
