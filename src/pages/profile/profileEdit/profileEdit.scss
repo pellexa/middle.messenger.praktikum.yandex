@@ -1,0 +1,10 @@
+.profile__label {
+    &::first-letter {
+        text-transform: uppercase;
+    }
+}
+
+.profile__input{
+    border: 0;
+    text-align: right;
+}

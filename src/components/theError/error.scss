@@ -1,0 +1,25 @@
+.error-box{
+    position: absolute;
+    overflow: hidden;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.error-box__status {
+    font-size: 40px;
+    margin: 20px;
+}
+
+.error-box__text {
+    font-size: 20px;
+    &::first-letter {
+        text-transform: uppercase;
+    }
+}
+
+.error-box__link {
+    font-size: 11px;
+    margin-top: 70px;
+}

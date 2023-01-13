@@ -1,0 +1,65 @@
+@use '../../../static/variables.scss' as variables;
+
+.profile {
+    display: flex;
+}
+
+.profile__left-side {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    padding: 0 18px;
+    
+    background-color: #FBFBFB;
+    border-right: 1px solid #EAEAEA;
+}
+
+.profile__content {
+    margin: auto auto;
+    text-align: center;
+    width: 30%;
+    min-width: 200px;
+}
+
+.avatar_size-profile {
+    margin: 0 auto;
+    width: 130px;
+    height: 130px;
+}
+
+.avatar_cursor-profile {
+    cursor: pointer;
+}
+
+.profile-name {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 16px;
+    color: variables.$text-color;
+    margin-top: 21px;
+}
+
+.profile-properties {
+    margin: 60px 0;
+}
+
+.profile-properties__row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-properties__row:not(:last-child) {
+    border-bottom: 1px solid #EAEAEA;
+}
+
+.profile-key {
+    color: variables.$text-color;
+}
+
+.profile-value {
+    color: #999999;
+}
+
+.profile_margin-data {
+    margin: 10px 0;
+}
