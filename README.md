@@ -21,3 +21,5 @@ http://localhost:1234/
 http://localhost:3000/
 
 ##### Design [here](https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0%3A1&t=hIQYbJRUQXfQOe13-0)
+
+### Pull Request [link](https://github.com/pellexa/middle.messenger.praktikum.yandex/pull/2) for sprint_1
