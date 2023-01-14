@@ -11,15 +11,10 @@ import profilePasswordEdit from './pages/profile/profilePasswordEdit/index.js'
 import profileUploadAvatar from './pages/profile/profileUploadAvatar/index.js'
 
 const app = document.getElementById('app');
-// app.innerHTML = signin
-// app.innerHTML = registration
-// app.innerHTML = error404
-// app.innerHTML = error500
-// app.innerHTML = main
-// app.innerHTML = profileDetailed
-// app.innerHTML = profileEdit
-// app.innerHTML = profilePasswordEdit
 
+if (!app) {
+    throw Error('There is no element in index.html with id="app".')
+}
 
 const routes = {
     '/singin': signin,

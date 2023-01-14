@@ -20,7 +20,8 @@
   "devDependencies": {
     "@parcel/transformer-sass": "2.8.2",
     "express": "4.18.2",
-    "parcel": "2.8.2"
+    "parcel": "2.8.2",
+    "typescript": "^4.9.4"
   },
   "dependencies": {
     "handlebars": "4.7.7"
