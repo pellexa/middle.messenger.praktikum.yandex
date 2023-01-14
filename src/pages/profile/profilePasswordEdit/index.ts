@@ -1,6 +1,6 @@
-import profilePasswordEdit from "./profilePasswordEdit.tmpl.js";
-import IconBackSvg from "../../../components/icons/IconBack.svg.js";
-import acceptButtonComponent from '../../../components/buttons/acceptButton/index.js';
+import profilePasswordEdit from "./profilePasswordEdit.tmpl";
+import IconBackSvg from "../../../components/icons/IconBack.svg";
+import acceptButtonComponent from '../../../components/buttons/acceptButton';
 import Handlebars from 'handlebars';
 
 const IconBack = Handlebars.compile(IconBackSvg)

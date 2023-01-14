@@ -1,7 +1,7 @@
-import profileEdit from "./profileEdit.tmpl.js";
-import IconBackSvg from "../../../components/icons/IconBack.svg.js";
-import acceptButtonComponent from '../../../components/buttons/acceptButton/index.js';
-import profileUploadAvatar from "../profileUploadAvatar/index.js";
+import profileEdit from "./profileEdit.tmpl";
+import IconBackSvg from "../../../components/icons/IconBack.svg";
+import acceptButtonComponent from '../../../components/buttons/acceptButton';
+import profileUploadAvatar from "../profileUploadAvatar";
 import Handlebars from 'handlebars';
 
 const IconBack = Handlebars.compile(IconBackSvg)

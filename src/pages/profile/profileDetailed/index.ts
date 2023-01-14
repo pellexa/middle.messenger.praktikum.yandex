@@ -1,5 +1,5 @@
-import profileDetailed from "./profileDetailed.tmpl.js";
-import IconBackSvg from "../../../components/icons/IconBack.svg.js";
+import profileDetailed from "./profileDetailed.tmpl";
+import IconBackSvg from "../../../components/icons/IconBack.svg";
 import Handlebars from 'handlebars';
 
 const IconBack = Handlebars.compile(IconBackSvg)

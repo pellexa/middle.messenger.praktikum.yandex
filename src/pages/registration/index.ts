@@ -1,6 +1,6 @@
-import registration from "./registration.tmpl.js";
-import formInputComponent from '../../components/formInput/index.js'
-import acceptButtonComponent from '../../components/buttons/acceptButton/index.js';
+import registration from "./registration.tmpl";
+import formInputComponent from '../../components/formInput'
+import acceptButtonComponent from '../../components/buttons/acceptButton';
 import Handlebars from 'handlebars';
 
 const formInputEmail = Handlebars.compile(formInputComponent)({

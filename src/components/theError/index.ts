@@ -1,3 +1,3 @@
-import theError from "./error.tmpl.js";
+import theError from "./error.tmpl";
 
 export default theError

@@ -1,5 +1,5 @@
-import profileUploadAvatar from "./profileUploadAvatar.tmpl.js";
-import acceptButtonComponent from '../../../components/buttons/acceptButton/index.js';
+import profileUploadAvatar from "./profileUploadAvatar.tmpl";
+import acceptButtonComponent from '../../../components/buttons/acceptButton';
 import Handlebars from 'handlebars';
 
 const acceptButton = Handlebars.compile(acceptButtonComponent)({

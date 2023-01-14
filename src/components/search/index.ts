@@ -1,3 +1,3 @@
-import search from "./search.tmpl.js";
+import search from "./search.tmpl";
 
 export default search
