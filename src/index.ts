@@ -10,23 +10,23 @@ import profileEdit from './pages/profile/profileEdit'
 import profilePasswordEdit from './pages/profile/profilePasswordEdit'
 import profileUploadAvatar from './pages/profile/profileUploadAvatar'
 
-const app = document.getElementById('app');
+const app = document.getElementById('app')
 
 if (!app) {
-    throw Error('There is no element in index.html with id="app".')
+  throw Error('There is no element in index.html with id="app".')
 }
 
 const routes = {
-    '/singin': signin,
-    '/': registration,
-    '/registration': registration,
-    '/chat': main,
-    '/profile/detailed': profileDetailed,
-    '/profile/edit': profileEdit,
-    '/profile/password/edit': profilePasswordEdit,
-    '/404': error404,
-    '/500': error500,
-};
+  '/singin': signin,
+  '/': registration,
+  '/registration': registration,
+  '/chat': main,
+  '/profile/detailed': profileDetailed,
+  '/profile/edit': profileEdit,
+  '/profile/password/edit': profilePasswordEdit,
+  '/404': error404,
+  '/500': error500,
+}
 
 app.innerHTML = routes[window.location.pathname]
 
