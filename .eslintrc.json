@@ -6,6 +6,7 @@
   "rules": {
     "semi": [2, "never"],
     "max-len": [2, 100],
+    "no-console": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -16,6 +17,10 @@
     ],
     "no-use-before-define": [2, {
       "functions": false
+      }
+    ],
+    "import/no-extraneous-dependencies": [2, {
+      "devDependencies": true
       }
     ]
   },
