@@ -33,7 +33,12 @@ export default `
         <form class="form-box__form">
             <ul class="profile-properties">
                 <li class="profile-properties__row">
-                    <label for="email" class="profile-key profile_margin-data profile__label">почта</label>
+                    <label
+                        for="email"
+                        class="profile-key profile_margin-data profile__label"
+                    >
+                        почта
+                    </label>
                     <input
                         id="email"
                         type="email"
@@ -43,7 +48,12 @@ export default `
                 </li>
 
                 <li class="profile-properties__row">
-                    <label for="login" class="profile-key profile_margin-data profile__label">логин</label>
+                    <label
+                        for="login"
+                        class="profile-key profile_margin-data profile__label"
+                    >
+                        логин
+                    </label>
                     <input
                         id="login"
                         type="text"
@@ -53,7 +63,12 @@ export default `
                 </li>
 
                 <li class="profile-properties__row">
-                    <label for="first_name" class="profile-key profile_margin-data profile__label">имя</label>
+                    <label
+                        for="first_name"
+                        class="profile-key profile_margin-data profile__label"
+                    >
+                        имя
+                    </label>
                     <input
                         id="first_name"
                         type="text"
@@ -73,7 +88,12 @@ export default `
                 </li>
 
                 <li class="profile-properties__row">
-                    <label for="display_name" class="profile-key profile_margin-data profile__label">имя в чате</label>
+                    <label
+                        for="display_name"
+                        class="profile-key profile_margin-data profile__label"
+                    >
+                        имя в чате
+                    </label>
                     <input
                         id="display_name"
                         type="text"
@@ -83,7 +103,12 @@ export default `
                 </li>
 
                 <li class="profile-properties__row">
-                    <label for="phone" class="profile-key profile_margin-data profile__label">телефон</label>
+                    <label
+                        for="phone"
+                        class="profile-key profile_margin-data profile__label"
+                    >
+                        телефон
+                    </label>
                     <input
                         id="phone"
                         type="text"

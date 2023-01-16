@@ -1,3 +1,3 @@
-import search from "./search.tmpl";
+import search from './search.tmpl'
 
 export default search

@@ -1,3 +1,3 @@
-import chatList  from './chatList.tmpl'
+import chatList from './chatList.tmpl'
 
 export default chatList

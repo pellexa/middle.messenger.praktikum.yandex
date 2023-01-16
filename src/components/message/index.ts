@@ -1,3 +1,3 @@
-import message from "./message.tmpl";
+import message from './message.tmpl'
 
 export default message

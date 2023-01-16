@@ -42,7 +42,13 @@ export default `
 
             <div class="content__send">
                 <div class="icon">{{{ IconAttachSvg }}}</div>
-                <input name="message" type="text" class="input input_border-radius_m input_bg-color_lightgray" placeholder="Сообщение" />
+                <input
+                    name="message"
+                    type="text"
+                    class="input
+                    input_border-radius_m input_bg-color_lightgray"
+                    placeholder="Сообщение"
+                />
                 <div class="icon">{{{ IconSendSvg }}}</div>
             </div>
         {{ else }}

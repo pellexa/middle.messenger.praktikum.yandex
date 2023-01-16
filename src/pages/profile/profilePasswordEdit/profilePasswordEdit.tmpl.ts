@@ -31,7 +31,12 @@ export default `
         <form class="form-box__form">
             <ul class="profile-properties">
                 <li class="profile-properties__row">
-                    <label for="old_password" class="profile-key profile_margin-data profile__label">старый пароль</label>
+                    <label
+                        for="old_password"
+                        class="profile-key profile_margin-data profile__label"
+                    >
+                        старый пароль
+                    </label>
                     <input
                         id="old_password"
                         type="password"
@@ -41,7 +46,12 @@ export default `
                 </li>
 
                 <li class="profile-properties__row">
-                    <label for="new_password" class="profile-key profile_margin-data profile__label">новый пароль</label>
+                    <label
+                        for="new_password"
+                        class="profile-key profile_margin-data profile__label"
+                    >
+                        новый пароль
+                    </label>
                     <input
                         id="new_password"
                         type="password"
@@ -51,7 +61,12 @@ export default `
                 </li>
 
                 <li class="profile-properties__row">
-                    <label for="new_password_again" class="profile-key profile_margin-data profile__label">повторите новый пароль</label>
+                    <label
+                        for="new_password_again"
+                        class="profile-key profile_margin-data profile__label"
+                    >
+                        повторите новый пароль
+                    </label>
                     <input
                         id="new_password_again"
                         type="password"

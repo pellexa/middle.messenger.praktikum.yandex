@@ -1,3 +1,3 @@
-import acceptButton from "./acceptButton.tmpl";
+import acceptButton from './acceptButton.tmpl'
 
 export default acceptButton
