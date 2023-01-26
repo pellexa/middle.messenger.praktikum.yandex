@@ -1,41 +1,82 @@
-import Handlebars from 'handlebars'
-import signin from './signin.tmpl'
-import formInputComponent from '../../components/formInput'
-import acceptButtonComponent from '../../components/buttons/acceptButton'
+import signinTmpl from './signin.tmpl'
+import Button from '../../components/button'
+import Input from '../../components/formInput'
+import Block from '../../modules/block'
 
-const formInputLogin = Handlebars.compile(formInputComponent)({
-  input: {
-    id: 'login',
-    name: 'login',
-    type: 'text',
-    label: {
-      value: 'Логин',
+import { SigninProps } from './types'
+
+const acceptButton = new Button(
+  'button',
+  {
+    tagAttrs: {
+      class: 'button',
+      type: 'submit',
     },
-    // validationErrors: {
-    //     error: 'Some validation error...'
-    // }
-  },
-})
-
-const formInputPassword = Handlebars.compile(formInputComponent)({
-  input: {
-    id: 'password',
-    name: 'password',
-    type: 'password',
-    label: {
-      value: 'Пароль',
-    },
-  },
-})
-
-const acceptButton = Handlebars.compile(acceptButtonComponent)({
-  button: {
-    type: 'submit',
     text: 'войти',
+    events: {
+      click: (event: Event) => {
+        event.preventDefault()
+        console.log('Button signin event: ', event)
+      },
+    },
   },
-})
+)
 
-const signinHTML = Handlebars.compile(signin)({
+const formInputLogin = new Input(
+  'div',
+  {
+    tagAttrs: {
+      class: 'input-row',
+    },
+    input: {
+      id: 'login',
+      name: 'login',
+      type: 'text',
+      label: {
+        value: 'Логин',
+      },
+      // validationErrors: {
+      //     error: 'Some validation error...'
+      // }
+    },
+  },
+)
+
+const formInputPassword = new Input(
+  'div',
+  {
+    tagAttrs: {
+      class: 'input-row',
+    },
+    input: {
+      id: 'password',
+      name: 'password',
+      type: 'password',
+      label: {
+        value: 'Пароль',
+      },
+    },
+  },
+)
+
+class SigninPage extends Block {
+  constructor(tagName: string, props: SigninProps) {
+    if (!(props.formInputLogin && props.formInputPassword && props.acceptButton)) {
+      throw new Error('SigninPage must have login/password fields and a button.')
+    }
+
+    super(tagName, props)
+  }
+
+  render() {
+    return this.compile(signinTmpl)
+  }
+}
+
+const signinHTML = new SigninPage('main', {
+  tagAttrs: {
+    class: 'form-box',
+  },
   formInputLogin,
   formInputPassword,
   acceptButton,
