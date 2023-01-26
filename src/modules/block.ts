@@ -10,7 +10,7 @@ import {
   IBlock,
 } from './types'
 
-export default class Block implements IBlock {
+export default abstract class Block implements IBlock {
   private static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -79,7 +79,7 @@ export default class Block implements IBlock {
     return { children, ownProps }
   }
 
-  public compile(template: string, props: PropsObject): DocumentFragment {
+  public compile(template: string, props?: PropsObject): DocumentFragment {
     if (typeof props === 'undefined') {
       props = this.props
     }
