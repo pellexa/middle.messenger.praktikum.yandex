@@ -1,3 +1,7 @@
+export type Listener = {
+  [key: string]: Function[];
+}
+
 export type TagAttribute = {
   [key: string]: string
 }

@@ -1,6 +1,4 @@
-type Listener = {
-  [key: string]: Function[];
-}
+import { Listener } from './types'
 
 class EventBus {
   private listeners: Listener
@@ -25,7 +23,7 @@ class EventBus {
     this.listeners[event] = this.listeners[event].filter(listener => listener !== callback)
   }
 
-  public emit(event: string, ...args): never | void {
+  public emit(event: string, ...args: unknown[]): never | void {
     if (!this.listeners[event]) {
       throw new Event(`Нет события: ${event}`)
     }
