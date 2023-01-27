@@ -1,5 +1,4 @@
-@use '../../../../static/variables.scss' as variables;
-
+@use '../../../static/variables.scss' as variables;
 
 .button {
     display: block;
@@ -14,4 +13,3 @@
         text-transform: uppercase;
     }
 }
-
