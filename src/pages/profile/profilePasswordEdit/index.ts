@@ -1,32 +1,59 @@
-import Handlebars from 'handlebars'
-import profilePasswordEdit from './profilePasswordEdit.tmpl'
+import profilePasswordEditTmpl from './profilePasswordEdit.tmpl'
 import IconBackSvg from '../../../components/icons/IconBack.svg'
-import acceptButtonComponent from '../../../components/buttons/acceptButton'
+import Button from '../../../components/button'
+import { ProfilePasswordEditProps } from './types'
+import Block from '../../../modules/block'
 
-const IconBack = Handlebars.compile(IconBackSvg)
+const acceptButton = new Button(
+  'button',
+  {
+    tagAttrs: {
+      class: 'button',
+      type: 'submit',
+    },
+    text: 'сохранить',
+    events: {
+      click: (event: Event) => {
+        event.preventDefault()
+        console.log('Button profilePasswordEdit event: ', event)
+      },
+    },
+  },
+)
 
-const apiResponseProfile = {
-  id: 123,
-  first_name: 'Petya',
-  second_name: 'Pupkin',
-  display_name: 'Petya Pupkin',
-  login: 'userLogin',
-  email: 'my@email.com',
-  phone: '89223332211',
-  avatar: '/path/to/avatar.jpg',
+class ProfilePasswordEdit extends Block {
+  constructor(tagName: string, props: ProfilePasswordEditProps) {
+    // if (!props.apiResponseProfile) {
+    //   throw new Error('ProfilePasswordEdit apiResponseProfile is undefined.')
+    // }
+
+    super(tagName, props)
+  }
+
+  render() {
+    return this.compile(profilePasswordEditTmpl)
+  }
 }
 
-const acceptButton = Handlebars.compile(acceptButtonComponent)({
-  button: {
-    type: 'submit',
-    text: 'сохранить',
+const profilePasswordEditHTML = new ProfilePasswordEdit(
+  'div',
+  {
+    tagAttrs: {
+      class: 'profile',
+    },
+    apiResponseProfile: {
+      id: 123,
+      first_name: 'Petya',
+      second_name: 'Pupkin',
+      display_name: 'Petya Pupkin',
+      login: 'userLogin',
+      email: 'my@email.com',
+      phone: '89223332211',
+      avatar: '/path/to/avatar.jpg',
+    },
+    acceptButton,
+    IconBack: IconBackSvg,
   },
-})
-
-const profilePasswordEditHTML = Handlebars.compile(profilePasswordEdit)({
-  apiResponseProfile,
-  IconBack,
-  acceptButton,
-})
+)
 
 export default profilePasswordEditHTML

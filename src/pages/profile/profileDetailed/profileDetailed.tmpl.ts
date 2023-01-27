@@ -14,42 +14,40 @@ import './profileDetailed.scss'
 }
 */
 export default `
-<div class="profile">
-    <div class="profile__left-side">
-        {{{ IconBack }}}
+<div class="profile__left-side">
+    {{{ IconBack }}}
+</div>
+
+<main class="profile__content">
+    <div class="avatar avatar_size-profile">
+        <img src="{{ apiResponseProfile.avatar }}" alt="avatar"></img>
     </div>
 
-    <main class="profile__content">
-        <div class="avatar avatar_size-profile">
-            <img src="{{ apiResponseProfile.avatar }}" alt="avatar"></img>
-        </div>
+    <h1 class="profile-name">
+        {{ apiResponseProfile.first_name }}
+    </h1>
 
-        <h1 class="profile-name">
-            {{ apiResponseProfile.first_name }}
-        </h1>
+    <ul class="profile-properties">
+        {{# each apiResponseProfile }}
+            <li class="profile-properties__row">
+                <div class="profile-key profile_margin-data">
+                    {{@ key }}
+                </div>
+                <div class="profile-value profile_margin-data">
+                    {{ this }}
+                </div>
+            </li>
+        {{/ each }}
+    </ul>
 
-        <ul class="profile-properties">
-            {{# each apiResponseProfile }}
-                <li class="profile-properties__row">
-                    <div class="profile-key profile_margin-data">
-                        {{@ key }}
-                    </div>
-                    <div class="profile-value profile_margin-data">
-                        {{ this }}
-                    </div>
-                </li>
-            {{/ each }}
-        </ul>
-
-        <div class="profile-properties__row">
-            <a href="#" class="link profile_margin-data">изменить данные</a>
-        </div>
-        <div class="profile-properties__row">
-            <a href="#" class="link profile_margin-data">изменить пароль</a>
-        </div>
-        <div class="profile-properties__row">
-            <a href="/" class="link profile_margin-data link_color_red">выйти</a>
-        </div>
-    </main>
-</div>
+    <div class="profile-properties__row">
+        <a href="#" class="link profile_margin-data">изменить данные</a>
+    </div>
+    <div class="profile-properties__row">
+        <a href="#" class="link profile_margin-data">изменить пароль</a>
+    </div>
+    <div class="profile-properties__row">
+        <a href="/" class="link profile_margin-data link_color_red">выйти</a>
+    </div>
+</main>
 `
