@@ -1,15 +1,20 @@
-import Handlebars from 'handlebars'
-import theError from '../../../components/theError'
+import TheError from '../../../components/theError'
 
-const error404 = Handlebars.compile(theError)({
-  error: {
-    status: '404',
-    text: 'не туда попали',
-    back: {
-      link: '#',
-      text: 'назад к чатам',
+const error404HTML = new TheError(
+  'main',
+  {
+    tagAttrs: {
+      class: 'error-box',
+    },
+    error: {
+      status: 404,
+      text: 'не туда попали',
+      back: {
+        link: '#',
+        text: 'назад к чатам',
+      },
     },
   },
-})
+)
 
-export default error404
+export default error404HTML

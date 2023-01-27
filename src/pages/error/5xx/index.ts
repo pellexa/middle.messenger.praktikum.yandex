@@ -1,15 +1,20 @@
-import Handlebars from 'handlebars'
-import theError from '../../../components/theError'
+import TheError from '../../../components/theError'
 
-const error500 = Handlebars.compile(theError)({
-  error: {
-    status: '500',
-    text: 'мы уже фиксим',
-    back: {
-      link: '#',
-      text: 'назад к чатам',
+const error500HTML = new TheError(
+  'main',
+  {
+    tagAttrs: {
+      class: 'error-box',
+    },
+    error: {
+      status: 500,
+      text: 'мы уже фиксим',
+      back: {
+        link: '#',
+        text: 'назад к чатам',
+      },
     },
   },
-})
+)
 
-export default error500
+export default error500HTML
