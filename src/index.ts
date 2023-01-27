@@ -4,11 +4,13 @@ import signin from './pages/signin'
 import registration from './pages/registration'
 import error404 from './pages/error/404'
 import error500 from './pages/error/5xx'
-import main from './pages/main'
+// import main from './pages/main'
 import profileDetailed from './pages/profile/profileDetailed'
 import profileEdit from './pages/profile/profileEdit'
 import profilePasswordEdit from './pages/profile/profilePasswordEdit'
-import profileUploadAvatar from './pages/profile/profileUploadAvatar'
+// import profileUploadAvatar from './pages/profile/profileUploadAvatar'
+import { render } from './utils/renderDOM'
+import Block from './modules/block'
 
 const app = document.getElementById('app')
 
@@ -16,11 +18,11 @@ if (!app) {
   throw Error('There is no element in index.html with id="app".')
 }
 
-const routes = {
-  '/singin': signin,
+const routes: Record<string, Block> = {
+  '/signin': signin,
   '/': registration,
   '/registration': registration,
-  '/chat': main,
+  // '/chat': main,
   '/profile/detailed': profileDetailed,
   '/profile/edit': profileEdit,
   '/profile/password/edit': profilePasswordEdit,
@@ -28,12 +30,12 @@ const routes = {
   '/500': error500,
 }
 
-app.innerHTML = routes[window.location.pathname]
+render('#app', routes[window.location.pathname])
 
 const pagesHTML = `
 <nav class="tmp-nav">
   <ul class="tmp-pages">
-    <li><a href="/singin">Singin</a></li>
+    <li><a href="/signin">Signin</a></li>
     <li><a href="/registration">Registration</a></li>
     <li><a href="/chat">Chat</a></li>
     <li><a href="/profile/detailed">Profile detailed</a></li>
