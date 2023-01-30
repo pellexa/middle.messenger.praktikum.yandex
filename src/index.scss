@@ -91,17 +91,3 @@ a {
     font-weight: 600;
     color: variables.$text-color;
 }
-
-/* ----- temporary styles ----- */
-.tmp-nav{}
-
-.tmp-pages {
-    position: absolute;
-    right: 10px;
-    bottom: 300px;
-    background-color: #EFEFEF;
-    padding: 15px;
-    border-radius: 10px;
-    z-index: 1;
-}
-/* ---------------------------- */
