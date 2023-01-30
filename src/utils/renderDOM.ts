@@ -5,7 +5,7 @@ export function render(query: string, block: Block) {
   const root = document.querySelector(query)
 
   if (root) {
-    root.appendChild(block.getContent())
+    root.append(block.getContent())
   }
 
   block.dispatchComponentDidMount()
