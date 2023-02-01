@@ -1,0 +1,10 @@
+@use '../../../static/variables.scss' as variables;
+
+.input-row__label {
+    display: block;
+
+}
+
+.input-row__label_displayed {
+    display: none;
+}

@@ -1,0 +1,8 @@
+@use '../../../static/variables.scss' as variables;
+
+.input-row__help {
+    display: block;
+    width: 280px;
+    text-align: left;
+    color: variables.$validation-error-color;
+}
