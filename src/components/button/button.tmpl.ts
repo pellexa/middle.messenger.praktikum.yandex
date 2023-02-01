@@ -1,5 +1,5 @@
 import './button.scss'
 
 export default `
-{{ text }}
+{{{ text }}}
 `
