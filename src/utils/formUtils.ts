@@ -174,6 +174,9 @@ const validations: Record<string, Function> = {
 
     return isValid
   },
+
+  // На это поле не было валидационных требований.
+  display_name: () => true,
 }
 
 export function validationFormData(needFields: Array<{
