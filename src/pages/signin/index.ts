@@ -40,23 +40,14 @@ const formInputPasswordLabel = new Label(
   }
 )
 
-const formInputLoginValidationError = new ValidationError(
-  'span',
-  {
-    tagAttrs: {
-      class: 'input-row__help',
-    },
-  }
-)
+const attrs = {
+  tagAttrs: {
+    class: 'input-row__help',
+  },
+}
 
-const formInputPasswordValidationError = new ValidationError(
-  'span',
-  {
-    tagAttrs: {
-      class: 'input-row__help',
-    },
-  }
-)
+const formInputLoginValidationError = new ValidationError('span', attrs)
+const formInputPasswordValidationError = new ValidationError('span', attrs)
 
 const formInputLogin = new Input(
   'input',
