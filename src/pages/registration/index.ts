@@ -86,7 +86,7 @@ const formInputPasswordAgainLabel = new Label(
 
 const attrs = {
   tagAttrs: {
-    class: 'input-row__help',
+    class: 'input-row__help input-row__help_registartion-width',
   },
 }
 

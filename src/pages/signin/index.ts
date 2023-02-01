@@ -42,7 +42,7 @@ const formInputPasswordLabel = new Label(
 
 const attrs = {
   tagAttrs: {
-    class: 'input-row__help',
+    class: 'input-row__help input-row__help_signin-width',
   },
 }
 
