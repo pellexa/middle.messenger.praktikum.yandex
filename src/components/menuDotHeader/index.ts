@@ -1,28 +1,13 @@
+import Block from '../../modules/block'
 import menuDotHeaderTmpl from './menuDotHeader.tmpl'
+import { MenuDotHeaderProps } from './types'
 
-setTimeout(() => {
-  const elemMenu = document.querySelector('.menu-dot__wrapper')
-  const elemMenuItems = document.querySelector('.menu-dot__items')
-
-  // Open menu items
-  if (elemMenu) {
-    elemMenu.addEventListener('click', elemMenuClick)
-
-    function elemMenuClick() {
-      elemMenuItems.style.display = 'block'
-    }
+export default class MenuDotHeader extends Block {
+  constructor(tagName: string, props: MenuDotHeaderProps) {
+    super(tagName, props)
   }
 
-  // Close menu items
-  if (elemMenuItems) {
-    document.addEventListener('click', closeMemuItems)
-
-    function closeMemuItems(event) {
-      if (!event.target.closest('.menu-dot')) {
-        elemMenuItems.style.display = 'none'
-      }
-    }
+  render() {
+    return this.compile(menuDotHeaderTmpl)
   }
-})
-
-export default menuDotHeaderTmpl
+}
