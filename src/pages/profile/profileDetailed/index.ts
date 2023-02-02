@@ -34,7 +34,7 @@ const profileDetailedHTML = new ProfileDetailed(
       avatar: '/path/to/avatar.jpg',
     },
     IconBack: IconBackSvg,
-  },
+  }
 )
 
 export default profileDetailedHTML

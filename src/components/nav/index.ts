@@ -12,6 +12,6 @@ class Nav extends Block {
   }
 }
 
-const nav = new Nav('nav', { tagAttrs: {class: 'tmp-nav'}})
+const nav = new Nav('nav', { tagAttrs: { class: 'tmp-nav' } })
 
 export default nav

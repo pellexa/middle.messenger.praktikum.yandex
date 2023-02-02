@@ -14,7 +14,7 @@ const error500HTML = new TheError(
         text: 'назад к чатам',
       },
     },
-  },
+  }
 )
 
 export default error500HTML

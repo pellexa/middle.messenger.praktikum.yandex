@@ -14,7 +14,7 @@ const error404HTML = new TheError(
         text: 'назад к чатам',
       },
     },
-  },
+  }
 )
 
 export default error404HTML
