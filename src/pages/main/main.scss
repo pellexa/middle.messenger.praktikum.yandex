@@ -65,11 +65,32 @@
     padding: 20px;
 }
 
-.content__send {
+.content__form {
     display: flex;
     gap: 10px;
     padding: 10px 20px;
     align-items: center;
+}
+
+.content__button-send {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    overflow: hidden;
+}
+
+.label {
+    cursor: pointer;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.input_display {
+    display: none;
 }
 
 .input_border-radius_m {

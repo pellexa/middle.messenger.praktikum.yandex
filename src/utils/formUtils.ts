@@ -14,7 +14,14 @@ export function jsonFromData(needFields: Array<{
     validation: ValidationError
   }) => {
     const fieldId = elements.field.props.tagAttrs!.id
-    result[fieldId] = formData.get(fieldId)
+    const value = formData.get(fieldId)
+    if (value instanceof File) {
+      if (value.size !== 0) {
+        result[fieldId] = value
+      }
+    } else if (value) {
+      result[fieldId] = value
+    }
   })
 
   return result
@@ -177,6 +184,26 @@ const validations: Record<string, Function> = {
 
   // На это поле не было валидационных требований.
   display_name: () => true,
+
+  // На это поле не было валидационных требований.
+  file: () => true,
+
+  message: (value: string, field: Input, validation: ValidationError) => {
+    let isValid = false
+
+    const fileInput = (document.getElementById('file') as HTMLInputElement)
+
+    field.setProps({ value })
+    validation.setProps({ error: null })
+
+    if (!value.trim() && !fileInput.files!.length) {
+      validation.setProps({ error: `Сообщение не может быть пустым.` })
+    } else {
+      isValid = true
+    }
+
+    return isValid
+  },
 }
 
 export function validationFormData(needFields: Array<{

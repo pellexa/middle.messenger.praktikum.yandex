@@ -1,15 +1,29 @@
-import Handlebars from 'handlebars'
-import main from './main.tmpl'
-import search from '../../components/search'
+import Search from '../../components/search'
 import IconSearchSvg from '../../components/icons/IconSearch.svg'
-import chatListComponent from '../../components/chatList'
-import message from '../../components/message'
 import IconAttachSvg from '../../components/icons/IconAttach.svg'
 import IconSendSvg from '../../components/icons/IconSend.svg'
-import menuDotHeaderComponent from '../../components/menuDotHeader'
+import ChatList from '../../components/chatList'
+import MenuDotHeader from '../../components/menuDotHeader'
+import Message from '../../components/message'
+import Time from '../../components/time'
+import Block from '../../modules/block'
+import mainTmpl from './main.tmpl'
+import { MainProps } from './types'
+import ValidationError from '../../components/validationError'
+import Input from '../../components/input'
+import { jsonFromData, runValidation, validationFormData } from '../../utils/formUtils'
+import Button from '../../components/button'
+import Label from '../../components/label'
 
-const IconSearch = Handlebars.compile(IconSearchSvg)
-const inputSearch = Handlebars.compile(search)({ IconSearch })
+const search = new Search(
+  'div',
+  {
+    tagAttrs: {
+      class: 'search',
+    },
+    IconSearch: IconSearchSvg,
+  }
+)
 
 const apiResponseChatList = {
   data: [
@@ -53,7 +67,15 @@ const apiResponseChatList = {
   ],
 }
 
-const chatList = Handlebars.compile(chatListComponent)(apiResponseChatList)
+const chatList = new ChatList(
+  'ul',
+  {
+    tagAttrs: {
+      class: 'chat-list',
+    },
+    data: apiResponseChatList.data,
+  }
+)
 
 // const apiResponseSelectedChat = {}
 const apiResponseSelectedChat = {
@@ -76,17 +98,23 @@ const apiResponseSelectedChat = {
 }
 
 /**
-  * Не нешёл описание api для ленты сообщений в Swagger (https://ya-praktikum.tech/api/v2/swagger/#/)
-  * Придумал свой json.
+  * Не нашёл описание api для ленты сообщений в Swagger
+  * (https://ya-praktikum.tech/api/v2/swagger/#/). Придумал свой json.
   */
 const apiResponseMessages = {
   chat_id: 123,
   messages: [
     {
       time: '2020-01-02T14:22:22.000Z',
-      content: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.
+      content: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в \
+                какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.\
+                Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все \
+                тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой \
+                забрали только кассеты с пленкой.
 
-      Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.`,
+                Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на \
+                ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из \
+                них недавно продали на аукционе за 45000 евро.`,
       is_my: false,
     },
     {
@@ -106,7 +134,7 @@ const listMessage = apiResponseMessages.messages.map((msg, index, array) => {
   const datetime = new Date(Date.parse(msg.time))
   const day = datetime.getDate()
 
-  let resultDate = ''
+  let resultDate: string | null = null
   if (index - 1 < 0) {
     resultDate = msg.time
   } else {
@@ -117,24 +145,172 @@ const listMessage = apiResponseMessages.messages.map((msg, index, array) => {
     }
   }
 
-  return Handlebars.compile(message)({
-    msg,
-    isImage: !!msg.content.image,
-    isMy: msg.is_my,
-    date: resultDate,
-  })
-}).join('')
+  let time: Time | null = null
+  if (resultDate) {
+    time = new Time(
+      'time',
+      {
+        tagAttrs: {
+          class: 'messages-date',
+        },
+        date: resultDate,
+      }
+    )
+  }
 
-const menuDotHeader = Handlebars.compile(menuDotHeaderComponent)
+  const message = new Message(
+    'div',
+    {
+      msg,
+      isImage: typeof msg.content === 'object' && msg.content.image ? true : false,
+      isMy: msg.is_my,
+      time,
+    }
+  )
 
-const mainHTML = Handlebars.compile(main)({
-  inputSearch,
-  chatList,
-  selectedChat: Object.keys(apiResponseSelectedChat).length > 0 ? apiResponseSelectedChat : false,
-  messages: listMessage,
-  IconAttachSvg,
-  IconSendSvg,
-  menuDotHeader,
+  return message
 })
 
-export default mainHTML
+const menuDotHeader = new MenuDotHeader(
+  'div',
+  {
+    tagAttrs: {
+      class: 'menu-dot',
+    },
+    events: {
+      click: () => {
+        const elemMenuItems = document.querySelector('.menu-dot__items') as HTMLElement
+        elemMenuItems.style.display = 'block'
+      },
+    },
+  }
+)
+
+const formInputFileLabel = new Label(
+  'label',
+  {
+    tagAttrs: {
+      class: 'label',
+      for: 'file',
+    },
+    text: IconAttachSvg,
+  }
+)
+
+const formInputFile = new Input(
+  'input',
+  {
+    tagAttrs: {
+      class: 'input_display',
+      id: 'file',
+      name: 'file',
+      type: 'file',
+    },
+  }
+)
+
+const sendButton = new Button(
+  'button',
+  {
+    tagAttrs: {
+      class: 'content__button-send',
+      type: 'submit',
+    },
+    text: IconSendSvg,
+  }
+)
+
+const attrs = {
+  tagAttrs: {
+    class: 'input-row__help input-row__help_signin-width',
+  },
+}
+
+const formInputMessageValidationError = new ValidationError('span', attrs)
+
+const formInputMessage = new Input(
+  'input',
+  {
+    tagAttrs: {
+      class: 'input input_border-radius_m input_bg-color_lightgray',
+      id: 'message',
+      name: 'message',
+      type: 'text',
+      placeholder: 'Сообщение',
+    },
+    events: {
+      focus: () => {
+        formInputMessageValidationError.setProps({ error: null })
+      },
+
+      blur: (event: Event) => {
+        const { value } = event.target as HTMLInputElement
+        runValidation('message', value, formInputMessage, formInputMessageValidationError)
+      },
+    },
+  }
+)
+
+class Main extends Block {
+  constructor(tagName: string, props: MainProps) {
+    super(tagName, props)
+  }
+
+  render() {
+    return this.compile(mainTmpl)
+  }
+}
+
+const main = new Main(
+  'main',
+  {
+    tagAttrs: {
+      class: 'main',
+    },
+    inputSearch: search,
+    chatList,
+    selectedChat: Object.keys(apiResponseSelectedChat).length > 0 ? apiResponseSelectedChat : false,
+    messages: listMessage,
+    formInputFileLabel,
+    formInputFile,
+    formInputMessage,
+    formInputMessageValidationError,
+    sendButton,
+    menuDotHeader,
+    events: {
+      submit: (event: Event) => {
+        event.preventDefault()
+
+        const fields = [
+          {
+            field: formInputFile,
+            validation: formInputMessageValidationError,
+          },
+          {
+            field: formInputMessage,
+            validation: formInputMessageValidationError,
+          },
+        ]
+
+        const validationResults = validationFormData.call(event, fields)
+        const result = Object.values(validationResults).every((value: boolean) => value === true)
+
+        const json = jsonFromData.call(event, fields)
+        console.log('json: ', json)
+
+        if (result) {
+          console.log('send api request')
+        }
+      },
+      click: (event: Event) => {
+        // Close MenuDot.
+        if (!(event.target as HTMLElement).closest('.menu-dot')) {
+          const elemMenuItems = document.querySelector('.menu-dot__items') as HTMLElement
+          elemMenuItems.style.display = 'none'
+        }
+      },
+    },
+  }
+)
+
+export default main
