@@ -1,12 +1,9 @@
 import './message.scss'
 
 export default `
-{{# if date }}
-    <time class="messages-date">
-        {{ date }}
-    </time>
+{{# if time }}
+    {{{ time }}}
 {{/ if}}
-
 
 <div class="message {{# if isMy }} message_aling-right {{/ if}}">
     {{# if isImage }}
