@@ -153,8 +153,7 @@ const validations: Record<string, Function> = {
       validation.setProps({
         error: 'Емайл должен состоять из букв(цифр), символ @, после которого должны быть буквы,\
                 затем точка, и снова буквы.',
-        }
-      )
+      })
     } else {
       isValid = true
     }
@@ -172,7 +171,7 @@ const validations: Record<string, Function> = {
       validation.setProps({
         error: 'Может содержать либо латиницу, либо кириллицу, без пробелов и цифр,\
                 доступен дефис.',
-       })
+      })
     } else if (!validationRules.firstUppercase(value)) {
       validation.setProps({ error: 'Первая буква должна быть заглавной.' })
     } else {
