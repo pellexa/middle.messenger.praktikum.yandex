@@ -1,32 +1,32 @@
 @use '../../../static/variables.scss' as variables;
 
 .message {
-    width: fit-content;
-    max-width: 40%;
-    background-color: #F8F8F8;
-    border-radius: 10px;
-    padding: 0 12px 12px;
-    margin-bottom: 10px;
+  width: fit-content;
+  max-width: 40%;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  padding: 0 12px 12px;
+  margin-bottom: 10px;
 }
 
 .message__text {
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 15px;
-    color: variables.$text-color;
-    white-space: pre-line;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: variables.$text-color;
+  white-space: pre-line;
 }
 
 .message__time {
-    display: block;
-    font-weight: 500;
-    font-size: 9px;
-    line-height: 9px;
-    text-align: right;
-    color: #999999;
-    margin: 10px 0 0 0;
+  display: block;
+  font-weight: 500;
+  font-size: 9px;
+  line-height: 9px;
+  text-align: right;
+  color: #999999;
+  margin: 10px 0 0 0;
 }
 
 .message_aling-right {
-    margin: 0 0 0 auto;
+  margin: 0 0 0 auto;
 }

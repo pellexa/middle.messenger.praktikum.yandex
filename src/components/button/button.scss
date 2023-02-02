@@ -1,15 +1,15 @@
 @use '../../../static/variables.scss' as variables;
 
 .button {
-    display: block;
-    margin: 0 auto 14px;
-    border: 0;
-    padding: 12px 70px;
-    background-color: variables.$button-bg-accept;
-    border-radius: 8px;
-    color: variables.$bg-color;
+  display: block;
+  margin: 0 auto 14px;
+  border: 0;
+  padding: 12px 70px;
+  background-color: variables.$button-bg-accept;
+  border-radius: 8px;
+  color: variables.$bg-color;
 
-    &::first-letter {
-        text-transform: uppercase;
-    }
+  &::first-letter {
+    text-transform: uppercase;
+  }
 }

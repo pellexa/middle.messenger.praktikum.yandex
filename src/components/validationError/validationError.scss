@@ -1,7 +1,7 @@
 @use '../../../static/variables.scss' as variables;
 
 .input-row__help {
-    display: block;
-    text-align: left;
-    color: variables.$validation-error-color;
+  display: block;
+  text-align: left;
+  color: variables.$validation-error-color;
 }
