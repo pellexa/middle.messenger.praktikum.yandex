@@ -1,0 +1,15 @@
+{
+  "extends": "stylelint-config-recommended-scss",
+  "rules": {
+    "indentation": 2,
+    "string-quotes": "single",
+    "declaration-colon-space-before": "never",
+    "declaration-colon-space-after": "always",
+    "rule-empty-line-before": "always",
+    "max-empty-lines": 1,
+    "color-hex-case": "lower"
+  },
+  "ignoreFiles": [
+    "dist/*"
+  ]
+} 
