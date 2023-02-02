@@ -4,7 +4,7 @@ import signin from './pages/signin'
 import registration from './pages/registration'
 import error404 from './pages/error/404'
 import error500 from './pages/error/5xx'
-// import main from './pages/main'
+import main from './pages/main'
 import profileDetailed from './pages/profile/profileDetailed'
 import profileEdit from './pages/profile/profileEdit'
 import profilePasswordEdit from './pages/profile/profilePasswordEdit'
@@ -22,7 +22,7 @@ const routes: Record<string, Block> = {
   '/signin': signin,
   '/': registration,
   '/registration': registration,
-  // '/chat': main,
+  '/chat': main,
   '/profile/detailed': profileDetailed,
   '/profile/edit': profileEdit,
   '/profile/password/edit': profilePasswordEdit,
