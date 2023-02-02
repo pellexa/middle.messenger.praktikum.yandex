@@ -1,7 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
   "extends": [
-    "airbnb",
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended"
   ],
@@ -9,6 +8,7 @@
     "browser": true
   },
   "rules": {
+    "indent": ["error", 2],
     "semi": [2, "never"],
     "max-len": [2, 100],
     "arrow-parens": [2, "as-needed"],
@@ -17,16 +17,25 @@
     "no-unused-vars": "off",
     "class-methods-use-this": "off",
     "no-param-reassign": "off",
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "js": "never",
-        "ts": "never"
-      }
-    ],
+    "no-multiple-empty-lines": [2, { "max": 1, "maxEOF": 0 }],
+    "comma-dangle": [2, {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "never"
+    }],
+    "padded-blocks": ["error", "never"],
+    "no-multi-spaces": "error",
+    "no-trailing-spaces": "error",
+    "keyword-spacing": "error",
+    "object-curly-spacing": ["error", "always"],
+    "space-infix-ops": "error",
     "no-use-before-define": [2, {
-      "functions": false
+      "functions": false,
+      "classes": true,
+      "variables": true,
+      "allowNamedExports": false
       }
     ],
     "import/no-extraneous-dependencies": "off"
