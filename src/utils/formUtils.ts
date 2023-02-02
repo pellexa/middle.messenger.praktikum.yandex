@@ -118,6 +118,29 @@ const validations: Record<string, Function> = {
     return isValid
   },
 
+  oldPassword: function(value: string, field: Input, validation: ValidationError) {
+    return this.password(value, field, validation)
+  },
+
+  newPassword: function(value: string, field: Input, validation: ValidationError) {
+    return this.password(value, field, validation)
+  },
+
+  newPasswordAgain: (value: string, field: Input, validation: ValidationError) => {
+    let isValid = false
+    const newPassword = (document.getElementById('newPassword') as HTMLInputElement).value
+
+    field.setProps({ value })
+    validation.setProps({ error: null })
+    if (value !== newPassword) {
+      validation.setProps({ error: 'Не совпадает с введённым выше паролем.' })
+    } else {
+      isValid = true
+    }
+
+    return isValid
+  },
+
   email: (value: string, field: Input, validation: ValidationError) => {
     let isValid = false
 
