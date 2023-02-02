@@ -30,7 +30,7 @@ export default abstract class Block implements IBlock {
 
   private eventBus: Function
 
-  private _children: Record<string, IBlock>
+  private _children: Record<string, IBlock | IBlock[]>
 
   constructor(tagName = 'div', props = {}) {
     const { children, ownProps } = this._getChildren(props)
@@ -62,16 +62,36 @@ export default abstract class Block implements IBlock {
   }
 
   private _getChildren(props: PropsObject): {
-      children: Record<string, IBlock>,
+      children: Record<string, IBlock | IBlock[]>,
       ownProps: PropsObject
     } {
-    const children: Record<string, IBlock> = {}
+    const children: Record<string, IBlock | IBlock[]> = {}
     const ownProps: PropsObject = {}
 
     Object.entries(props).forEach(([key, value]) => {
       if (value instanceof Block) {
         children[key] = value
-      } else {
+      } else if (Array.isArray(value)) {
+        const childrenArr: Array<IBlock> = []
+        const ownPropsArr: unknown[] = []
+
+        value.forEach(item => {
+          if (item instanceof Block) {
+            childrenArr.push(item)
+          } else {
+            ownPropsArr.push(item)
+          }
+        })
+
+        if (childrenArr.length) {
+          children[key] = childrenArr
+        }
+
+        if (ownPropsArr.length) {
+          ownProps[key] = ownPropsArr
+        }
+      }
+      else {
         ownProps[key] = value
       }
     })
@@ -87,18 +107,47 @@ export default abstract class Block implements IBlock {
     const propsAndStubs = { ...props }
 
     Object.entries(this._children).forEach(([key, child]) => {
-      propsAndStubs[key] = `<div data-id="${child.id}"></div>`
+      if (Array.isArray(child)) {
+        child.forEach(item => {
+          if (!propsAndStubs[key]) {
+            propsAndStubs[key] = `<div data-id="${item.id}"></div>`
+          } else {
+            propsAndStubs[key] += `<div data-id="${item.id}"></div>`
+          }
+        })
+      } else {
+        propsAndStubs[key] = `<div data-id="${child.id}"></div>`
+      }
     })
 
     const fragment = document.createElement('template')
     fragment.innerHTML = Handlebars.compile(template)(propsAndStubs)
 
     Object.values(this._children).forEach((child: IBlock) => {
-      const stub = fragment.content.querySelector(`[data-id="${child.id}"]`)
-
-      if (stub) {
-        stub.replaceWith(child.getContent())
+      const stubs: Array<HTMLTemplateElement | null> = []
+      if (Array.isArray(child)) {
+        child.forEach(item => {
+          if (item instanceof Block) {
+            stubs.push(fragment.content.querySelector(`[data-id="${item.id}"]`))
+          }
+        })
+      } else {
+        stubs.push(fragment.content.querySelector(`[data-id="${child.id}"]`))
       }
+
+      stubs.forEach(stub => {
+        if (stub) {
+          if (Array.isArray(child)) {
+            child.forEach(item => {
+              stub.before(item.getContent())
+            })
+          } else {
+            stub.replaceWith(child.getContent())
+          }
+        }
+
+        if (stub) stub.remove()
+      })
     })
 
     return fragment.content
@@ -156,7 +205,11 @@ export default abstract class Block implements IBlock {
     this.componentDidMount()
 
     Object.values(this._children).forEach(child => {
-      child.dispatchComponentDidMount()
+      if (Array.isArray(child)) {
+        child.forEach(item => item.dispatchComponentDidMount())
+      } else {
+        child.dispatchComponentDidMount()
+      }
     })
   }
 
