@@ -1,36 +1,37 @@
 @use '../../../static/variables.scss' as variables;
 
 .menu-dot {
-    position: relative;
+  position: relative;
 }
 
 .menu-dot__wrapper {
-    padding: 10px;
-    cursor: pointer;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .menu-dot__dot {
-    width: 3px;
-    height: 3px;
-    background-color: variables.$text-color;
-    border-radius: 50%;
-    box-shadow: 0 -6px variables.$text-color, 0 6px variables.$text-color;
+  width: 3px;
+  height: 3px;
+  background-color: variables.$text-color;
+  border-radius: 50%;
+  box-shadow: 0 -6px variables.$text-color, 0 6px variables.$text-color;
 }
 
 .menu-dot__items {
-    display: none;
-    position: absolute;
-    top: 25px;
-    right: 0;
-    padding: 20px;
-    background-color: #f8f8f8;
-    max-width: 250px;
-    white-space: nowrap;
-    border-radius: 10px;
+  display: none;
+  position: absolute;
+  top: 25px;
+  right: 0;
+  padding: 20px;
+  background-color: #f8f8f8;
+  max-width: 250px;
+  white-space: nowrap;
+  border-radius: 10px;
 }
 
 .menu-dot__item {
-   &:nth-child(n + 2) {
-        margin-top: 10px;
-    }
+
+  &:nth-child(n + 2) {
+    margin-top: 10px;
+  }
 }
