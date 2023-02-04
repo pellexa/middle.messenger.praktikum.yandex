@@ -12,27 +12,29 @@ type OptionsProps = {
   timeout?: number
 }
 
+type HTTPMethod = (url: string, options?: OptionsProps) => Promise<unknown>
+
 class HTTPTransport {
-  public get = (url: string, options: OptionsProps = {}) => {
-    return this.request(url, { ...options, method: METHODS.GET }, options.timeout)
+  public get: HTTPMethod = (url, options = {}) => {
+    return this.request(url, { ...options, method: METHODS.GET })
   }
 
-  public put = (url: string, options: OptionsProps = {}) => {
-    return this.request(url, { ...options, method: METHODS.PUT }, options.timeout)
+  public put: HTTPMethod = (url, options = {}) => {
+    return this.request(url, { ...options, method: METHODS.PUT })
   }
 
-  public post = (url: string, options: OptionsProps = {}) => {
-    return this.request(url, { ...options, method: METHODS.POST }, options.timeout)
+  public post: HTTPMethod = (url, options = {}) => {
+    return this.request(url, { ...options, method: METHODS.POST })
   }
 
-  public delete = (url: string, options: OptionsProps = {}) => {
-    return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout)
+  public delete: HTTPMethod = (url, options = {}) => {
+    return this.request(url, { ...options, method: METHODS.DELETE })
   }
 
-  public request = (url: string, options: OptionsProps, timeout = 5000) => {
+  public request = (url: string, options: OptionsProps) => {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest()
-      xhr.timeout = timeout
+      xhr.timeout = options.timeout ? options.timeout : 5000
 
       if (!options.method) {
         options.method === METHODS.GET
