@@ -26,7 +26,7 @@ export default class Router implements IRouter {
     this._rootQueryElement = rootQueryElement
   }
 
-  public static getInstance(rootQueryElement: string): IRouter {
+  public static getInstance(rootQueryElement: string = ''): IRouter {
     if (!Router.instance) {
       Router.instance = new Router(rootQueryElement)
     }
