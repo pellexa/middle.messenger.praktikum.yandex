@@ -300,10 +300,14 @@ export default abstract class Block implements IBlock {
   }
 
   public show(): void {
-    this.element.style.display = 'block'
+    this.element.style.display = ''
   }
 
   public hide(): void {
     this.element.style.display = 'none'
+  }
+
+  public remove(): void {
+    this.element.remove()
   }
 }
