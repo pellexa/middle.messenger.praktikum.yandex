@@ -7,12 +7,7 @@ export default `
     </div>
 
     <ul class="menu-dot__items">
-        <li class="menu-dot__item">
-            <a href="#">мой профиль</a>
-        </li>
-        <li class="menu-dot__item">
-            <a href="#">выйти</a>
-        </li>
+        {{{ menuDotHeaderItemComponents }}}
     </ul>
 </div>
 `

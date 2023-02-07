@@ -14,6 +14,9 @@ import Input from '../../components/input'
 import { jsonFromData, runValidation, validationFormData } from '../../utils/formUtils'
 import Button from '../../components/button'
 import Label from '../../components/label'
+import Router from '../../modules/Router'
+import Link from '../../components/link'
+import Wrapper from '../../components/wrapper'
 
 const search = new Search(
   'div',
@@ -171,16 +174,70 @@ const listMessage = apiResponseMessages.messages.map((msg, index, array) => {
   return message
 })
 
+const menuDotHeaderItems = {
+  '/settings': 'мой профиль',
+  '#': 'выйти',
+}
+
+const menuDotHeaderItemComponents = Object.entries(menuDotHeaderItems).map(([href, content]) => {
+  const link = new Link(
+    'a',
+    {
+      tagAttrs: {
+        href,
+        class: 'link link_color_blue',
+      },
+      content,
+      events: {
+        click: (event: Event) => {
+          event.preventDefault()
+
+          const element = event.target as HTMLLinkElement
+          const router = Router.getInstance()
+          const uri = element.getAttribute('href')
+
+          if (!uri) {
+            throw new Error('The href attribute must exist on the "a" tag.')
+          }
+
+          // Hide menu.
+          const elemMenuItems = document.querySelector('.menu-dot__items') as HTMLElement
+          elemMenuItems.style.display = 'none'
+
+          router.go(uri)
+        },
+      },
+    }
+  )
+
+  const wrapper = new Wrapper(
+    'li',
+    {
+      tagAttrs: {
+        href,
+        class: 'menu-dot__item',
+      },
+      content: link,
+    }
+  )
+
+  return wrapper
+})
+
 const menuDotHeader = new MenuDotHeader(
   'div',
   {
     tagAttrs: {
       class: 'menu-dot',
     },
+    menuDotHeaderItemComponents,
     events: {
       click: () => {
         const elemMenuItems = document.querySelector('.menu-dot__items') as HTMLElement
-        elemMenuItems.style.display = 'block'
+
+        if (elemMenuItems) {
+          elemMenuItems.style.display = 'block'
+        }
       },
     },
   }
