@@ -1,9 +1,10 @@
 @use '../../../static/variables.scss' as variables;
 
-a {
+.link {
   display: inline-block;
   color: variables.$button-bg-accept;
   text-decoration: none;
+  cursor: pointer;
 
   &::first-letter {
     text-transform: uppercase;
