@@ -2,11 +2,18 @@
 
 .link {
   display: inline-block;
-  color: variables.$button-bg-accept;
   text-decoration: none;
   cursor: pointer;
 
   &::first-letter {
     text-transform: uppercase;
   }
+}
+
+.link_color_blue {
+  color: variables.$button-bg-accept;
+}
+
+.link_color_red {
+  color: #ff0000;
 }

@@ -24,7 +24,7 @@ const signupLink = new Link(
   'a',
   {
     tagAttrs: {
-      class: 'link',
+      class: 'link link_color_blue',
       href: '/sign-up',
     },
     content: 'нет аккаунта?',
