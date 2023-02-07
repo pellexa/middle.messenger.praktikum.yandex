@@ -1,0 +1,11 @@
+@use '../../../static/variables.scss' as variables;
+
+a {
+  display: inline-block;
+  color: variables.$button-bg-accept;
+  text-decoration: none;
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
