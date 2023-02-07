@@ -214,7 +214,6 @@ const menuDotHeaderItemComponents = Object.entries(menuDotHeaderItems).map(([hre
     'li',
     {
       tagAttrs: {
-        href,
         class: 'menu-dot__item',
       },
       content: link,
