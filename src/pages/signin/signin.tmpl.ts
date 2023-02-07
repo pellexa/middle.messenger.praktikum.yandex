@@ -16,9 +16,9 @@ export default `
         {{{ formInputPasswordValidationError }}}
     </div>
 
-    <div class="buttons buttons_margin-singin">
+    <div class="buttons buttons_margin-signin">
         {{{ acceptButton }}}
-        <a href="#" class="link">нет аккаунта?</a>
+        {{{ signupLink }}}
     </div>
 </form>
 `
