@@ -6,7 +6,7 @@ const linkBack = new Link(
   'a',
   {
     tagAttrs: {
-      class: 'error-box__link link_color_blue',
+      class: 'link error-box__link link_color_blue',
       href: '/messanger',
     },
     content: 'назад к чатам',

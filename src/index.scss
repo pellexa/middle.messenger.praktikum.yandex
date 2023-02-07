@@ -35,17 +35,6 @@
   color: #999;
 }
 
-a {
-  display: inline-block;
-  text-decoration: none;
-
-  &::first-letter {
-    text-transform: uppercase;
-  }
-}
-
-// form
-
 .form-box {
   position: absolute;
   overflow: hidden;
