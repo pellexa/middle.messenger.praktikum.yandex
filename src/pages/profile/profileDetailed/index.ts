@@ -2,6 +2,86 @@ import profileDetailedTmpl from './profileDetailed.tmpl'
 import IconBackSvg from '../../../components/icons/IconBack.svg'
 import Block from '../../../modules/block'
 import { ProfileDetailedProps } from './types'
+import Router from '../../../modules/Router'
+import Link from '../../../components/link'
+
+const linkBack = new Link(
+  'a',
+  {
+    tagAttrs: {
+      class: 'link__icon-back',
+      href: '/messanger',
+    },
+    content: IconBackSvg,
+    events: {
+      click: (event: Event) => {
+        event.preventDefault()
+
+        const element = event.currentTarget as HTMLLinkElement
+        const router = Router.getInstance()
+        const uri = element.getAttribute('href')
+
+        if (!uri) {
+          throw new Error('The href attribute must exist on the "a" tag.')
+        }
+
+        router.go(uri)
+      },
+    },
+  }
+)
+
+const linkChangeData = new Link(
+  'a',
+  {
+    tagAttrs: {
+      class: 'link profile_margin-data link_color_blue',
+      href: '/settings/edit',
+    },
+    content: 'изменить данные',
+    events: {
+      click: (event: Event) => {
+        event.preventDefault()
+
+        const element = event.target as HTMLLinkElement
+        const router = Router.getInstance()
+        const uri = element.getAttribute('href')
+
+        if (!uri) {
+          throw new Error('The href attribute must exist on the "a" tag.')
+        }
+
+        router.go(uri)
+      },
+    },
+  }
+)
+
+const linkChangePassword = new Link(
+  'a',
+  {
+    tagAttrs: {
+      class: 'link profile_margin-data link_color_blue',
+      href: '/settings/password/edit',
+    },
+    content: 'изменить пароль',
+    events: {
+      click: (event: Event) => {
+        event.preventDefault()
+
+        const element = event.target as HTMLLinkElement
+        const router = Router.getInstance()
+        const uri = element.getAttribute('href')
+
+        if (!uri) {
+          throw new Error('The href attribute must exist on the "a" tag.')
+        }
+
+        router.go(uri)
+      },
+    },
+  }
+)
 
 class ProfileDetailed extends Block {
   constructor(tagName: string, props: ProfileDetailedProps) {
@@ -33,7 +113,9 @@ const profileDetailedHTML = new ProfileDetailed(
       phone: '89223332211',
       avatar: '/path/to/avatar.jpg',
     },
-    IconBack: IconBackSvg,
+    linkBack,
+    linkChangeData,
+    linkChangePassword,
   }
 )
 

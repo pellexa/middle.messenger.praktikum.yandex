@@ -1,5 +1,4 @@
 import '../profile.scss'
-import './profileDetailed.scss'
 
 /*
 {
@@ -15,7 +14,7 @@ import './profileDetailed.scss'
 */
 export default `
 <div class="profile__left-side">
-    {{{ IconBack }}}
+    {{{ linkBack }}}
 </div>
 
 <main class="profile__content">
@@ -41,10 +40,10 @@ export default `
     </ul>
 
     <div class="profile-properties__row">
-        <a href="#" class="link profile_margin-data">изменить данные</a>
+        {{{ linkChangeData }}}
     </div>
     <div class="profile-properties__row">
-        <a href="#" class="link profile_margin-data">изменить пароль</a>
+        {{{ linkChangePassword}}}
     </div>
     <div class="profile-properties__row">
         <a href="/" class="link profile_margin-data link_color_red">выйти</a>

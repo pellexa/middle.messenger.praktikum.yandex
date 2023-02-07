@@ -1,3 +1,4 @@
+import Link from '../../../components/link'
 import { TagAttribute, ComponentEvent } from '../../../modules/types'
 
 export type ProfileDetailedProps = {
@@ -12,6 +13,8 @@ export type ProfileDetailedProps = {
     phone: string,
     avatar: string,
   },
-  IconBack: string,
+  linkBack: Link,
+  linkChangeData: Link
+  linkChangePassword: Link
   events?: ComponentEvent
 }
