@@ -3,7 +3,7 @@ import './profileEdit.scss'
 
 export default `
 <div class="profile__left-side">
-    {{{ IconBack }}}
+    {{{ linkBack }}}
 </div>
 
 {{{ profileUploadAvatar }}}

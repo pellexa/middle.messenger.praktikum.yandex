@@ -1,6 +1,7 @@
 import Button from '../../../components/button'
 import Input from '../../../components/input'
 import Label from '../../../components/label'
+import Link from '../../../components/link'
 import ValidationError from '../../../components/validationError'
 import { TagAttribute, ComponentEvent } from '../../../modules/types'
 import ProfileUploadAvatar from '../profileUploadAvatar'
@@ -32,7 +33,7 @@ export type ProfileEditProps = {
   formInputPhoneValidationError: ValidationError,
   formInputPhone: Input,
 
-  IconBack: string,
+  linkBack: Link
   acceptButton: Button
   profileUploadAvatar: ProfileUploadAvatar
   events?: ComponentEvent

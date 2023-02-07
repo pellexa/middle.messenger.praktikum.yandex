@@ -8,6 +8,34 @@ import Label from '../../../components/label'
 import ValidationError from '../../../components/validationError'
 import Input from '../../../components/input'
 import { jsonFromData, runValidation, validationFormData } from '../../../utils/formUtils'
+import Link from '../../../components/link'
+import Router from '../../../modules/Router'
+
+const linkBack = new Link(
+  'a',
+  {
+    tagAttrs: {
+      class: 'link__icon-back',
+      href: '/messanger',
+    },
+    content: IconBackSvg,
+    events: {
+      click: (event: Event) => {
+        event.preventDefault()
+
+        const element = event.currentTarget as HTMLLinkElement
+        const router = Router.getInstance()
+        const uri = element.getAttribute('href')
+
+        if (!uri) {
+          throw new Error('The href attribute must exist on the "a" tag.')
+        }
+
+        router.go(uri)
+      },
+    },
+  }
+)
 
 const acceptButton = new Button(
   'button',
@@ -351,7 +379,7 @@ const profileEditHTML = new ProfileEdit('div', {
   formInputPhone,
   formInputPhoneValidationError,
 
-  IconBack: IconBackSvg,
+  linkBack,
   profileUploadAvatar,
   acceptButton,
   events: {
