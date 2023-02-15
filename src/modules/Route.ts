@@ -1,4 +1,3 @@
-import nav from '../components/nav'
 import { render } from '../utils/renderDOM'
 import Block from './block'
 
@@ -27,7 +26,6 @@ export default class Route {
   }
 
   public render(): void {
-    const root = render(this._props.rootQueryElement, this._block)
-    root.append(nav.getContent())
+    render(this._props.rootQueryElement, this._block)
   }
 }
