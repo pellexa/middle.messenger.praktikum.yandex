@@ -1,3 +1,5 @@
+import AuthAPI from '../api/auth-api'
+import store from '../servises/store'
 import Block from './block'
 import Route from './Route'
 
@@ -14,6 +16,7 @@ interface IRouter {
 
 export default class Router implements IRouter {
   private static instance: IRouter
+  private static publicRoutes = ['/', '/sign-up']
   public routes: Route[]
   public history: History
   private _currentRoute: Route | undefined
@@ -41,10 +44,31 @@ export default class Router implements IRouter {
 
   public start(): void {
     window.onpopstate = () => {
-      this._onRoute(window.location.pathname)
+      this._checkAuth()
     }
 
-    this._onRoute(window.location.pathname)
+    this._checkAuth()
+  }
+
+  private async _checkAuth() {
+    const pathname = window.location.pathname
+    const responseAuth = await AuthAPI.user()
+
+    if (responseAuth.status === 200) {
+      store.set('auth.user', responseAuth.responseText)
+
+      if (Router.publicRoutes.includes(pathname)) {
+        this.go('/messanger')
+      } else {
+        this._onRoute(pathname)
+      }
+    } else {
+      if (Router.publicRoutes.includes(pathname)) {
+        this._onRoute(pathname)
+      } else {
+        this.go('/')
+      }
+    }
   }
 
   private _onRoute(pathname: string): void {
