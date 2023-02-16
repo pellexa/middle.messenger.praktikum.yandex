@@ -12,6 +12,7 @@ export default `
 
     <hr class="hr hr_margin-left-side" />
 
+        {{{ chatModal }}}
         {{{ chatList }}}
 </div>
 
@@ -40,12 +41,7 @@ export default `
         <hr class="hr hr_margin-content" />
         
         {{{ formInputMessageValidationError }}}
-        <form class="content__form" id="send_message_form">
-            {{{ formInputFileLabel }}}
-            {{{ formInputFile }}}
-            {{{ formInputMessage }}}
-            {{{ sendButton }}}
-        </form>
+        {{{ formMessage }}}
     {{ else }}
         <p class="content__no-data">Выберите чат чтобы отправить сообщение</p>
     {{/ if }}

@@ -17,6 +17,16 @@ import Label from '../../components/label'
 import Router from '../../modules/Router'
 import Link from '../../components/link'
 import Wrapper from '../../components/wrapper'
+import Modal from '../../components/modal'
+import ChatController from '../../controllers/chat'
+import store from '../../servises/store'
+import AuthController from '../../controllers/auth'
+
+const attrs = {
+  tagAttrs: {
+    class: 'input-row__help input-row__help_signin-width',
+  },
+}
 
 const search = new Search(
   'div',
@@ -28,47 +38,101 @@ const search = new Search(
   }
 )
 
-const apiResponseChatList = {
-  data: [
-    {
-      id: 123,
-      title: 'my-chat',
-      avatar: '/123/avatar1.jpg',
-      unread_count: 15,
-      last_message: {
-        user: {
-          first_name: 'Petya',
-          second_name: 'Pupkin',
-          avatar: '/path/to/avatar.jpg',
-          email: 'my@email.com',
-          login: 'userLogin',
-          phone: '8(911)-222-33-22',
-        },
-        time: '2020-01-02T14:22:22.000Z',
-        content: 'this is message content',
+const chatButtonShowModal = new Button(
+  'button',
+  {
+    tagAttrs: {
+      id: 'show_modal_chat',
+      class: 'button',
+      type: 'button',
+    },
+    text: 'добавить чат',
+    events: {
+      click: () => {
+        const elemModal = (document.querySelector('.modal') as HTMLElement)
+        elemModal.style.display = 'block'
       },
     },
-    {
-      id: 1234,
-      title: 'my-chat-2',
-      avatar: '/123/avatar2.jpg',
-      unread_count: 55,
-      last_message: {
-        user: {
-          first_name: 'Vasya',
-          second_name: 'Terkin',
-          avatar: '/path/to/avatar.jpg',
-          email: 'vt@email.com',
-          login: 'vtLogin',
-          phone: '8(922)-333-44-33',
-        },
-        //   "time": "2020-03-01T14:22:22.000Z",
-        time: '1 мар 2020',
-        content: 'Друзья, у меня для вас особенный выпуск новостей! Во-первых лалала',
+  }
+)
+
+const chatModalInputValidationError = new ValidationError('span', attrs)
+const chatModalInput = new Input(
+  'input',
+  {
+    tagAttrs: {
+      class: 'input input_border-radius_m input_bg-color_lightgray',
+      id: 'title',
+      name: 'title',
+      type: 'text',
+      placeholder: 'название чата',
+    },
+    events: {
+      focus: () => {
+        chatModalInputValidationError.setProps({ error: null })
+      },
+
+      blur: (event: Event) => {
+        const { value } = event.target as HTMLInputElement
+        runValidation('title', value, chatModalInput, chatModalInputValidationError)
       },
     },
-  ],
-}
+  }
+)
+
+const chatModalAddButton = new Button(
+  'button',
+  {
+    tagAttrs: {
+      class: 'button',
+      type: 'submit',
+    },
+    text: 'создать',
+  }
+)
+
+const chatModalForm = new Wrapper(
+  'form',
+  {
+    tagAttrs: {
+      class: 'modal__form',
+    },
+    content: [chatModalInput, chatModalInputValidationError, chatModalAddButton],
+    events: {
+      submit: (event: Event) => {
+        event.preventDefault()
+
+        const fields = [
+          {
+            field: chatModalInput,
+            validation: chatModalInputValidationError,
+          },
+        ]
+
+        const chatContorller = new ChatController(event, fields)
+        chatContorller.create()
+      },
+    },
+  }
+)
+
+const chatModal = new Modal(
+  'div',
+  {
+    tagAttrs: {
+      class: 'modal',
+    },
+    form: chatModalForm,
+    events: {
+      click: (event: Event) => {
+        const elemModal = (document.querySelector('.modal') as HTMLElement)
+        if (event.target === elemModal) {
+          elemModal.style.display = 'none'
+        }
+      },
+    },
+  }
+)
 
 const chatList = new ChatList(
   'ul',
@@ -76,7 +140,42 @@ const chatList = new ChatList(
     tagAttrs: {
       class: 'chat-list',
     },
-    data: apiResponseChatList.data,
+    chatButtonShowModal,
+    events: {
+      click: (event: Event) => {
+        const ul = event.currentTarget as HTMLElement
+        ul.querySelectorAll('li').forEach((li: HTMLElement) => li.style.backgroundColor = '')
+
+        function handleRemove(e: Event) {
+          const chatId = (e.target as HTMLElement).dataset.chatId!
+          const chatAPI = new ChatController()
+          chatAPI.delete(chatId)
+        }
+
+        const removeElements = ul.querySelectorAll('.chat__remove')
+        removeElements.forEach((r: HTMLElement) => {
+          r.style.display = ''
+          r.removeEventListener('click', handleRemove)
+        })
+
+        // в Message(s) подписываемся на это свойство и там же перерисовываем ленту сообщений
+        // store.set('chats.activeChatId', null)
+
+        const element = event.target as HTMLElement
+        const elementLi = element.closest('li')
+        if (elementLi) {
+          elementLi.style.backgroundColor = '#efefef'
+
+          // в Message(s) подписываемся на это свойство и там же перерисовываем ленту сообщений
+          store.set('chats.activeChatId', elementLi.dataset.chatId)
+
+          const removeElement = elementLi.nextElementSibling as HTMLElement
+          removeElement.style.display = 'block'
+
+          removeElement.addEventListener('click', handleRemove)
+        }
+      },
+    },
   }
 )
 
@@ -176,7 +275,6 @@ const listMessage = apiResponseMessages.messages.map((msg, index, array) => {
 
 const menuDotHeaderItems = {
   '/settings': 'мой профиль',
-  '#': 'выйти',
 }
 
 const menuDotHeaderItemComponents = Object.entries(menuDotHeaderItems).map(([href, content]) => {
@@ -222,6 +320,41 @@ const menuDotHeaderItemComponents = Object.entries(menuDotHeaderItems).map(([hre
 
   return wrapper
 })
+
+const linkSignout = new Link(
+  'a',
+  {
+    tagAttrs: {
+      href: '/',
+      class: 'link link_color_blue',
+    },
+    content: 'Выход',
+    events: {
+      click: async (event: Event) => {
+        event.preventDefault()
+
+        // Hide menu.
+        const elemMenuItems = document.querySelector('.menu-dot__items') as HTMLElement
+        elemMenuItems.style.display = 'none'
+
+        const authController = new AuthController(event)
+        authController.signuot()
+      },
+    },
+  }
+)
+
+const wrapperSignout = new Wrapper(
+  'li',
+  {
+    tagAttrs: {
+      class: 'menu-dot__item',
+    },
+    content: linkSignout,
+  }
+)
+
+menuDotHeaderItemComponents.push(wrapperSignout)
 
 const menuDotHeader = new MenuDotHeader(
   'div',
@@ -276,12 +409,6 @@ const sendButton = new Button(
   }
 )
 
-const attrs = {
-  tagAttrs: {
-    class: 'input-row__help input-row__help_signin-width',
-  },
-}
-
 const formInputMessageValidationError = new ValidationError('span', attrs)
 
 const formInputMessage = new Input(
@@ -307,32 +434,18 @@ const formInputMessage = new Input(
   }
 )
 
-class Main extends Block {
-  constructor(tagName: string, props: MainProps) {
-    super(tagName, props)
-  }
-
-  render() {
-    return this.compile(mainTmpl)
-  }
-}
-
-const main = new Main(
-  'main',
+const formMessage = new Wrapper(
+  'form',
   {
     tagAttrs: {
-      class: 'main',
+      class: 'content__form',
     },
-    inputSearch: search,
-    chatList,
-    selectedChat: Object.keys(apiResponseSelectedChat).length > 0 ? apiResponseSelectedChat : false,
-    messages: listMessage,
-    formInputFileLabel,
-    formInputFile,
-    formInputMessage,
-    formInputMessageValidationError,
-    sendButton,
-    menuDotHeader,
+    content: [
+      formInputFileLabel,
+      formInputFile,
+      formInputMessage,
+      sendButton,
+    ],
     events: {
       submit: (event: Event) => {
         event.preventDefault()
@@ -358,6 +471,35 @@ const main = new Main(
           console.log('send api request')
         }
       },
+    },
+  }
+)
+
+class Main extends Block {
+  constructor(tagName: string, props: MainProps) {
+    super(tagName, props)
+  }
+
+  render() {
+    return this.compile(mainTmpl)
+  }
+}
+
+const main = new Main(
+  'main',
+  {
+    tagAttrs: {
+      class: 'main',
+    },
+    inputSearch: search,
+    chatModal,
+    chatList,
+    selectedChat: Object.keys(apiResponseSelectedChat).length > 0 ? apiResponseSelectedChat : false,
+    messages: listMessage,
+    formInputMessageValidationError,
+    formMessage,
+    menuDotHeader,
+    events: {
       click: (event: Event) => {
         // Close MenuDot.
         if (!(event.target as HTMLElement).closest('.menu-dot')) {
