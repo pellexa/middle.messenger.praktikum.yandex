@@ -57,29 +57,31 @@ export default class AuthController {
   public async signup() {
     try {
       const validationResults = validationFormData.call(this.event, this.fields)
-      const result = Object.values(validationResults).every((value: boolean) => value === true)
+      const isValid = Object.values(validationResults).every((value: boolean) => value === true)
 
-      if (result) {
-        const json = jsonFromData.call(this.event, this.fields)
-        const authAPI = new AuthAPI(json) // нужно экранировать символы перед отправкой
-        const responseAuth = await authAPI.signup()
+      if (!isValid) {
+        return
+      }
 
-        if (responseAuth.status === 401) {
-          alert('Login or password incorrect.')
-        } else if (responseAuth.status === 400) {
-          alert(`Ошибка: ${responseAuth.response.reason}`)
-        } else if (responseAuth.status === 200) {
-          const responseUser = await AuthAPI.user()
-          const authUser = responseUser.responseText
+      const json = jsonFromData.call(this.event, this.fields)
+      const authAPI = new AuthAPI(json) // нужно экранировать символы перед отправкой
+      const responseAuth = await authAPI.signup()
 
-          store.set('auth.user', authUser)
-          this.router.go('/messanger')
+      if (responseAuth.status === 401) {
+        alert('Login or password incorrect.')
+      } else if (responseAuth.status === 400) {
+        alert(`Ошибка: ${responseAuth.response.reason}`)
+      } else if (responseAuth.status === 200) {
+        const responseUser = await AuthAPI.user()
+        const authUser = responseUser.responseText
 
-          // Clear input fields.
-          this.fields!.forEach(item => (item.field.element as HTMLInputElement).value = '')
-        } else if (responseAuth.status.toString().match(/^5\d\d$/)) {
-          alert('Фиксим проблему...')
-        }
+        store.set('auth.user', authUser)
+        this.router.go('/messanger')
+
+        // Clear input fields.
+        this.fields!.forEach(item => (item.field.element as HTMLInputElement).value = '')
+      } else if (responseAuth.status.toString().match(/^5\d\d$/)) {
+        alert('Фиксим проблему...')
       }
     } catch (error) {
       console.log('При регистрации что-то полшло не так.')
