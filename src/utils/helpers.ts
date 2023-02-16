@@ -37,3 +37,25 @@ export function set(object: Indexed, path: string, value: any): Indexed {
   object = merge(object as Indexed, res)
   return object
 }
+
+function isObject(value: unknown) {
+  return typeof value === 'object' && value !== null || Array.isArray(value)
+}
+
+export function isEqual(a: Indexed, b: Indexed): boolean {
+  if (Object.values(a).length !== Object.values(b).length) {
+    return false
+  }
+
+  for (const key in a) {
+    const isObjects = isObject(a[key]) && isObject(b[key])
+
+    if (isObjects && !isEqual(a[key] as Indexed, b[key] as Indexed)
+      || !(isObjects) && a[key] !== b[key]
+    ) {
+      return false
+    }
+  }
+
+  return true
+}
