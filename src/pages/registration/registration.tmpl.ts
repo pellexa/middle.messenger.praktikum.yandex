@@ -48,7 +48,7 @@ export default `
 
     <div class="buttons buttons_margin-registration">
         {{{ acceptButton }}}
-        <a href="#" class="link">войти</a>
+        {{{ linkSignin }}}
     </div>
 </form>
 `

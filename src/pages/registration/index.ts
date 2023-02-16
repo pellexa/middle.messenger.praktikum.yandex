@@ -5,7 +5,10 @@ import Input from '../../components/input'
 import Button from '../../components/button'
 import Label from '../../components/label'
 import ValidationError from '../../components/validationError'
-import { jsonFromData, runValidation, validationFormData } from '../../utils/formUtils'
+import { runValidation } from '../../utils/formUtils'
+import AuthController from '../../controllers/auth'
+import Link from '../../components/link'
+import Router from '../../modules/Router'
 
 const formInputEmailLabel = new Label(
   'label',
@@ -275,6 +278,32 @@ const acceptButton = new Button(
   }
 )
 
+const linkSignin = new Link(
+  'a',
+  {
+    tagAttrs: {
+      href: '/',
+      class: 'link',
+    },
+    content: 'войти',
+    events: {
+      click: (event: Event) => {
+        event.preventDefault()
+
+        const element = event.target as HTMLLinkElement
+        const router = Router.getInstance()
+        const uri = element.getAttribute('href')
+
+        if (!uri) {
+          throw new Error('The href attribute must exist on the "a" tag.')
+        }
+
+        router.go(uri)
+      },
+    },
+  }
+)
+
 class RegistrationPage extends Block {
   constructor(tagName: string, props: RegistrationProps) {
     if (!(props.formInputEmail
@@ -296,7 +325,7 @@ class RegistrationPage extends Block {
   }
 }
 
-const registrationHTML = new RegistrationPage('main', {
+const registration = new RegistrationPage('main', {
   tagAttrs: {
     class: 'form-box',
   },
@@ -329,6 +358,7 @@ const registrationHTML = new RegistrationPage('main', {
   formInputPasswordAgainValidationError,
 
   acceptButton,
+  linkSignin,
   events: {
     submit: (event: Event) => {
       event.preventDefault()
@@ -364,17 +394,10 @@ const registrationHTML = new RegistrationPage('main', {
         },
       ]
 
-      const validationResults = validationFormData.call(event, fields)
-      const result = Object.values(validationResults).every((value: boolean) => value === true)
-
-      const json = jsonFromData.call(event, fields)
-      console.log('json: ', json)
-
-      if (result) {
-        console.log('send api request')
-      }
+      const authController = new AuthController(event, fields)
+      authController.signup()
     },
   },
 })
 
-export default registrationHTML
+export default registration

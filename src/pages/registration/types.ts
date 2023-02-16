@@ -1,6 +1,7 @@
 import Button from '../../components/button'
 import formInput from '../../components/input'
 import Label from '../../components/label'
+import Link from '../../components/link'
 import ValidationError from '../../components/validationError'
 import { TagAttribute, ComponentEvent } from '../../modules/types'
 
@@ -36,5 +37,6 @@ export type RegistrationProps = {
   formInputPasswordAgainValidationError: ValidationError
 
   acceptButton: Button
+  linkSignin: Link
   events?: ComponentEvent
 }
