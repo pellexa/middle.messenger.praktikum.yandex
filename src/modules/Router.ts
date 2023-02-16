@@ -55,7 +55,7 @@ export default class Router implements IRouter {
     const responseAuth = await AuthAPI.user()
 
     if (responseAuth.status === 200) {
-      store.set('auth.user', responseAuth.responseText)
+      store.set('auth.user', JSON.parse(responseAuth.responseText))
 
       if (Router.publicRoutes.includes(pathname)) {
         this.go('/messanger')
