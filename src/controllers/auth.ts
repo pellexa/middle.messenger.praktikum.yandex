@@ -39,9 +39,8 @@ export default class AuthController {
         alert(`Ошибка: ${responseAuth.response.reason}`)
       } else if (responseAuth.status === 200) {
         const responseUser = await AuthAPI.user()
-        const authUser = responseUser.responseText
+        store.set('auth.user', JSON.parse(responseUser.responseText))
 
-        store.set('auth.user', authUser)
         this.router.go('/messanger')
 
         // Clear input fields.
@@ -73,9 +72,8 @@ export default class AuthController {
         alert(`Ошибка: ${responseAuth.response.reason}`)
       } else if (responseAuth.status === 200) {
         const responseUser = await AuthAPI.user()
-        const authUser = responseUser.responseText
+        store.set('auth.user', JSON.parse(responseUser.responseText))
 
-        store.set('auth.user', authUser)
         this.router.go('/messanger')
 
         // Clear input fields.

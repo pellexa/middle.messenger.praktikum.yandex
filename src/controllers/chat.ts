@@ -45,21 +45,24 @@ export default class ChatController {
   public async create() {
     try {
       const validationResults = validationFormData.call(this.event, this.fields)
-      const result = Object.values(validationResults).every((value: boolean) => value === true)
+      const isValid = Object.values(validationResults).every((value: boolean) => value === true)
 
-      if (result) {
-        const json = jsonFromData.call(this.event, this.fields)
-        const chatAPI = new ChatAPI(json) // нужно экранировать символы перед отправкой
-        const response = await chatAPI.create()
-        if (response.status === 401) {
-          this.router.go('/')
-        } else if (response.status === 400) {
-          alert(`Ошибка: ${response.response.reason}`)
-        } else if (response.status === 200) {
-          this.getChats()
-        } else if (response.status.toString().match(/^5\d\d$/)) {
-          alert('Фиксим проблему...')
-        }
+      if (!isValid) {
+        return
+      }
+
+      const json = jsonFromData.call(this.event, this.fields)
+      const chatAPI = new ChatAPI(json) // нужно экранировать символы перед отправкой
+      const response = await chatAPI.create()
+
+      if (response.status === 401) {
+        this.router.go('/')
+      } else if (response.status === 400) {
+        alert(`Ошибка: ${response.response.reason}`)
+      } else if (response.status === 200) {
+        await this.getChats()
+      } else if (response.status.toString().match(/^5\d\d$/)) {
+        alert('Фиксим проблему...')
       }
     } catch (error) {
       console.log('При создании чата что-то полшло не так.')
@@ -80,13 +83,13 @@ export default class ChatController {
       } else if (response.status === 200) {
         const chatList = store.getState().chats.list
         const newChatList = chatList.filter((chat: Chat) => chat.id.toString() !== id)
-        store.getState().chats.list = newChatList
+        store.getState().chats.list = newChatList.length > 0 ? newChatList : null
         store.emit(StoreEvents.UPDATED)
       } else if (response.status.toString().match(/^5\d\d$/)) {
         alert('Фиксим проблему...')
       }
     } catch (error) {
-      console.log('При удалени чата что-то полшло не так. error: ', error)
+      console.log('При удалени чата что-то полшло не так.')
     }
   }
 }

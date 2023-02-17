@@ -11,11 +11,11 @@ export type MainProps = {
   tagAttrs?: TagAttribute
   inputSearch: Search
   chatModal: Modal
-  chatList: ChatList
+  chatList: InstanceType<typeof ChatList>
   selectedChat: {} | boolean
   messages: Array<Message>
   formInputMessageValidationError: ValidationError
   formMessage: Wrapper
-  menuDotHeader: MenuDotHeader
+  menuDotHeader: InstanceType<typeof MenuDotHeader>
   events?: ComponentEvent
 }

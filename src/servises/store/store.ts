@@ -21,8 +21,10 @@ export default class Store extends EventBus {
   }
 
   public set(path: string, value: any) {
-    set(this.state, path, JSON.parse(value))
+    // Without setting null, the state is equal to the newState in the connect funciton.
+    // For example, the list of chats will not be re-rendered during creation.
+    set(this.state, path, null)
+    set(this.state, path, value)
     this.emit(StoreEvents.UPDATED)
-    return this
   }
 }

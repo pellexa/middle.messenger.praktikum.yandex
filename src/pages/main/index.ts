@@ -148,8 +148,8 @@ const chatList = new ChatList(
 
         function handleRemove(e: Event) {
           const chatId = (e.target as HTMLElement).dataset.chatId!
-          const chatAPI = new ChatController()
-          chatAPI.delete(chatId)
+          const chatController = new ChatController()
+          chatController.delete(chatId)
         }
 
         const removeElements = ul.querySelectorAll('.chat__remove')
