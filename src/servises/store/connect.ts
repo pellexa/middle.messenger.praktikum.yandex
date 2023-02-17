@@ -3,9 +3,9 @@ import Block from '../../modules/block'
 import { isEqual } from '../../utils/helpers'
 import { State, StoreEvents } from './store'
 
-export default function connect(mapStateToProps: (state: State) => State) {
-  return function(Component: typeof Block) {
-    return class extends Component {
+export default function connect<T>(mapStateToProps: (state: State) => State) {
+  return function(Component: T) {
+    return class extends (Component as typeof Block) {
       constructor(tag: string, props = {}) {
         // сохраняем начальное состояние
         let state = mapStateToProps(store.getState())
@@ -26,6 +26,6 @@ export default function connect(mapStateToProps: (state: State) => State) {
           state = newState
         })
       }
-    }
+    } as T
   }
 }

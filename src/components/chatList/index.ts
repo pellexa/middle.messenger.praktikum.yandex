@@ -35,4 +35,4 @@ function mapChatListToProps(state: State) {
   }
 }
 
-export default connect(mapChatListToProps)(ChatList)
+export default connect<typeof ChatList>(mapChatListToProps)(ChatList)

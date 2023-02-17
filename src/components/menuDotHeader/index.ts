@@ -25,4 +25,4 @@ function mapAuthToProps(state: State) {
   }
 }
 
-export default connect(mapAuthToProps)(MenuDotHeader)
+export default connect<typeof MenuDotHeader>(mapAuthToProps)(MenuDotHeader)
