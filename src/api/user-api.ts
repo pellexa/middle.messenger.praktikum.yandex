@@ -19,6 +19,7 @@ type profilePassword = {
 }
 
 type UserData = profileData | profilePassword
+
 export default class UserAPI extends BaseAPI {
   private data?: UserData
 
@@ -40,5 +41,9 @@ export default class UserAPI extends BaseAPI {
       headers: BaseAPI.headers,
       data: JSON.stringify(this.data),
     })
+  }
+
+  changeAvatar(formData: FormData) {
+    return userAPIInstance.put(`${host}/profile/avatar`, { data: formData })
   }
 }

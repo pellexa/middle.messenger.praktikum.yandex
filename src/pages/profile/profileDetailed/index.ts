@@ -8,6 +8,8 @@ import Wrapper from '../../../components/wrapper'
 import AuthController from '../../../controllers/auth'
 import { State } from '../../../servises/store/store'
 import connect from '../../../servises/store/connect'
+import BaseAPI from '../../../modules/base-api'
+import { set } from '../../../utils/helpers'
 
 const linkBack = new Link(
   'a',
@@ -151,9 +153,13 @@ class ProfileDetailed extends Block {
 }
 
 function mapProfileDetailedToProps(state: State) {
-  return {
-    authUser: state.auth?.user,
+  const data = { authUser: state.auth?.user }
+
+  if (BaseAPI.resources && state.auth?.user.avatar) {
+    set(data, 'userAvatar', `${BaseAPI.resources}${state.auth?.user.avatar}`)
   }
+
+  return data
 }
 
 const profileDetailedConnect =

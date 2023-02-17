@@ -19,7 +19,7 @@ export default `
 
 <main class="profile__content">
     <div class="avatar avatar_size-profile">
-        <img src="{{ authUser.avatar }}" alt="avatar"></img>
+        <img src="{{ userAvatar }}" alt="avatar"></img>
     </div>
 
     <h1 class="profile-name">

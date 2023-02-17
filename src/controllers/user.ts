@@ -36,7 +36,8 @@ export default class UserController {
       if (response.status === 401) {
         this.router.go('/')
       } else if (response.status === 400) {
-        alert(`Ошибка: ${response.response.reason}`)
+        const reason = JSON.parse(response.response).reason
+        alert(`Ошибка: ${reason}`)
       } else if (response.status === 200) {
         store.set('auth.user', JSON.parse(response.responseText))
         alert('Данные обновлены.')
@@ -64,7 +65,8 @@ export default class UserController {
       if (response.status === 401) {
         this.router.go('/')
       } else if (response.status === 400) {
-        alert(`Ошибка: ${response.response.reason}`)
+        const reason = JSON.parse(response.response).reason
+        alert(`Ошибка: ${reason}`)
       } else if (response.status === 200) {
         // Clear input fields.
         this.fields!.forEach(item => {(item.field.element as HTMLInputElement).value = ''})
@@ -73,7 +75,40 @@ export default class UserController {
         alert('Фиксим проблему...')
       }
     } catch (error) {
-      console.log('При смене пароля что-то полшло не так. error: ', error)
+      console.log('При смене пароля что-то полшло не так.')
+    }
+  }
+
+  public async changeAvatar() {
+    try {
+      const form = (this.event!.target as HTMLElement).closest('form')
+
+      if (!form) {
+        throw new Error('Form not found. The button must be inside the form.')
+      }
+
+      const formData = new FormData(form)
+      const avatarFile = formData.get('avatar') as File
+
+      if (avatarFile.size <= 0) {
+        alert('Файл не выбран.')
+      }
+
+      const userAPI = new UserAPI()
+      const response = await userAPI.changeAvatar(formData)
+
+      if (response.status === 401) {
+        this.router.go('/')
+      } else if (response.status === 400) {
+        const reason = JSON.parse(response.response).reason
+        alert(`Ошибка: ${reason}`)
+      } else if (response.status === 200) {
+        store.set('auth.user', JSON.parse(response.responseText))
+      } else if (response.status.toString().match(/^5\d\d$/)) {
+        alert('Фиксим проблему...')
+      }
+    } catch (error) {
+      console.log('При изменении аватара что-то полшло не так.')
     }
   }
 }

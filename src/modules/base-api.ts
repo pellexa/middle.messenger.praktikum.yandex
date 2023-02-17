@@ -1,5 +1,7 @@
 export default class BaseAPI {
   public static host = 'https://ya-praktikum.tech'
+  public static resources = `${BaseAPI.host}/api/v2/resources`
+
   public static headers = {
     'Content-Type': 'application/json',
   }

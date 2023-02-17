@@ -13,6 +13,8 @@ import Router from '../../../modules/Router'
 import { State } from '../../../servises/store/store'
 import connect from '../../../servises/store/connect'
 import UserController from '../../../controllers/user'
+import BaseAPI from '../../../modules/base-api'
+import { set } from '../../../utils/helpers'
 
 const linkBack = new Link(
   'a',
@@ -58,11 +60,13 @@ const acceptButtonUploadAvatar = new Button(
       class: 'button',
       type: 'submit',
     },
-    text: 'поменять UploadAvatar',
+    text: 'поменять',
     events: {
       click: (event: Event) => {
         event.preventDefault()
-        console.log('Button profileUploadAvatar event: ', event)
+
+        const userContoller = new UserController(event)
+        userContoller.changeAvatar()
       },
     },
   }
@@ -340,9 +344,13 @@ class ProfileEdit extends Block {
 }
 
 function mapProfileEditToProps(state: State) {
-  return {
-    authUser: state.auth?.user,
+  const data = { authUser: state.auth?.user }
+
+  if (BaseAPI.resources && state.auth?.user.avatar) {
+    set(data, 'userAvatar', `${BaseAPI.resources}${state.auth?.user.avatar}`)
   }
+
+  return data
 }
 
 const profileEditConnect = connect<typeof ProfileEdit>(mapProfileEditToProps)(ProfileEdit)
