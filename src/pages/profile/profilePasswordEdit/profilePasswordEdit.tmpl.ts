@@ -20,11 +20,11 @@ export default `
 
 <main class="profile__content">
     <div class="avatar avatar_size-profile">
-        <img src="{{ apiResponseProfile.avatar }}" alt="avatar"></img>
+        <img src="{{ authUser.avatar }}" alt="avatar"></img>
     </div>
 
     <h1 class="profile-name">
-        {{ apiResponseProfile.first_name }}
+        {{ authUser.first_name }}
     </h1>
 
     <form class="form-box__form">

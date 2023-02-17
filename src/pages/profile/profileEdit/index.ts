@@ -7,11 +7,12 @@ import ProfileUploadAvatar from '../profileUploadAvatar'
 import Label from '../../../components/label'
 import ValidationError from '../../../components/validationError'
 import Input from '../../../components/input'
-import { jsonFromData, runValidation, validationFormData } from '../../../utils/formUtils'
+import { runValidation } from '../../../utils/formUtils'
 import Link from '../../../components/link'
 import Router from '../../../modules/Router'
 import { State } from '../../../servises/store/store'
 import connect from '../../../servises/store/connect'
+import UserController from '../../../controllers/user'
 
 const linkBack = new Link(
   'a',
@@ -408,15 +409,8 @@ const profileEdit = new profileEditConnect('div', {
         },
       ]
 
-      const validationResults = validationFormData.call(event, fields)
-      const result = Object.values(validationResults).every((value: boolean) => value === true)
-
-      const json = jsonFromData.call(event, fields)
-      console.log('json: ', json)
-
-      if (result) {
-        console.log('send api request')
-      }
+      const userController = new UserController(event, fields)
+      userController.changeProfile()
     },
   },
 })
