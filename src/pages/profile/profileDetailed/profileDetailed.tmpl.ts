@@ -19,15 +19,15 @@ export default `
 
 <main class="profile__content">
     <div class="avatar avatar_size-profile">
-        <img src="{{ apiResponseProfile.avatar }}" alt="avatar"></img>
+        <img src="{{ authUser.avatar }}" alt="avatar"></img>
     </div>
 
     <h1 class="profile-name">
-        {{ apiResponseProfile.first_name }}
+        {{ authUser.first_name }}
     </h1>
 
     <ul class="profile-properties">
-        {{# each apiResponseProfile }}
+        {{# each authUser }}
             <li class="profile-properties__row">
                 <div class="profile-key profile_margin-data">
                     {{@ key }}

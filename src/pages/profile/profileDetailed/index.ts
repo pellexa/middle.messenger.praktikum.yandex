@@ -6,6 +6,8 @@ import Router from '../../../modules/Router'
 import Link from '../../../components/link'
 import Wrapper from '../../../components/wrapper'
 import AuthController from '../../../controllers/auth'
+import { State } from '../../../servises/store/store'
+import connect from '../../../servises/store/connect'
 
 const linkBack = new Link(
   'a',
@@ -140,10 +142,6 @@ const wrapperSignout = new Wrapper(
 
 class ProfileDetailed extends Block {
   constructor(tagName: string, props: ProfileDetailedProps) {
-    // if (!props.apiResponseProfile) {
-    //   throw new Error('ProfileDetailed apiResponseProfile is undefined.')
-    // }
-
     super(tagName, props)
   }
 
@@ -152,21 +150,20 @@ class ProfileDetailed extends Block {
   }
 }
 
-const profileDetailed = new ProfileDetailed(
+function mapProfileDetailedToProps(state: State) {
+  return {
+    authUser: state.auth?.user,
+  }
+}
+
+const profileDetailedConnect =
+  connect<typeof ProfileDetailed>(mapProfileDetailedToProps)(ProfileDetailed)
+
+const profileDetailed = new profileDetailedConnect(
   'div',
   {
     tagAttrs: {
       class: 'profile',
-    },
-    apiResponseProfile: {
-      id: 123,
-      first_name: 'Petya',
-      second_name: 'Pupkin',
-      display_name: 'Petya Pupkin',
-      login: 'userLogin',
-      email: 'my@email.com',
-      phone: '89223332211',
-      avatar: '/path/to/avatar.jpg',
     },
     linkBack: wrapperLinkBack,
     linkChangeData: wrapperLinkChangeData,
