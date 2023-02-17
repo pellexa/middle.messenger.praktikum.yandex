@@ -1,20 +1,28 @@
 import Block from '../../modules/block'
-import store from '../../servises/store'
-import { StoreEvents } from '../../servises/store/store'
+import connect from '../../servises/store/connect'
+import { State } from '../../servises/store/store'
+import { isEqual } from '../../utils/helpers'
 import menuDotHeaderTmpl from './menuDotHeader.tmpl'
 import { MenuDotHeaderProps } from './types'
 
-export default class MenuDotHeader extends Block {
+class MenuDotHeader extends Block {
   constructor(tagName: string, props: MenuDotHeaderProps) {
     super(tagName, props)
+  }
 
-    store.on(StoreEvents.UPDATED, () => {
-      const state = store.getState()
-      this.setProps({ userName: state.auth.user.login })
-    })
+  public componentDidUpdate(oldProps: any, newProps: any): boolean {
+    return !isEqual(oldProps ?? {} , newProps ?? {})
   }
 
   render() {
     return this.compile(menuDotHeaderTmpl)
   }
 }
+
+function mapAuthToProps(state: State) {
+  return {
+    userName: state.auth?.user.login,
+  }
+}
+
+export default connect(mapAuthToProps)(MenuDotHeader)
