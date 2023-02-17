@@ -10,6 +10,8 @@ import Input from '../../../components/input'
 import { jsonFromData, runValidation, validationFormData } from '../../../utils/formUtils'
 import Link from '../../../components/link'
 import Router from '../../../modules/Router'
+import { State } from '../../../servises/store/store'
+import connect from '../../../servises/store/connect'
 
 const linkBack = new Link(
   'a',
@@ -162,17 +164,6 @@ const formInputSecondNameValidationError = new ValidationError('span', attrs)
 const formInputDisplayNameValidationError = new ValidationError('span', attrs)
 const formInputPhoneValidationError = new ValidationError('span', attrs)
 
-const apiResponseProfile = {
-  id: 123,
-  first_name: 'Petya',
-  second_name: 'Pupkin',
-  display_name: 'Petya Pupkin',
-  login: 'userLogin',
-  email: 'my@email.com',
-  phone: '89223332211',
-  avatar: '/path/to/avatar.jpg',
-}
-
 const formInputEmail = new Input(
   'input',
   {
@@ -182,7 +173,7 @@ const formInputEmail = new Input(
       name: 'email',
       type: 'text',
       placeholder: 'Почта',
-      value: apiResponseProfile.email,
+      'data-input-value': 'email',
     },
     events: {
       focus: () => {
@@ -206,7 +197,7 @@ const formInputLogin = new Input(
       name: 'login',
       type: 'text',
       placeholder: 'Логин',
-      value: apiResponseProfile.login,
+      'data-input-value': 'login',
     },
     events: {
       focus: () => {
@@ -230,7 +221,7 @@ const formInputFirstName = new Input(
       name: 'first_name',
       type: 'text',
       placeholder: 'Имя',
-      value: apiResponseProfile.first_name,
+      'data-input-value': 'first_name',
     },
     events: {
       focus: () => {
@@ -254,7 +245,7 @@ const formInputSecondName = new Input(
       name: 'second_name',
       type: 'text',
       placeholder: 'Фамилия',
-      value: apiResponseProfile.second_name,
+      'data-input-value': 'second_name',
     },
     events: {
       focus: () => {
@@ -277,8 +268,8 @@ const formInputDisplayName = new Input(
       id: 'display_name',
       name: 'display_name',
       type: 'text',
-      placeholder: 'Фамилия',
-      value: apiResponseProfile.display_name,
+      placeholder: 'Имя в чате',
+      'data-input-value': 'display_name',
     },
     events: {
       focus: () => {
@@ -307,7 +298,7 @@ const formInputPhone = new Input(
       name: 'phone',
       type: 'text',
       placeholder: 'Телефон',
-      value: apiResponseProfile.phone,
+      'data-input-value': 'phone',
     },
     events: {
       focus: () => {
@@ -324,10 +315,6 @@ const formInputPhone = new Input(
 
 class ProfileEdit extends Block {
   constructor(tagName: string, props: ProfileEditProps) {
-    // if (!props.apiResponseProfile) {
-    //   throw new Error('ProfileEdit apiResponseProfile is undefined.')
-    // }
-
     super(tagName, props)
   }
 
@@ -351,7 +338,15 @@ class ProfileEdit extends Block {
   }
 }
 
-const profileEditHTML = new ProfileEdit('div', {
+function mapProfileEditToProps(state: State) {
+  return {
+    authUser: state.auth?.user,
+  }
+}
+
+const profileEditConnect = connect<typeof ProfileEdit>(mapProfileEditToProps)(ProfileEdit)
+
+const profileEdit = new profileEditConnect('div', {
   tagAttrs: {
     class: 'profile',
   },
@@ -426,4 +421,4 @@ const profileEditHTML = new ProfileEdit('div', {
   },
 })
 
-export default profileEditHTML
+export default profileEdit
