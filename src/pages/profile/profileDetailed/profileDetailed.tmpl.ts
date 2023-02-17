@@ -39,14 +39,8 @@ export default `
         {{/ each }}
     </ul>
 
-    <div class="profile-properties__row">
-        {{{ linkChangeData }}}
-    </div>
-    <div class="profile-properties__row">
-        {{{ linkChangePassword}}}
-    </div>
-    <div class="profile-properties__row">
-        <a href="/" class="link profile_margin-data link_color_red">выйти</a>
-    </div>
+    {{{ linkChangeData }}}
+    {{{ linkChangePassword}}}
+    {{{ linkSignout }}}
 </main>
 `

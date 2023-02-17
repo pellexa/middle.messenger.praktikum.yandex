@@ -16,5 +16,6 @@ export type ProfileDetailedProps = {
   linkBack: Link,
   linkChangeData: Link
   linkChangePassword: Link
+  linkSignout: Link
   events?: ComponentEvent
 }

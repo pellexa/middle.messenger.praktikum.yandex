@@ -4,6 +4,8 @@ import Block from '../../../modules/block'
 import { ProfileDetailedProps } from './types'
 import Router from '../../../modules/Router'
 import Link from '../../../components/link'
+import Wrapper from '../../../components/wrapper'
+import AuthController from '../../../controllers/auth'
 
 const linkBack = new Link(
   'a',
@@ -83,6 +85,59 @@ const linkChangePassword = new Link(
   }
 )
 
+const linkSignout = new Link(
+  'a',
+  {
+    tagAttrs: {
+      href: '/',
+      class: 'link profile_margin-data link_color_red',
+    },
+    content: 'Выход',
+    events: {
+      click: (event: Event) => {
+        event.preventDefault()
+
+        const authController = new AuthController(event)
+        authController.signuot()
+      },
+    },
+  }
+)
+
+const attrs = {
+  class: 'profile-properties__row',
+}
+
+const wrapperLinkBack = new Wrapper(
+  'div',
+  {
+    tagAttrs: attrs,
+    content: linkBack,
+  }
+)
+const wrapperLinkChangeData = new Wrapper(
+  'div',
+  {
+    tagAttrs: attrs,
+    content: linkChangeData,
+  }
+)
+const wrapperLinkChangePassword = new Wrapper(
+  'div',
+  {
+    tagAttrs: attrs,
+    content: linkChangePassword,
+  }
+)
+
+const wrapperSignout = new Wrapper(
+  'div',
+  {
+    tagAttrs: attrs,
+    content: linkSignout,
+  }
+)
+
 class ProfileDetailed extends Block {
   constructor(tagName: string, props: ProfileDetailedProps) {
     // if (!props.apiResponseProfile) {
@@ -97,7 +152,7 @@ class ProfileDetailed extends Block {
   }
 }
 
-const profileDetailedHTML = new ProfileDetailed(
+const profileDetailed = new ProfileDetailed(
   'div',
   {
     tagAttrs: {
@@ -113,10 +168,11 @@ const profileDetailedHTML = new ProfileDetailed(
       phone: '89223332211',
       avatar: '/path/to/avatar.jpg',
     },
-    linkBack,
-    linkChangeData,
-    linkChangePassword,
+    linkBack: wrapperLinkBack,
+    linkChangeData: wrapperLinkChangeData,
+    linkChangePassword: wrapperLinkChangePassword,
+    linkSignout: wrapperSignout,
   }
 )
 
-export default profileDetailedHTML
+export default profileDetailed
