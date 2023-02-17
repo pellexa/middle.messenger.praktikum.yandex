@@ -38,8 +38,7 @@ export default class AuthController {
       } else if (responseAuth.status === 400) {
         alert(`Ошибка: ${responseAuth.response.reason}`)
       } else if (responseAuth.status === 200) {
-        const responseUser = await AuthAPI.user()
-        store.set('auth.user', JSON.parse(responseUser.responseText))
+        await this.getUser()
 
         this.router.go('/messanger')
 
@@ -50,6 +49,24 @@ export default class AuthController {
       }
     } catch (error) {
       console.log('При аутентификации что-то полшло не так.')
+    }
+  }
+
+  public async getUser() {
+    try {
+      const response = await AuthAPI.user()
+
+      if (response.status === 401) {
+        this.router.go('/')
+      } else if (response.status === 400) {
+        alert(`Ошибка: ${response.response.reason}`)
+      } else if (response.status === 200) {
+        store.set('auth.user', JSON.parse(response.responseText))
+      } else if (response.status.toString().match(/^5\d\d$/)) {
+        alert('Фиксим проблему...')
+      }
+    } catch (error) {
+      console.log('При получении аутентифицированного пользователя что-то полшло не так.')
     }
   }
 
@@ -71,8 +88,7 @@ export default class AuthController {
       } else if (responseAuth.status === 400) {
         alert(`Ошибка: ${responseAuth.response.reason}`)
       } else if (responseAuth.status === 200) {
-        const responseUser = await AuthAPI.user()
-        store.set('auth.user', JSON.parse(responseUser.responseText))
+        await this.getUser()
 
         this.router.go('/messanger')
 
