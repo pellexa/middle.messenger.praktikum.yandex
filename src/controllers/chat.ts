@@ -58,7 +58,8 @@ export default class ChatController {
       if (response.status === 401) {
         this.router.go('/')
       } else if (response.status === 400) {
-        alert(`Ошибка: ${response.response.reason}`)
+        const reason = JSON.parse(response.response).reason
+        alert(`Ошибка: ${reason}`)
       } else if (response.status === 200) {
         await this.getChats()
       } else if (response.status.toString().match(/^5\d\d$/)) {
@@ -77,7 +78,8 @@ export default class ChatController {
       if (response.status === 401) {
         this.router.go('/')
       } else if (response.status === 400) {
-        alert(`Ошибка: ${response.response.reason}`)
+        const reason = JSON.parse(response.response).reason
+        alert(`Ошибка: ${reason}`)
       } else if (response.status === 403) {
         alert('У вас нет прав что бы удалить этот чат')
       } else if (response.status === 200) {

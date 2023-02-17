@@ -36,7 +36,8 @@ export default class AuthController {
       if (responseAuth.status === 401) {
         alert('Login or password incorrect.')
       } else if (responseAuth.status === 400) {
-        alert(`Ошибка: ${responseAuth.response.reason}`)
+        const reason = JSON.parse(responseAuth.response).reason
+        alert(`Ошибка: ${reason}`)
       } else if (responseAuth.status === 200) {
         await this.getUser()
 
@@ -59,7 +60,8 @@ export default class AuthController {
       if (response.status === 401) {
         this.router.go('/')
       } else if (response.status === 400) {
-        alert(`Ошибка: ${response.response.reason}`)
+        const reason = JSON.parse(response.response).reason
+        alert(`Ошибка: ${reason}`)
       } else if (response.status === 200) {
         store.set('auth.user', JSON.parse(response.responseText))
       } else if (response.status.toString().match(/^5\d\d$/)) {
@@ -86,7 +88,8 @@ export default class AuthController {
       if (responseAuth.status === 401) {
         alert('Login or password incorrect.')
       } else if (responseAuth.status === 400) {
-        alert(`Ошибка: ${responseAuth.response.reason}`)
+        const reason = JSON.parse(responseAuth.response).reason
+        alert(`Ошибка: ${reason}`)
       } else if (responseAuth.status === 200) {
         await this.getUser()
 
