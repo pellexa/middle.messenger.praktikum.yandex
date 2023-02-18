@@ -1,8 +1,11 @@
 import UserAPI from '../api/user-api'
+import Input from '../components/input'
+import ValidationError from '../components/validationError'
 import Block from '../modules/block'
 import Router from '../modules/Router'
 import store from '../servises/store'
-import { jsonFromData, validationFormData } from '../utils/formUtils'
+import { jsonFromData, runValidation, validationFormData } from '../utils/formUtils'
+import ChatController from './chat'
 
 type UserFieldElements = Array<{
   field: Block
@@ -109,6 +112,60 @@ export default class UserController {
       }
     } catch (error) {
       console.log('При изменении аватара что-то полшло не так.')
+    }
+  }
+
+  public static async search(
+    event: Event,
+    fields: { field: Input, validation: ValidationError }
+  ) {
+    try {
+      const state = store.getState()
+      if (!state.chats?.activeChatId) {
+        store.set('chats.activeChatUsers', null)
+      }
+
+      const { value } = event.target as HTMLInputElement
+      const searchList = document.querySelector('.search-list') as HTMLElement
+      if (value.length < 3) {
+        searchList.style.display = 'none'
+        store.set('search.users', null)
+        return
+      }
+
+      const { field, validation } = fields
+      // Поиск осуществляется по логину, по нему и валидируем.
+      const isValid = runValidation('login', value, field, validation)
+
+      if (!isValid) {
+        return
+      }
+
+      const userAPI = new UserAPI()
+      const response = await userAPI.search({ login: value })
+
+      if (response.status === 401) {
+        const router = Router.getInstance()
+        router.go('/')
+      } else if (response.status === 400) {
+        const reason = JSON.parse(response.response).reason
+        validation.setProps({ error: reason })
+      } else if (response.status === 200) {
+        const responseData = JSON.parse(response.responseText)
+        if (responseData.length < 1) {
+          validation.setProps({ error: 'ничего не найдно' })
+          return
+        }
+
+        store.set('search.users', JSON.parse(response.responseText))
+        ChatController.getAlreadyAddedUsersToChat()
+
+        searchList.style.display = 'block'
+      } else if (response.status.toString().match(/^5\d\d$/)) {
+        alert('Фиксим проблему...')
+      }
+    } catch (error) {
+      console.log('При выполнении поиска пользователей что-то полшло не так.')
     }
   }
 }

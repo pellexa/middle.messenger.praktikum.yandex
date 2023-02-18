@@ -8,6 +8,7 @@ export default `
 
     <div class="left-side__search">
         {{{ inputSearch }}}
+        {{{ searchUserList }}}
     </div>
 
     <hr class="hr hr_margin-left-side" />
@@ -17,16 +18,17 @@ export default `
 </div>
 
 <div class="content">
-    {{# if selectedChat }}
         <div class="content__header">
             <div class="profile-chat">
-                <div class="avatar avatar_size-profile-chat">
-                    <img src="{{ selectedChat.avatar }}" alt="avatar">
-                </div>
+                {{# if selectedChat }}
+                    <div class="avatar avatar_size-profile-chat">
+                        <img src="{{ selectedChat.avatar }}" alt="avatar">
+                    </div>
 
-                <h6 class="title">
-                    {{ selectedChat.title }}
-                </h6>
+                    <h6 class="title">
+                        {{ selectedChat.title }}
+                    </h6>
+                {{/ if }}
             </div>
 
             {{{ menuDotHeader }}}
@@ -34,6 +36,7 @@ export default `
 
         <hr class="hr hr_margin-content" />
 
+    {{# if selectedChat }}
         <div class="content__messages">
             {{{ messages }}}
         </div>

@@ -23,7 +23,13 @@
 }
 
 .left-side__search {
+  position: relative;
   margin: 0 10px 14px;
+}
+
+.left-side__search-input-wrapper {
+  display: flex;
+  align-items: center;
 }
 
 .hr_margin-left-side {

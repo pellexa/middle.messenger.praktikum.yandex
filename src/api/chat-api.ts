@@ -35,4 +35,22 @@ export default class ChatAPI extends BaseAPI {
       headers: BaseAPI.headers,
     })
   }
+
+  public getUsers(chatId: string) {
+    return chatAPIInstance.get(`${host}/${chatId}/users`, { headers: BaseAPI.headers })
+  }
+
+  public addUserToChat(data: {users: string[], chatId: string}) {
+    return chatAPIInstance.put(`${host}/users`, {
+      data: JSON.stringify(data),
+      headers: BaseAPI.headers,
+    })
+  }
+
+  public deleteUserFromChat(data: {users: string[], chatId: string}) {
+    return chatAPIInstance.delete(`${host}/users`, {
+      data: JSON.stringify(data),
+      headers: BaseAPI.headers,
+    })
+  }
 }

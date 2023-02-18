@@ -46,4 +46,11 @@ export default class UserAPI extends BaseAPI {
   changeAvatar(formData: FormData) {
     return userAPIInstance.put(`${host}/profile/avatar`, { data: formData })
   }
+
+  search(data: { login: string }) {
+    return userAPIInstance.post(`${host}/search`, {
+      headers: BaseAPI.headers,
+      data: JSON.stringify(data),
+    })
+  }
 }

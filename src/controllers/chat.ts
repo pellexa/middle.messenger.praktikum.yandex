@@ -94,4 +94,124 @@ export default class ChatController {
       console.log('При удалени чата что-то полшло не так.')
     }
   }
+
+  public async getUsers(chatId: string) {
+    try {
+      chatId = chatId.replace(/\D+/g, '')
+      const chatAPI = new ChatAPI()
+      const response = await chatAPI.getUsers(chatId)
+
+      if (response.status === 401) {
+        this.router.go('/')
+      } else if (response.status === 400) {
+        const reason = JSON.parse(response.response).reason
+        alert(`Ошибка: ${reason}`)
+      } else if (response.status === 200) {
+        store.set('chats.activeChatUsers', JSON.parse(response.responseText))
+        ChatController.getAlreadyAddedUsersToChat()
+      } else if (response.status.toString().match(/^5\d\d$/)) {
+        alert('Фиксим проблему...')
+      }
+    } catch (error) {
+      console.log('При запросе пользователей чата что-то полшло не так.')
+    }
+  }
+
+  public addOrDeleteUserToChat(data: {chatId: string, userId: string}) {
+    const state = store.getState()
+    const alreadyAddedUsers = state.chats?.alreadyAddedUsers
+
+    if (!alreadyAddedUsers || alreadyAddedUsers.length < 1) {
+      this.addUser(data)
+      return
+    }
+
+    const user = alreadyAddedUsers.find(
+      (item: {id: number}) => item.id === +data.userId)
+
+    if (!user) {
+      this.addUser(data)
+      return
+    }
+
+    if (user._wasAdded) {
+      this.deleteUser(data)
+    } else {
+      this.addUser(data)
+    }
+  }
+
+  // Добавлем по одному пользователю (хотя api позволяет сразу много),
+  // при клике по результату поиска.
+  public async addUser(data: {chatId: string, userId: string}) {
+    try {
+      const chatId = data.chatId.replace(/\D+/g, '')
+      const userId = data.userId.replace(/\D+/g, '')
+      const resultData = { users: [userId], chatId }
+      const chatAPI = new ChatAPI()
+      const response = await chatAPI.addUserToChat(resultData)
+
+      if (response.status === 401) {
+        this.router.go('/')
+      } else if (response.status === 400) {
+        const reason = JSON.parse(response.response).reason
+        alert(`Ошибка: ${reason}`)
+      } else if (response.status === 200) {
+        await this.getUsers(chatId)
+      } else if (response.status.toString().match(/^5\d\d$/)) {
+        alert('Фиксим проблему...')
+      }
+    } catch (error) {
+      console.log('При доблении пользователя в чат что-то полшло не так.')
+    }
+  }
+
+  // Удаляем по одному пользователю (хотя api позволяет сразу много),
+  // при клике по результату поиска.
+  public async deleteUser(data: {chatId: string, userId: string}) {
+    try {
+      const chatId = data.chatId.replace(/\D+/g, '')
+      const userId = data.userId.replace(/\D+/g, '')
+      const resultData = { users: [userId], chatId }
+      const chatAPI = new ChatAPI()
+      const response = await chatAPI.deleteUserFromChat(resultData)
+
+      if (response.status === 401) {
+        this.router.go('/')
+      } else if (response.status === 400) {
+        const reason = JSON.parse(response.response).reason
+        alert(`Ошибка: ${reason}`)
+      } else if (response.status === 200) {
+        await this.getUsers(chatId)
+      } else if (response.status.toString().match(/^5\d\d$/)) {
+        alert('Фиксим проблему...')
+      }
+    } catch (error) {
+      console.log('При удалении пользователя из чата что-то полшло не так.')
+    }
+  }
+
+  public static getAlreadyAddedUsersToChat() {
+    const state = store.getState()
+    const searchUser = state.search?.users
+    const activeChatUsers = state.chats?.activeChatUsers ? state.chats.activeChatUsers : []
+    const alreadyAddedUsers = []
+
+    if (searchUser && searchUser.length > 0) {
+      searchLoop: for (let s = 0; s < searchUser.length; s++) {
+        for (let a = 0; a < activeChatUsers.length; a++ ) {
+          if (searchUser[s].id === activeChatUsers[a].id) {
+            searchUser[s]._wasAdded = true
+            alreadyAddedUsers.push(searchUser[s])
+            continue searchLoop
+          }
+        }
+        searchUser[s]._wasAdded = false
+        alreadyAddedUsers.push(searchUser[s])
+      }
+    }
+
+    store.set('chats.alreadyAddedUsers', null)
+    store.set('chats.alreadyAddedUsers', alreadyAddedUsers)
+  }
 }

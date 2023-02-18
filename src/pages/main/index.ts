@@ -21,20 +21,109 @@ import Modal from '../../components/modal'
 import ChatController from '../../controllers/chat'
 import store from '../../servises/store'
 import AuthController from '../../controllers/auth'
+import { State } from '../../servises/store/store'
+import connect from '../../servises/store/connect'
+import UserController from '../../controllers/user'
+import SearchUserList from '../../components/searchUserList'
 
 const attrs = {
   tagAttrs: {
-    class: 'input-row__help input-row__help_signin-width',
+    class: 'input-row__help',
   },
 }
+const searchInputValidationError = new ValidationError('span', attrs)
+
+const searchInput = new Input(
+  'input',
+  {
+    tagAttrs: {
+      class: 'input input_bg-color_transparent',
+      id: 'search',
+      name: 'search',
+      type: 'text',
+      placeholder: 'Поиск',
+    },
+    events: {
+      focus: () => {
+        searchInputValidationError.setProps({ error: null })
+      },
+
+      blur: () => {
+        searchInputValidationError.setProps({ error: null })
+      },
+
+      input: (event: Event) => {
+        event.preventDefault()
+
+        const fields = {
+          field: searchInput,
+          validation: searchInputValidationError,
+        }
+
+        // В конроллере результат поиска скрывается и отображается.
+        UserController.search(event, fields)
+      },
+    },
+  }
+)
+
+const iconSearch = new Wrapper(
+  'div',
+  {
+    tagAttrs: {
+      class: 'search__icon',
+    },
+    content: IconSearchSvg,
+  }
+)
+
+const searchWrapperInput = new Wrapper(
+  'div',
+  {
+    tagAttrs: {
+      class: 'left-side__search-input-wrapper',
+    },
+    content: [iconSearch, searchInput],
+  }
+)
+
+const searchUserList = new SearchUserList(
+  'ul',
+  {
+    tagAttrs: {
+      class: 'search-list',
+    },
+    events: {
+      click: (event: Event) => {
+        const element = event.target as HTMLElement
+        const li = element.closest('li')
+        if (!li) {
+          return
+        }
+
+        const state = store.getState()
+        const activeChatId = state.chats?.activeChatId
+        if (!activeChatId) {
+          alert('Выбирите чат в который нужно добавить пользователя')
+          return
+        }
+
+        const chatController = new ChatController()
+        chatController.addOrDeleteUserToChat({ chatId: activeChatId, userId: li.dataset.userId! })
+      },
+    },
+  }
+)
 
 const search = new Search(
-  'div',
+  'form',
   {
     tagAttrs: {
       class: 'search',
     },
-    IconSearch: IconSearchSvg,
+    searchInputValidationError,
+    searchWrapperInput,
+    searchUserList,
   }
 )
 
@@ -109,8 +198,8 @@ const chatModalForm = new Wrapper(
           },
         ]
 
-        const chatContorller = new ChatController(event, fields)
-        chatContorller.create()
+        const chatController = new ChatController(event, fields)
+        chatController.create()
       },
     },
   }
@@ -134,6 +223,12 @@ const chatModal = new Modal(
   }
 )
 
+function handleRemoveChat(e: Event) {
+  const chatId = (e.target as HTMLElement).dataset.chatId!
+  const chatController = new ChatController()
+  chatController.delete(chatId)
+}
+
 const chatList = new ChatList(
   'ul',
   {
@@ -146,58 +241,40 @@ const chatList = new ChatList(
         const ul = event.currentTarget as HTMLElement
         ul.querySelectorAll('li').forEach((li: HTMLElement) => li.style.backgroundColor = '')
 
-        function handleRemove(e: Event) {
-          const chatId = (e.target as HTMLElement).dataset.chatId!
-          const chatController = new ChatController()
-          chatController.delete(chatId)
-        }
-
+        // Скрыаем "удалить чат" и удаляем событие для всего списка чатов.
         const removeElements = ul.querySelectorAll('.chat__remove')
         removeElements.forEach((r: HTMLElement) => {
+          r.removeEventListener('click', handleRemoveChat)
           r.style.display = ''
-          r.removeEventListener('click', handleRemove)
         })
 
         // в Message(s) подписываемся на это свойство и там же перерисовываем ленту сообщений
-        // store.set('chats.activeChatId', null)
+        store.set('chats.activeChatId', null)
 
         const element = event.target as HTMLElement
         const elementLi = element.closest('li')
-        if (elementLi) {
-          elementLi.style.backgroundColor = '#efefef'
-
-          // в Message(s) подписываемся на это свойство и там же перерисовываем ленту сообщений
-          store.set('chats.activeChatId', elementLi.dataset.chatId)
-
-          const removeElement = elementLi.nextElementSibling as HTMLElement
-          removeElement.style.display = 'block'
-
-          removeElement.addEventListener('click', handleRemove)
+        if (!elementLi) {
+          return
         }
+        // Клик выполнен по li-эементу или внутри него.
+
+        elementLi.style.backgroundColor = '#efefef'
+        const chatId = elementLi.dataset.chatId!
+
+        // в Message(s) подписываемся на это свойство и там же перерисовываем ленту сообщений
+        store.set('chats.activeChatId', chatId)
+
+        const chatController = new ChatController()
+        chatController.getUsers(chatId)
+
+        // Показываем "удалить чат" и навешиваем событие
+        const removeElement = elementLi.nextElementSibling as HTMLElement
+        removeElement.style.display = 'inline-block'
+        removeElement.addEventListener('click', handleRemoveChat)
       },
     },
   }
 )
-
-// const apiResponseSelectedChat = {}
-const apiResponseSelectedChat = {
-  id: 123,
-  title: 'my-chat',
-  avatar: '/123/avatar1.jpg',
-  unread_count: 15,
-  last_message: {
-    user: {
-      first_name: 'Petya',
-      second_name: 'Pupkin',
-      avatar: '/path/to/avatar.jpg',
-      email: 'my@email.com',
-      login: 'userLogin',
-      phone: '8(911)-222-33-22',
-    },
-    time: '2020-01-02T14:22:22.000Z',
-    content: 'this is message content',
-  },
-}
 
 /**
   * Не нашёл описание api для ленты сообщений в Swagger
@@ -485,7 +562,15 @@ class Main extends Block {
   }
 }
 
-const main = new Main(
+function mapMainToProps(state: State) {
+  return {
+    selectedChat: state.chats?.activeChatId,
+  }
+}
+
+const MainConnect = connect<typeof Main>(mapMainToProps)(Main)
+
+const main = new MainConnect(
   'main',
   {
     tagAttrs: {
@@ -494,7 +579,6 @@ const main = new Main(
     inputSearch: search,
     chatModal,
     chatList,
-    selectedChat: Object.keys(apiResponseSelectedChat).length > 0 ? apiResponseSelectedChat : false,
     messages: listMessage,
     formInputMessageValidationError,
     formMessage,
@@ -504,7 +588,9 @@ const main = new Main(
         // Close MenuDot.
         if (!(event.target as HTMLElement).closest('.menu-dot')) {
           const elemMenuItems = document.querySelector('.menu-dot__items') as HTMLElement
-          elemMenuItems.style.display = 'none'
+          if (elemMenuItems) {
+            elemMenuItems.style.display = 'none'
+          }
         }
       },
     },

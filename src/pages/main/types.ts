@@ -12,7 +12,6 @@ export type MainProps = {
   inputSearch: Search
   chatModal: Modal
   chatList: InstanceType<typeof ChatList>
-  selectedChat: {} | boolean
   messages: Array<Message>
   formInputMessageValidationError: ValidationError
   formMessage: Wrapper
