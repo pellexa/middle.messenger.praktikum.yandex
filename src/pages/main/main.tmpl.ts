@@ -37,9 +37,7 @@ export default `
         <hr class="hr hr_margin-content" />
 
     {{# if selectedChat }}
-        <div class="content__messages">
-            {{{ messages }}}
-        </div>
+        {{{ messages }}}
 
         <hr class="hr hr_margin-content" />
         

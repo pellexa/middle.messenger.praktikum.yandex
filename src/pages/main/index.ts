@@ -4,8 +4,6 @@ import IconAttachSvg from '../../components/icons/IconAttach.svg'
 import IconSendSvg from '../../components/icons/IconSend.svg'
 import ChatList from '../../components/chatList'
 import MenuDotHeader from '../../components/menuDotHeader'
-import Message from '../../components/message'
-import Time from '../../components/time'
 import Block from '../../modules/block'
 import mainTmpl from './main.tmpl'
 import { MainProps } from './types'
@@ -25,6 +23,8 @@ import { State } from '../../servises/store/store'
 import connect from '../../servises/store/connect'
 import UserController from '../../controllers/user'
 import SearchUserList from '../../components/searchUserList'
+import WebSocketMessage from '../../controllers/webSocketMessage'
+import MessageList from '../../components/messageList'
 
 const attrs = {
   tagAttrs: {
@@ -155,6 +155,7 @@ const chatModalInput = new Input(
       name: 'title',
       type: 'text',
       placeholder: 'название чата',
+      autofocus: 'true',
     },
     events: {
       focus: () => {
@@ -248,8 +249,13 @@ const chatList = new ChatList(
           r.style.display = ''
         })
 
-        // в Message(s) подписываемся на это свойство и там же перерисовываем ленту сообщений
+        const prevActiveChatId = store.getState().chats.activeChatId
+        store.set('chats.prevActiveChatId', prevActiveChatId)
         store.set('chats.activeChatId', null)
+
+        if (prevActiveChatId) {
+          store.set('chats.' + prevActiveChatId + '.messages', null)
+        }
 
         const element = event.target as HTMLElement
         const elementLi = element.closest('li')
@@ -267,6 +273,9 @@ const chatList = new ChatList(
         const chatController = new ChatController()
         chatController.getUsers(chatId)
 
+        const socket = WebSocketMessage.getInstance()
+        socket.connect(chatId)
+
         // Показываем "удалить чат" и навешиваем событие
         const removeElement = elementLi.nextElementSibling as HTMLElement
         removeElement.style.display = 'inline-block'
@@ -276,79 +285,14 @@ const chatList = new ChatList(
   }
 )
 
-/**
-  * Не нашёл описание api для ленты сообщений в Swagger
-  * (https://ya-praktikum.tech/api/v2/swagger/#/). Придумал свой json.
-  */
-const apiResponseMessages = {
-  chat_id: 123,
-  messages: [
-    {
-      time: '2020-01-02T14:22:22.000Z',
-      content: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в \
-                какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.\
-                Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все \
-                тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой \
-                забрали только кассеты с пленкой.
-
-                Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на \
-                ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из \
-                них недавно продали на аукционе за 45000 евро.`,
-      is_my: false,
+const messageList = new MessageList(
+  'div',
+  {
+    tagAttrs: {
+      class: 'content__messages',
     },
-    {
-      time: '2020-01-02T14:22:23.000Z',
-      content: { image: './path/to/image.jpg' },
-      is_my: false,
-    },
-    {
-      time: '2020-01-03T14:23:12.000Z',
-      content: 'круто!',
-      is_my: true,
-    },
-  ],
-}
-
-const listMessage = apiResponseMessages.messages.map((msg, index, array) => {
-  const datetime = new Date(Date.parse(msg.time))
-  const day = datetime.getDate()
-
-  let resultDate: string | null = null
-  if (index - 1 < 0) {
-    resultDate = msg.time
-  } else {
-    const prevDatetime = new Date(Date.parse(array[index - 1].time))
-    const prevDay = prevDatetime.getDate()
-    if (day !== prevDay) {
-      resultDate = msg.time
-    }
   }
-
-  let time: Time | null = null
-  if (resultDate) {
-    time = new Time(
-      'time',
-      {
-        tagAttrs: {
-          class: 'messages-date',
-        },
-        date: resultDate,
-      }
-    )
-  }
-
-  const message = new Message(
-    'div',
-    {
-      msg,
-      isImage: typeof msg.content === 'object' && msg.content.image ? true : false,
-      isMy: msg.is_my,
-      time,
-    }
-  )
-
-  return message
-})
+)
 
 const menuDotHeaderItems = {
   '/settings': 'мой профиль',
@@ -546,6 +490,12 @@ const formMessage = new Wrapper(
 
         if (result) {
           console.log('send api request')
+
+          const socket = WebSocketMessage.getInstance()
+          socket.sendMessage(json.message)
+
+          // Clear input fields.
+          fields.forEach(item => {(item.field.element as HTMLInputElement).value = ''})
         }
       },
     },
@@ -579,7 +529,7 @@ const main = new MainConnect(
     inputSearch: search,
     chatModal,
     chatList,
-    messages: listMessage,
+    messages: messageList,
     formInputMessageValidationError,
     formMessage,
     menuDotHeader,

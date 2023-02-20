@@ -1,6 +1,6 @@
 import ChatList from '../../components/chatList'
 import MenuDotHeader from '../../components/menuDotHeader'
-import Message from '../../components/message'
+import MessageList from '../../components/messageList'
 import Modal from '../../components/modal'
 import Search from '../../components/search'
 import ValidationError from '../../components/validationError'
@@ -12,7 +12,7 @@ export type MainProps = {
   inputSearch: Search
   chatModal: Modal
   chatList: InstanceType<typeof ChatList>
-  messages: Array<Message>
+  messages: InstanceType<typeof MessageList>
   formInputMessageValidationError: ValidationError
   formMessage: Wrapper
   menuDotHeader: InstanceType<typeof MenuDotHeader>

@@ -4,6 +4,7 @@
   display: flex;
   background-color: #fbfbfb;
   height: 100vh;
+  overflow: hidden;
 }
 
 .left-side {
@@ -68,6 +69,7 @@
 
 .content__messages {
   padding: 20px;
+  overflow: auto;
 }
 
 .content__form {
