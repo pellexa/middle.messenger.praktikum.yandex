@@ -53,4 +53,12 @@ export default class ChatAPI extends BaseAPI {
       headers: BaseAPI.headers,
     })
   }
+
+  public getToken(chatId: string) {
+    return chatAPIInstance.post(`${host}/token/${chatId}`, { headers: BaseAPI.headers })
+  }
+
+  public getNewMessages(chatId: string) {
+    return chatAPIInstance.get(`${host}/new/${chatId}`, { headers: BaseAPI.headers })
+  }
 }

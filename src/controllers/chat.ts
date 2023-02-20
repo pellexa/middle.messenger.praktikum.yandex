@@ -214,4 +214,44 @@ export default class ChatController {
     store.set('chats.alreadyAddedUsers', null)
     store.set('chats.alreadyAddedUsers', alreadyAddedUsers)
   }
+
+  public async getNewMessages(chatId: string) {
+    try {
+      chatId = chatId.replace(/\D+/g, '')
+      const chatAPI = new ChatAPI()
+      const response = await chatAPI.getNewMessages(chatId)
+
+      if (response.status === 401) {
+        this.router.go('/')
+      } else if (response.status === 400) {
+        const reason = JSON.parse(response.response).reason
+        alert(`Ошибка: ${reason}`)
+      } else if (response.status === 200) {
+        store.set('chats.' + chatId + '.countNewMessages',
+          JSON.parse(response.responseText).unread_count)
+      } else if (response.status.toString().match(/^5\d\d$/)) {
+        alert('Фиксим проблему...')
+      }
+    } catch (error) {
+      console.log('При получении непрочитанных сообщений что-то полшло не так.')
+    }
+  }
+
+  public async getToken(chatId: string) {
+    try {
+      chatId = chatId.replace(/\D+/g, '')
+      const chatAPI = new ChatAPI()
+      const response = await chatAPI.getToken(chatId)
+
+      if (response.status === 401) {
+        this.router.go('/')
+      } else if (response.status === 200) {
+        store.set('chats.webSocketToken', JSON.parse(response.responseText).token)
+      } else if (response.status.toString().match(/^5\d\d$/)) {
+        alert('Фиксим проблему...')
+      }
+    } catch (error) {
+      console.log('При получении WebSocket-токена что-то полшло не так. ')
+    }
+  }
 }
