@@ -1,5 +1,7 @@
 .chat-list {
   padding: 0 10px;
+  height: 70vh;
+  overflow: auto;
 }
 
 .chat {
@@ -41,6 +43,8 @@
   font-size: 12px;
   line-height: 15px;
   color: #999999;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .chat__unread {
