@@ -29,7 +29,7 @@ export default `
 {{# each data }}
     <li class="chat" data-chat-id="{{ this.id }}">
         <div class="avatar avatar_size-chat-list">
-            <img src="{{ this.avatar }}" alt="avatar">
+            <img class="avatar__img" src="{{ this._lastMessageUserAvatar }}" alt="avatar">
         </div>
 
         <div class="chat__content">

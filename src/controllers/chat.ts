@@ -1,4 +1,5 @@
 import ChatAPI from '../api/chat-api'
+import BaseAPI from '../modules/base-api'
 import Block from '../modules/block'
 import Router from '../modules/Router'
 import store from '../servises/store'
@@ -11,7 +12,23 @@ type ChatFieldElements = Array<{
 }>
 
 type Chat = {
-  id: string
+  id: number
+  title: string
+  avatar: string
+  unread_count: number
+  last_message?: {
+    user: {
+      first_name: string
+      second_name: string
+      avatar: string
+      email: string
+      login: string
+      phone: string
+    },
+    time: string
+    content: string
+  }
+  _lastMessageUserAvatar: string | null
 }
 
 export default class ChatController {
@@ -25,6 +42,19 @@ export default class ChatController {
     this.router = Router.getInstance()
   }
 
+  private handleChatsList(chats: Chat[]) {
+    const result: Chat[] = []
+    chats.forEach((chat: Chat) => {
+      chat._lastMessageUserAvatar = null
+      if (chat.last_message) {
+        chat._lastMessageUserAvatar = `${BaseAPI.resources}/${chat.last_message.user.avatar}`
+      }
+      result.push(chat)
+    })
+
+    return result
+  }
+
   public async getChats() {
     try {
       const chatAPI = new ChatAPI()
@@ -33,7 +63,7 @@ export default class ChatController {
       if (response.status === 401) {
         this.router.go('/')
       } else if (response.status === 200) {
-        store.set('chats.list', JSON.parse(response.responseText))
+        store.set('chats.list', this.handleChatsList(JSON.parse(response.responseText)))
       } else if (response.status.toString().match(/^5\d\d$/)) {
         alert('Фиксим проблему...')
       }
