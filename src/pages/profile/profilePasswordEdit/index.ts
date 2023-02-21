@@ -12,6 +12,8 @@ import Router from '../../../modules/Router'
 import UserController from '../../../controllers/user'
 import { State } from '../../../servises/store/store'
 import connect from '../../../servises/store/connect'
+import BaseAPI from '../../../modules/base-api'
+import { set } from '../../../utils/helpers'
 
 const linkBack = new Link(
   'a',
@@ -185,9 +187,13 @@ class ProfilePasswordEdit extends Block {
 }
 
 function mapProfilePasswordEditToProps(state: State) {
-  return {
-    authUser: state.auth?.user,
+  const data = { authUser: state.auth?.user }
+
+  if (BaseAPI.resources && state.auth?.user.avatar) {
+    set(data, 'userAvatar', `${BaseAPI.resources}${state.auth?.user.avatar}`)
   }
+
+  return data
 }
 
 const ProfilePasswordEditConnect =
