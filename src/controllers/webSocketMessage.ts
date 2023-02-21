@@ -95,13 +95,17 @@ export default class WebSocketMessage {
     })
 
     this.socket.addEventListener('message', event => {
-      const data = JSON.parse(event.data)
+      try {
+        const data = JSON.parse(event.data)
 
-      if (!Array.isArray(data) && !data.type?.match(/^message|file|sticker$/i)) {
-        return
+        if (!Array.isArray(data) && !data.type?.match(/^message|file|sticker$/i)) {
+          return
+        }
+
+        this._handlerMessage(authUserId, chatId, data)
+      } catch (error) {
+        console.log('При получении данных в WebSocketMessage что-то полшло не так.')
       }
-
-      this._handlerMessage(authUserId, chatId, data)
     })
 
     this.socket.addEventListener('close', () => {
