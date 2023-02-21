@@ -18,7 +18,7 @@ function merge(lhs: Indexed, rhs: Indexed): Indexed {
   return lhs
 }
 
-export function set(object: Indexed, path: string, value: any): Indexed {
+export function set(object: Indexed, path: string, value: unknown): Indexed {
   if (typeof path !== 'string') {
     throw new Error('path must be string')
   }

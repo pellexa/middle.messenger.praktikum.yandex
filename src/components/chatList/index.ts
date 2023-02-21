@@ -20,7 +20,7 @@ class ChatList extends Block {
     chatController.getChats()
   }
 
-  public componentDidUpdate(oldProps: any, newProps: any): boolean {
+  public componentDidUpdate(oldProps: unknown, newProps: unknown): boolean {
     return !isEqual(oldProps ?? {} , newProps ?? {})
   }
 

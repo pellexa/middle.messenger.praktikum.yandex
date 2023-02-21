@@ -8,7 +8,7 @@ enum METHODS {
 export type OptionsProps = {
   method?: METHODS
   headers?: Record<string, string>
-  data?: any
+  data?: XMLHttpRequestBodyInit
   timeout?: number
 }
 

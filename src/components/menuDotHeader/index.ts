@@ -10,7 +10,7 @@ class MenuDotHeader extends Block {
     super(tagName, props)
   }
 
-  public componentDidUpdate(oldProps: any, newProps: any): boolean {
+  public componentDidUpdate(oldProps: unknown, newProps: unknown): boolean {
     return !isEqual(oldProps ?? {} , newProps ?? {})
   }
 

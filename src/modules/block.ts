@@ -220,7 +220,7 @@ export default abstract class Block implements IBlock {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM)
   }
 
-  private _componentDidUpdate(oldProps: any, newProps: any): void {
+  private _componentDidUpdate(oldProps: unknown, newProps: unknown): void {
     const isRender = this.componentDidUpdate(oldProps, newProps)
     if (isRender) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER)
@@ -228,7 +228,7 @@ export default abstract class Block implements IBlock {
   }
 
   // Can be overridden from client code.
-  public componentDidUpdate(oldProps: any, newProps: any): boolean {
+  public componentDidUpdate(oldProps: unknown, newProps: unknown): boolean {
     if (oldProps !== newProps) {
       return true
     }

@@ -10,7 +10,7 @@ class MessageList extends Block {
     super(tagName, props)
   }
 
-  public componentDidUpdate(oldProps: any, newProps: any): boolean {
+  public componentDidUpdate(oldProps: unknown, newProps: unknown): boolean {
     const result = !isEqual(oldProps ?? {} , newProps ?? {})
 
     if (result) {
