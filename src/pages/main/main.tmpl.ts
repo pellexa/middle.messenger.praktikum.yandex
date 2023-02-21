@@ -2,9 +2,7 @@ import './main.scss'
 
 export default `
 <div class="left-side">
-    <p class="left-side__header">
-        профиль >
-    </p>
+    {{{ linkProfileWrapper }}}
 
     <div class="left-side__search">
         {{{ inputSearch }}}

@@ -9,6 +9,7 @@ import { TagAttribute, ComponentEvent } from '../../modules/types'
 
 export type MainProps = {
   tagAttrs?: TagAttribute
+  linkProfileWrapper: Wrapper
   inputSearch: Search
   chatModal: Modal
   chatList: InstanceType<typeof ChatList>

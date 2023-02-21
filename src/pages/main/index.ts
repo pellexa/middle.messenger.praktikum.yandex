@@ -486,11 +486,8 @@ const formMessage = new Wrapper(
         const result = Object.values(validationResults).every((value: boolean) => value === true)
 
         const json = jsonFromData.call(event, fields)
-        console.log('json: ', json)
 
         if (result) {
-          console.log('send api request')
-
           const socket = WebSocketMessage.getInstance()
           socket.sendMessage(json.message)
 
@@ -499,6 +496,42 @@ const formMessage = new Wrapper(
         }
       },
     },
+  }
+)
+
+const linkProfile = new Link(
+  'a',
+  {
+    tagAttrs: {
+      class: 'link link_color_grey',
+      href: '/settings',
+    },
+    content: 'профиль >',
+    events: {
+      click: (event: Event) => {
+        event.preventDefault()
+
+        const element = event.target as HTMLLinkElement
+        const router = Router.getInstance()
+        const uri = element.getAttribute('href')
+
+        if (!uri) {
+          throw new Error('The href attribute must exist on the "a" tag.')
+        }
+
+        router.go(uri)
+      },
+    },
+  }
+)
+
+const linkProfileWrapper = new Wrapper(
+  'p',
+  {
+    tagAttrs: {
+      class: 'left-side__header',
+    },
+    content: linkProfile,
   }
 )
 
@@ -526,6 +559,7 @@ const main = new MainConnect(
     tagAttrs: {
       class: 'main',
     },
+    linkProfileWrapper,
     inputSearch: search,
     chatModal,
     chatList,
