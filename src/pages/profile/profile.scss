@@ -56,6 +56,10 @@
   color: variables.$text-color;
 }
 
+.profile-key::first-letter {
+  text-transform: uppercase;
+}
+
 .profile-value {
   color: #999999;
 }

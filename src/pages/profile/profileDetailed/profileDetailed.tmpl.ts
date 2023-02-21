@@ -27,16 +27,40 @@ export default `
     </h1>
 
     <ul class="profile-properties">
-        {{# each authUser }}
-            <li class="profile-properties__row">
-                <div class="profile-key profile_margin-data">
-                    {{@ key }}
-                </div>
-                <div class="profile-value profile_margin-data">
-                    {{ this }}
-                </div>
-            </li>
-        {{/ each }}
+        <li class="profile-properties__row">
+            <div class="profile-key profile_margin-data">идентификатор</div>
+            <div class="profile-value profile_margin-data">{{ authUser.id }}</div>
+        </li>
+
+        <li class="profile-properties__row">
+            <div class="profile-key profile_margin-data">имя</div>
+            <div class="profile-value profile_margin-data">{{ authUser.first_name }}</div>
+        </li>
+
+        <li class="profile-properties__row">
+            <div class="profile-key profile_margin-data">фамилия</div>
+            <div class="profile-value profile_margin-data">{{ authUser.second_name }}</div>
+        </li>
+
+        <li class="profile-properties__row">
+            <div class="profile-key profile_margin-data">логин</div>
+            <div class="profile-value profile_margin-data">{{ authUser.login }}</div>
+        </li>
+
+        <li class="profile-properties__row">
+            <div class="profile-key profile_margin-data">аватар</div>
+            <div class="profile-value profile_margin-data">{{ authUser.avatar }}</div>
+        </li>
+
+        <li class="profile-properties__row">
+            <div class="profile-key profile_margin-data">почта</div>
+            <div class="profile-value profile_margin-data">{{ authUser.email }}</div>
+        </li>
+
+        <li class="profile-properties__row">
+            <div class="profile-key profile_margin-data">телефон</div>
+            <div class="profile-value profile_margin-data">{{ authUser.phone }}</div>
+        </li>
     </ul>
 
     {{{ linkChangeData }}}
