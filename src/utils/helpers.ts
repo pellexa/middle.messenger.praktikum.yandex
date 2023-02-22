@@ -1,4 +1,4 @@
-type Indexed<T = any> = {
+type Indexed<T = unknown> = {
   [k in string]: T;
 };
 
@@ -42,7 +42,7 @@ function isObject(value: unknown) {
   return typeof value === 'object' && value !== null || Array.isArray(value)
 }
 
-export function isEqual(a: Indexed, b: Indexed): boolean {
+export function isEqual(a: Partial<Indexed>, b: Partial<Indexed>): boolean {
   if (Object.values(a).length !== Object.values(b).length) {
     return false
   }
