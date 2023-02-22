@@ -17,7 +17,7 @@ export default class Input extends Block {
     const propName = this.element.dataset.inputValue
     if (propName) {
       const value = state.auth?.user[propName] ? state.auth?.user[propName] : ''
-      this.element.setAttribute('value', value)
+      this.element.setAttribute('value', value as string)
     }
   }
 

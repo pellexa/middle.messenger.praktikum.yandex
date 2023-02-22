@@ -31,7 +31,7 @@ function mapChatListToProps(state: State) {
   if (activeChatId) {
     return {
       activeChatId,
-      data: state.chats[activeChatId]?.messages,
+      data: state.chats![+activeChatId]?.messages,
     }
   }
 

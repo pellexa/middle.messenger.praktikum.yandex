@@ -17,6 +17,13 @@ export interface ISignupData extends ISigninData {
   password_again: string
 }
 
+export interface User extends ISignupData {
+  id: number
+  avatar: string
+  _wasAdded: boolean
+  [key: string]: unknown | boolean
+}
+
 export type AuthData = ISigninData | ISignupData
 
 export default class AuthAPI extends BaseAPI {

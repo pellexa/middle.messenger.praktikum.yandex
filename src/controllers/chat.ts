@@ -1,3 +1,4 @@
+import { User } from '../api/auth-api'
 import ChatAPI from '../api/chat-api'
 import BaseAPI from '../modules/base-api'
 import Block from '../modules/block'
@@ -11,7 +12,7 @@ type ChatFieldElements = Array<{
   validation: Block
 }>
 
-type Chat = {
+export type Chat = {
   id: number
   title: string
   avatar: string
@@ -113,9 +114,9 @@ export default class ChatController {
       } else if (response.status === 403) {
         alert('У вас нет прав что бы удалить этот чат')
       } else if (response.status === 200) {
-        const chatList = store.getState().chats.list
+        const chatList = store.getState().chats!.list!
         const newChatList = chatList.filter((chat: Chat) => chat.id.toString() !== id)
-        store.getState().chats.list = newChatList.length > 0 ? newChatList : null
+        store.getState().chats!.list = newChatList.length > 0 ? newChatList : null
         store.emit(StoreEvents.UPDATED)
       } else if (response.status.toString().match(/^5\d\d$/)) {
         alert('Фиксим проблему...')
@@ -156,8 +157,7 @@ export default class ChatController {
       return
     }
 
-    const user = alreadyAddedUsers.find(
-      (item: {id: number}) => item.id === +data.userId)
+    const user = alreadyAddedUsers.find((item: User) => item.id.toString() === data.userId)
 
     if (!user) {
       this.addUser(data)

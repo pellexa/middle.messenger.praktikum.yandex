@@ -1,7 +1,7 @@
 import store from '../servises/store'
 import ChatController from './chat'
 
-type Message = {
+export type Message = {
   id: number
   chat_id?: number
   time: string
@@ -56,7 +56,7 @@ export default class WebSocketMessage {
   private async connecting(authUserId: string, chatId: string) {
     const chatAPI = new ChatController()
     await chatAPI.getToken(chatId)
-    const token = store.getState().chats.webSocketToken
+    const token = store.getState().chats!.webSocketToken
     this.socket = new WebSocket(`${this.url}/${authUserId}/${chatId}/${token}`)
   }
 
@@ -68,8 +68,8 @@ export default class WebSocketMessage {
 
   public async connect(chatId: string) {
     const state = store.getState()
-    const prevActiveChatId = state.chats.prevActiveChatId
-    const authUserId = state.auth.user.id
+    const prevActiveChatId = state.chats!.prevActiveChatId
+    const authUserId = state.auth!.user.id.toString()
     chatId = chatId.replace(/\D+/g, '')
 
     if (prevActiveChatId === chatId) {
@@ -102,7 +102,7 @@ export default class WebSocketMessage {
           return
         }
 
-        this._handlerMessage(authUserId, chatId, data)
+        this._handlerMessage(authUserId, +chatId, data)
       } catch (error) {
         console.log('При получении данных в WebSocketMessage что-то полшло не так.')
       }
@@ -127,8 +127,13 @@ export default class WebSocketMessage {
     return item
   }
 
-  private async _handlerMessage(authUserId: string, chatId: string, data: Message | Message[]) {
+  private async _handlerMessage(authUserId: string, chatId: number, data: Message | Message[]) {
     const state = store.getState()
+
+    if (!state.chats) {
+      console.log('state.chats must exist.')
+      return
+    }
 
     const messages = state.chats[chatId]?.messages
       ? { [chatId]: state.chats[chatId]?.messages }
@@ -149,7 +154,7 @@ export default class WebSocketMessage {
       store.set('chats.' + chatId + '.messages', messages[chatId].reverse())
 
       const chatAPI = new ChatController()
-      await chatAPI.getNewMessages(chatId)
+      await chatAPI.getNewMessages(chatId.toString())
       const countNewMessages = state.chats[chatId].countNewMessages
 
       // Здесь рекурсия, загружает непрочитанные сообщения пока не загрузит все.

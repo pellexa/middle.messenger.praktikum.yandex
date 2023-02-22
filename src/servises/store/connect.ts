@@ -3,7 +3,7 @@ import Block from '../../modules/block'
 import { isEqual } from '../../utils/helpers'
 import { State, StoreEvents } from './store'
 
-export default function connect<T>(mapStateToProps: (state: State) => State) {
+export default function connect<T>(mapStateToProps: (state: State) => {[key: string]: unknown}) {
   return function(Component: T) {
     return class extends (Component as typeof Block) {
       constructor(tag: string, props = {}) {

@@ -249,7 +249,7 @@ const chatList = new ChatList(
           r.style.display = ''
         })
 
-        const prevActiveChatId = store.getState().chats.activeChatId
+        const prevActiveChatId = store.getState().chats?.activeChatId
         store.set('chats.prevActiveChatId', prevActiveChatId)
         store.set('chats.activeChatId', null)
 
