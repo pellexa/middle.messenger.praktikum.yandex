@@ -24,10 +24,12 @@ import './chatList.scss'
 */
 
 export default `
+{{{ chatButtonShowModal }}}
+
 {{# each data }}
-    <li class="chat">
+    <li class="chat" data-chat-id="{{ this.id }}">
         <div class="avatar avatar_size-chat-list">
-            <img src="{{ this.avatar }}" alt="avatar">
+            <img class="avatar__img" src="{{ this._lastMessageUserAvatar }}" alt="avatar">
         </div>
 
         <div class="chat__content">
@@ -52,6 +54,8 @@ export default `
             </div>
         </div>
     </li>
+
+    <div class="chat__remove" data-chat-id="{{ this.id }}">удалить</div>
 
     <hr class="hr hr_margin-left-side" />
 {{/ each }}

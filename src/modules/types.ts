@@ -34,4 +34,5 @@ export interface IBlock {
   getContent(): HTMLElement
   show(): void
   hide(): void
+  remove(): void
 }

@@ -56,10 +56,20 @@
   color: variables.$text-color;
 }
 
+.profile-key::first-letter {
+  text-transform: uppercase;
+}
+
 .profile-value {
   color: #999999;
 }
 
 .profile_margin-data {
   margin: 10px 0;
+}
+
+.link__icon-back {
+  display: flex;
+  border-radius: 50%;
+  overflow: hidden;
 }

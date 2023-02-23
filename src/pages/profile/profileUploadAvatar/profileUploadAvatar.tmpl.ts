@@ -4,7 +4,7 @@ export default `
 <div class="modal__content">
     <h2 class="modal__title-upload">загрузите файл</h2>
 
-    <form class="modal__form" enctype="multipart/form-data">
+    <form class="modal__form">
         <label class="modal__label-upload">
             <input 
                 type="file"

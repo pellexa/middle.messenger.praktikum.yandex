@@ -219,11 +219,29 @@ const validations: Record<string, Function> = {
     validation.setProps({ error: null })
 
     if (!value.trim() && !fileInput.files!.length) {
-      validation.setProps({ error: `Сообщение не может быть пустым.` })
+      validation.setProps({ error: 'Сообщение не может быть пустым.' })
     } else {
       isValid = true
     }
 
+    return isValid
+  },
+
+  title: (value: string, field: Input, validation: ValidationError) => {
+    let isValid = false
+    const min = 1
+    const max = 40
+
+    field.setProps({ value })
+    validation.setProps({ error: null })
+
+    if (!validationRules.length(value, min, max)) {
+      validation.setProps({ error: `Может содержать от ${min} до ${max} символов.` })
+    } else if (!validationRules.langs(value, [LangValue.Latin, LangValue.Cyrillic], '0-9_-')) {
+      validation.setProps({ error: 'Может содержать только латиницу или кирилицу.' })
+    } else {
+      isValid = true
+    }
     return isValid
   },
 }

@@ -1,24 +1,21 @@
-import Button from '../../components/button'
 import ChatList from '../../components/chatList'
-import Input from '../../components/input'
-import Label from '../../components/label'
 import MenuDotHeader from '../../components/menuDotHeader'
-import Message from '../../components/message'
+import MessageList from '../../components/messageList'
+import Modal from '../../components/modal'
 import Search from '../../components/search'
 import ValidationError from '../../components/validationError'
+import Wrapper from '../../components/wrapper'
 import { TagAttribute, ComponentEvent } from '../../modules/types'
 
 export type MainProps = {
   tagAttrs?: TagAttribute
+  linkProfileWrapper: Wrapper
   inputSearch: Search
-  chatList: ChatList
-  selectedChat: {} | boolean
-  messages: Array<Message>
-  formInputFileLabel: Label
-  formInputFile: Input
-  formInputMessage: Input
+  chatModal: Modal
+  chatList: InstanceType<typeof ChatList>
+  messages: InstanceType<typeof MessageList>
   formInputMessageValidationError: ValidationError
-  sendButton: Button
-  menuDotHeader: MenuDotHeader
+  formMessage: Wrapper
+  menuDotHeader: InstanceType<typeof MenuDotHeader>
   events?: ComponentEvent
 }

@@ -8,9 +8,7 @@ import main from './pages/main'
 import profileDetailed from './pages/profile/profileDetailed'
 import profileEdit from './pages/profile/profileEdit'
 import profilePasswordEdit from './pages/profile/profilePasswordEdit'
-import { render } from './utils/renderDOM'
-import Block from './modules/block'
-import nav from './components/nav'
+import Router from './modules/Router'
 
 const app = document.getElementById('app')
 
@@ -18,17 +16,15 @@ if (!app) {
   throw Error('There is no element in index.html with id="app".')
 }
 
-const routes: Record<string, Block> = {
-  '/signin': signin,
-  '/': registration,
-  '/registration': registration,
-  '/chat': main,
-  '/profile/detailed': profileDetailed,
-  '/profile/edit': profileEdit,
-  '/profile/password/edit': profilePasswordEdit,
-  '/404': error404,
-  '/500': error500,
-}
+const router = Router.getInstance('#app')
 
-const root = render('#app', routes[window.location.pathname])
-root!.append(nav.getContent())
+router
+  .use('/', signin)
+  .use('/sign-up', registration)
+  .use('/messanger', main)
+  .use('/settings', profileDetailed)
+  .use('/settings/edit', profileEdit)
+  .use('/settings/password/edit', profilePasswordEdit)
+  .use('/404', error404)
+  .use('/500', error500)
+  .start()

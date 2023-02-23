@@ -3,9 +3,12 @@ import Button from '../../components/button'
 import Input from '../../components/input'
 import Block from '../../modules/block'
 import { SigninProps } from './types'
-import { jsonFromData, runValidation, validationFormData } from '../../utils/formUtils'
+import { runValidation } from '../../utils/formUtils'
 import ValidationError from '../../components/validationError'
 import Label from '../../components/label'
+import Link from '../../components/link'
+import Router from '../../modules/Router'
+import AuthController from '../../controllers/auth'
 
 const acceptButton = new Button(
   'button',
@@ -15,6 +18,32 @@ const acceptButton = new Button(
       type: 'submit',
     },
     text: 'войти',
+  }
+)
+
+const signupLink = new Link(
+  'a',
+  {
+    tagAttrs: {
+      class: 'link link_color_blue',
+      href: '/sign-up',
+    },
+    content: 'нет аккаунта?',
+    events: {
+      click: (event: Event) => {
+        event.preventDefault()
+
+        const element = event.target as HTMLLinkElement
+        const router = Router.getInstance()
+        const uri = element.getAttribute('href')
+
+        if (!uri) {
+          throw new Error('The href attribute must exist on the "a" tag.')
+        }
+
+        router.go(uri)
+      },
+    },
   }
 )
 
@@ -109,7 +138,7 @@ class SigninPage extends Block {
   }
 }
 
-const signinHTML = new SigninPage('main', {
+const signin = new SigninPage('main', {
   tagAttrs: {
     class: 'form-box',
   },
@@ -122,6 +151,7 @@ const signinHTML = new SigninPage('main', {
   formInputPasswordValidationError,
 
   acceptButton,
+  signupLink,
   events: {
     submit: (event: Event) => {
       event.preventDefault()
@@ -137,17 +167,10 @@ const signinHTML = new SigninPage('main', {
         },
       ]
 
-      const validationResults = validationFormData.call(event, fields)
-      const result = Object.values(validationResults).every((value: boolean) => value === true)
-
-      const json = jsonFromData.call(event, fields)
-      console.log('json: ', json)
-
-      if (result) {
-        console.log('send api request')
-      }
+      const authController = new AuthController(event, fields)
+      authController.signin()
     },
   },
 })
 
-export default signinHTML
+export default signin

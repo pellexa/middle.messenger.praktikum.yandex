@@ -1,5 +1,4 @@
 import '../profile.scss'
-import './profileDetailed.scss'
 
 /*
 {
@@ -15,39 +14,57 @@ import './profileDetailed.scss'
 */
 export default `
 <div class="profile__left-side">
-    {{{ IconBack }}}
+    {{{ linkBack }}}
 </div>
 
 <main class="profile__content">
     <div class="avatar avatar_size-profile">
-        <img src="{{ apiResponseProfile.avatar }}" alt="avatar"></img>
+        <img class="avatar__img" src="{{ userAvatar }}" alt="avatar"></img>
     </div>
 
     <h1 class="profile-name">
-        {{ apiResponseProfile.first_name }}
+        {{ authUser.first_name }}
     </h1>
 
     <ul class="profile-properties">
-        {{# each apiResponseProfile }}
-            <li class="profile-properties__row">
-                <div class="profile-key profile_margin-data">
-                    {{@ key }}
-                </div>
-                <div class="profile-value profile_margin-data">
-                    {{ this }}
-                </div>
-            </li>
-        {{/ each }}
+        <li class="profile-properties__row">
+            <div class="profile-key profile_margin-data">идентификатор</div>
+            <div class="profile-value profile_margin-data">{{ authUser.id }}</div>
+        </li>
+
+        <li class="profile-properties__row">
+            <div class="profile-key profile_margin-data">имя</div>
+            <div class="profile-value profile_margin-data">{{ authUser.first_name }}</div>
+        </li>
+
+        <li class="profile-properties__row">
+            <div class="profile-key profile_margin-data">фамилия</div>
+            <div class="profile-value profile_margin-data">{{ authUser.second_name }}</div>
+        </li>
+
+        <li class="profile-properties__row">
+            <div class="profile-key profile_margin-data">логин</div>
+            <div class="profile-value profile_margin-data">{{ authUser.login }}</div>
+        </li>
+
+        <li class="profile-properties__row">
+            <div class="profile-key profile_margin-data">аватар</div>
+            <div class="profile-value profile_margin-data">{{ authUser.avatar }}</div>
+        </li>
+
+        <li class="profile-properties__row">
+            <div class="profile-key profile_margin-data">почта</div>
+            <div class="profile-value profile_margin-data">{{ authUser.email }}</div>
+        </li>
+
+        <li class="profile-properties__row">
+            <div class="profile-key profile_margin-data">телефон</div>
+            <div class="profile-value profile_margin-data">{{ authUser.phone }}</div>
+        </li>
     </ul>
 
-    <div class="profile-properties__row">
-        <a href="#" class="link profile_margin-data">изменить данные</a>
-    </div>
-    <div class="profile-properties__row">
-        <a href="#" class="link profile_margin-data">изменить пароль</a>
-    </div>
-    <div class="profile-properties__row">
-        <a href="/" class="link profile_margin-data link_color_red">выйти</a>
-    </div>
+    {{{ linkChangeData }}}
+    {{{ linkChangePassword}}}
+    {{{ linkSignout }}}
 </main>
 `

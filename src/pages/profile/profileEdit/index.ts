@@ -7,7 +7,40 @@ import ProfileUploadAvatar from '../profileUploadAvatar'
 import Label from '../../../components/label'
 import ValidationError from '../../../components/validationError'
 import Input from '../../../components/input'
-import { jsonFromData, runValidation, validationFormData } from '../../../utils/formUtils'
+import { runValidation } from '../../../utils/formUtils'
+import Link from '../../../components/link'
+import Router from '../../../modules/Router'
+import { State } from '../../../servises/store/store'
+import connect from '../../../servises/store/connect'
+import UserController from '../../../controllers/user'
+import BaseAPI from '../../../modules/base-api'
+import { set } from '../../../utils/helpers'
+
+const linkBack = new Link(
+  'a',
+  {
+    tagAttrs: {
+      class: 'link__icon-back',
+      href: '/messanger',
+    },
+    content: IconBackSvg,
+    events: {
+      click: (event: Event) => {
+        event.preventDefault()
+
+        const element = event.currentTarget as HTMLLinkElement
+        const router = Router.getInstance()
+        const uri = element.getAttribute('href')
+
+        if (!uri) {
+          throw new Error('The href attribute must exist on the "a" tag.')
+        }
+
+        router.go(uri)
+      },
+    },
+  }
+)
 
 const acceptButton = new Button(
   'button',
@@ -27,11 +60,13 @@ const acceptButtonUploadAvatar = new Button(
       class: 'button',
       type: 'submit',
     },
-    text: 'поменять UploadAvatar',
+    text: 'поменять',
     events: {
       click: (event: Event) => {
         event.preventDefault()
-        console.log('Button profileUploadAvatar event: ', event)
+
+        const userContoller = new UserController(event)
+        userContoller.changeAvatar()
       },
     },
   }
@@ -134,17 +169,6 @@ const formInputSecondNameValidationError = new ValidationError('span', attrs)
 const formInputDisplayNameValidationError = new ValidationError('span', attrs)
 const formInputPhoneValidationError = new ValidationError('span', attrs)
 
-const apiResponseProfile = {
-  id: 123,
-  first_name: 'Petya',
-  second_name: 'Pupkin',
-  display_name: 'Petya Pupkin',
-  login: 'userLogin',
-  email: 'my@email.com',
-  phone: '89223332211',
-  avatar: '/path/to/avatar.jpg',
-}
-
 const formInputEmail = new Input(
   'input',
   {
@@ -154,7 +178,7 @@ const formInputEmail = new Input(
       name: 'email',
       type: 'text',
       placeholder: 'Почта',
-      value: apiResponseProfile.email,
+      'data-input-value': 'email',
     },
     events: {
       focus: () => {
@@ -178,7 +202,7 @@ const formInputLogin = new Input(
       name: 'login',
       type: 'text',
       placeholder: 'Логин',
-      value: apiResponseProfile.login,
+      'data-input-value': 'login',
     },
     events: {
       focus: () => {
@@ -202,7 +226,7 @@ const formInputFirstName = new Input(
       name: 'first_name',
       type: 'text',
       placeholder: 'Имя',
-      value: apiResponseProfile.first_name,
+      'data-input-value': 'first_name',
     },
     events: {
       focus: () => {
@@ -226,7 +250,7 @@ const formInputSecondName = new Input(
       name: 'second_name',
       type: 'text',
       placeholder: 'Фамилия',
-      value: apiResponseProfile.second_name,
+      'data-input-value': 'second_name',
     },
     events: {
       focus: () => {
@@ -249,8 +273,8 @@ const formInputDisplayName = new Input(
       id: 'display_name',
       name: 'display_name',
       type: 'text',
-      placeholder: 'Фамилия',
-      value: apiResponseProfile.display_name,
+      placeholder: 'Имя в чате',
+      'data-input-value': 'display_name',
     },
     events: {
       focus: () => {
@@ -279,7 +303,7 @@ const formInputPhone = new Input(
       name: 'phone',
       type: 'text',
       placeholder: 'Телефон',
-      value: apiResponseProfile.phone,
+      'data-input-value': 'phone',
     },
     events: {
       focus: () => {
@@ -296,10 +320,6 @@ const formInputPhone = new Input(
 
 class ProfileEdit extends Block {
   constructor(tagName: string, props: ProfileEditProps) {
-    // if (!props.apiResponseProfile) {
-    //   throw new Error('ProfileEdit apiResponseProfile is undefined.')
-    // }
-
     super(tagName, props)
   }
 
@@ -323,7 +343,19 @@ class ProfileEdit extends Block {
   }
 }
 
-const profileEditHTML = new ProfileEdit('div', {
+function mapProfileEditToProps(state: State) {
+  const data = { authUser: state.auth?.user }
+
+  if (BaseAPI.resources && state.auth?.user.avatar) {
+    set(data, 'userAvatar', `${BaseAPI.resources}${state.auth?.user.avatar}`)
+  }
+
+  return data
+}
+
+const profileEditConnect = connect<typeof ProfileEdit>(mapProfileEditToProps)(ProfileEdit)
+
+const profileEdit = new profileEditConnect('div', {
   tagAttrs: {
     class: 'profile',
   },
@@ -351,7 +383,7 @@ const profileEditHTML = new ProfileEdit('div', {
   formInputPhone,
   formInputPhoneValidationError,
 
-  IconBack: IconBackSvg,
+  linkBack,
   profileUploadAvatar,
   acceptButton,
   events: {
@@ -385,17 +417,10 @@ const profileEditHTML = new ProfileEdit('div', {
         },
       ]
 
-      const validationResults = validationFormData.call(event, fields)
-      const result = Object.values(validationResults).every((value: boolean) => value === true)
-
-      const json = jsonFromData.call(event, fields)
-      console.log('json: ', json)
-
-      if (result) {
-        console.log('send api request')
-      }
+      const userController = new UserController(event, fields)
+      userController.changeProfile()
     },
   },
 })
 
-export default profileEditHTML
+export default profileEdit

@@ -6,7 +6,40 @@ import Block from '../../../modules/block'
 import Label from '../../../components/label'
 import ValidationError from '../../../components/validationError'
 import Input from '../../../components/input'
-import { jsonFromData, runValidation, validationFormData } from '../../../utils/formUtils'
+import { runValidation } from '../../../utils/formUtils'
+import Link from '../../../components/link'
+import Router from '../../../modules/Router'
+import UserController from '../../../controllers/user'
+import { State } from '../../../servises/store/store'
+import connect from '../../../servises/store/connect'
+import BaseAPI from '../../../modules/base-api'
+import { set } from '../../../utils/helpers'
+
+const linkBack = new Link(
+  'a',
+  {
+    tagAttrs: {
+      class: 'link__icon-back',
+      href: '/messanger',
+    },
+    content: IconBackSvg,
+    events: {
+      click: (event: Event) => {
+        event.preventDefault()
+
+        const element = event.currentTarget as HTMLLinkElement
+        const router = Router.getInstance()
+        const uri = element.getAttribute('href')
+
+        if (!uri) {
+          throw new Error('The href attribute must exist on the "a" tag.')
+        }
+
+        router.go(uri)
+      },
+    },
+  }
+)
 
 const formInputOldPasswordLabel = new Label(
   'label',
@@ -153,21 +186,24 @@ class ProfilePasswordEdit extends Block {
   }
 }
 
-const profilePasswordEditHTML = new ProfilePasswordEdit(
+function mapProfilePasswordEditToProps(state: State) {
+  const data = { authUser: state.auth?.user }
+
+  if (BaseAPI.resources && state.auth?.user.avatar) {
+    set(data, 'userAvatar', `${BaseAPI.resources}${state.auth?.user.avatar}`)
+  }
+
+  return data
+}
+
+const ProfilePasswordEditConnect =
+  connect<typeof ProfilePasswordEdit>(mapProfilePasswordEditToProps)(ProfilePasswordEdit)
+
+const profilePasswordEdit = new ProfilePasswordEditConnect(
   'div',
   {
     tagAttrs: {
       class: 'profile',
-    },
-    apiResponseProfile: {
-      id: 123,
-      first_name: 'Petya',
-      second_name: 'Pupkin',
-      display_name: 'Petya Pupkin',
-      login: 'userLogin',
-      email: 'my@email.com',
-      phone: '89223332211',
-      avatar: '/path/to/avatar.jpg',
     },
 
     formInputOldPasswordLabel,
@@ -183,7 +219,7 @@ const profilePasswordEditHTML = new ProfilePasswordEdit(
     formInputNewPasswordAgainValidationError,
 
     acceptButton,
-    IconBack: IconBackSvg,
+    linkBack,
 
     events: {
       submit: (event: Event) => {
@@ -204,18 +240,11 @@ const profilePasswordEditHTML = new ProfilePasswordEdit(
           },
         ]
 
-        const validationResults = validationFormData.call(event, fields)
-        const result = Object.values(validationResults).every((value: boolean) => value === true)
-
-        const json = jsonFromData.call(event, fields)
-        console.log('json: ', json)
-
-        if (result) {
-          console.log('send api request')
-        }
+        const userController = new UserController(event, fields)
+        userController.changePassword()
       },
     },
   }
 )
 
-export default profilePasswordEditHTML
+export default profilePasswordEdit

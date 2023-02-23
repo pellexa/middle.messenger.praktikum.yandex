@@ -4,6 +4,7 @@
   display: flex;
   background-color: #fbfbfb;
   height: 100vh;
+  overflow: hidden;
 }
 
 .left-side {
@@ -23,7 +24,13 @@
 }
 
 .left-side__search {
+  position: relative;
   margin: 0 10px 14px;
+}
+
+.left-side__search-input-wrapper {
+  display: flex;
+  align-items: center;
 }
 
 .hr_margin-left-side {
@@ -33,7 +40,6 @@
 .content {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  position: relative;
   flex: 4;
   background-color: white;
   overflow: hidden;
@@ -63,6 +69,7 @@
 
 .content__messages {
   padding: 20px;
+  overflow: auto;
 }
 
 .content__form {

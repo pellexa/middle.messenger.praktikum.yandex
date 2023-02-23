@@ -5,16 +5,16 @@ enum METHODS {
   DELETE = 'DELETE',
 }
 
-type OptionsProps = {
+export type OptionsProps = {
   method?: METHODS
   headers?: Record<string, string>
   data?: XMLHttpRequestBodyInit
   timeout?: number
 }
 
-type HTTPMethod = (url: string, options?: OptionsProps) => Promise<unknown>
+type HTTPMethod = (url: string, options?: OptionsProps) => Promise<XMLHttpRequest>
 
-class HTTPTransport {
+export default class HTTPTransport {
   public get: HTTPMethod = (url, options = {}) => {
     return this.request(url, { ...options, method: METHODS.GET })
   }
@@ -31,7 +31,7 @@ class HTTPTransport {
     return this.request(url, { ...options, method: METHODS.DELETE })
   }
 
-  public request = (url: string, options: OptionsProps) => {
+  public request = (url: string, options: OptionsProps): Promise<XMLHttpRequest> => {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest()
       xhr.timeout = options.timeout ? options.timeout : 5000
@@ -43,10 +43,12 @@ class HTTPTransport {
       if (options.method === METHODS.GET && options.data) {
         url += this.queryStringify(options.data)
         xhr.open(options.method, url)
+        xhr.withCredentials = true
         this.setHeaders(xhr, options)
         xhr.send()
       } else {
         xhr.open(options.method!, url)
+        xhr.withCredentials = true
         this.setHeaders(xhr, options)
         xhr.send(options.data)
       }

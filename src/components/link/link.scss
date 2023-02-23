@@ -1,0 +1,23 @@
+@use '../../../static/variables.scss' as variables;
+
+.link {
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.link_color_blue {
+  color: variables.$button-bg-accept;
+}
+
+.link_color_red {
+  color: #ff0000;
+}
+
+.link_color_grey {
+  color: #999;
+}

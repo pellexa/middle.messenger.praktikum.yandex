@@ -1,7 +1,7 @@
 import { TagAttribute, ComponentEvent } from '../../modules/types'
 
-export type TimeProps = {
+export type wrapperProps = {
   tagAttrs?: TagAttribute
-  date: string | null
+  content: unknown
   events?: ComponentEvent
 }

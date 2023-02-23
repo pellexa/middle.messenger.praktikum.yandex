@@ -1,5 +1,7 @@
 .chat-list {
   padding: 0 10px;
+  height: 70vh;
+  overflow: auto;
 }
 
 .chat {
@@ -7,6 +9,8 @@
   grid-template-columns: auto 1fr;
   gap: 10px;
   align-items: center;
+  padding: 5px;
+  cursor: pointer;
 }
 
 .avatar_size-chat-list {
@@ -39,6 +43,8 @@
   font-size: 12px;
   line-height: 15px;
   color: #999999;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .chat__unread {
@@ -57,4 +63,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.chat__remove {
+  display: none;
+  font-size: 10px;
+  color: red;
+  cursor: pointer;
 }
