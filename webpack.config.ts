@@ -1,12 +1,15 @@
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+import * as path from 'path'
+import * as webpack from 'webpack'
+import 'webpack-dev-server'
+
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
 const isProduction = process.env.NODE_ENV == 'production'
 
 const stylesHandler = MiniCssExtractPlugin.loader
 
-const config = {
+const config: webpack.Configuration = {
   entry: './src/index.ts',
   output: {
     publicPath: '/',
@@ -67,3 +70,5 @@ module.exports = () => {
   }
   return config
 }
+
+export default config
