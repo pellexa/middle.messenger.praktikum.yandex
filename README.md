@@ -9,9 +9,9 @@ Published [here](https://poetic-choux-99c746.netlify.app/).
 
 `npm install`
 
-`npm run dev`
+`npm run serve`
 
-http://localhost:1234/
+http://localhost:8080/
 
 ### Linting commands(run in project root):
 `npx eslint src/` - ESLint
@@ -26,6 +26,13 @@ http://localhost:1234/
 `npm run start`
 
 http://localhost:3000/
+
+
+##### or this project has been created using **webpack-cli**, you can now run
+`npm run build` or `yarn build`
+
+to bundle your application
+
 
 ##### Design [here](https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0%3A1&t=hIQYbJRUQXfQOe13-0)
 
