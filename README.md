@@ -28,10 +28,15 @@ http://localhost:8080/
 http://localhost:3000/
 
 
-##### or this project has been created using **webpack-cli**, you can now run
-`npm run build` or `yarn build`
+##### Run in Docker(run in project root):
+`docker build -t messenger_nodejs197 .`
 
-to bundle your application
+`docker run --rm -d --name running_messenger -p 8081:3000 messenger_nodejs197`
+
+http://localhost:8081/
+
+###### to stop the container, run:
+`docker stop running_messenger`
 
 
 ##### Design [here](https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0%3A1&t=hIQYbJRUQXfQOe13-0)
