@@ -10,7 +10,8 @@
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
     "serve": "webpack serve",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "stylelint \"**/*.scss\" && eslint src/ && npx tsc --noEmit"
   },
   "repository": {
     "type": "git",
