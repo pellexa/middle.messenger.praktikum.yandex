@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npx stylelint "**/*.scss"
+npx eslint src/
+npx tsc --noEmit
+npm test
