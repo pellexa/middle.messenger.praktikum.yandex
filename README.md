@@ -21,6 +21,14 @@ http://localhost:8080/
 
 `npx stylelint "**/*.scss"` - Stylelin
 
+##### Commit changes
+Husky (pre-commit) is configured in the .husky/pre-commit file.
+To commit the changes, first run:
+`npm prepare`, and then `git commit -m ...`
+
+To commit without pre-commit checks, run with `-n`:
+`git commit -nm ...`
+
 ##### to start express server run (first abort the `npm run dev` command):
 `npm run build`
 
