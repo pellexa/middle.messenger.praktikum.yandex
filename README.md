@@ -1,6 +1,7 @@
 ### Messenger
 Messenger is the first project of the PracticumYandex.
-Published [here](https://poetic-choux-99c746.netlify.app/).
+Published on netlify.com [here](https://poetic-choux-99c746.netlify.app/).
+Published on render.com [here](https://ya-p-messenger.onrender.com/).
 
 ### For development
 `git clone -b deploy https://github.com/pellexa/middle.messenger.praktikum.yandex.git`
