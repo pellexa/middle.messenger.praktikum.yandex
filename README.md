@@ -1,6 +1,7 @@
 ### Messenger
 Messenger is the first project of the PracticumYandex.
-Published [here](https://poetic-choux-99c746.netlify.app/).
+Published on netlify.com [here](https://poetic-choux-99c746.netlify.app/).
+Published on render.com [here](https://ya-p-messenger.onrender.com/).
 
 ### For development
 `git clone -b deploy https://github.com/pellexa/middle.messenger.praktikum.yandex.git`
@@ -9,9 +10,9 @@ Published [here](https://poetic-choux-99c746.netlify.app/).
 
 `npm install`
 
-`npm run dev`
+`npm run serve`
 
-http://localhost:1234/
+http://localhost:8080/
 
 ### Linting commands(run in project root):
 `npx eslint src/` - ESLint
@@ -20,6 +21,14 @@ http://localhost:1234/
 
 `npx stylelint "**/*.scss"` - Stylelin
 
+##### Commit changes
+Husky (pre-commit) is configured in the .husky/pre-commit file.
+To commit the changes, first run:
+`npm prepare`, and then `git commit -m ...`
+
+To commit without pre-commit checks, run with `-n`:
+`git commit -nm ...`
+
 ##### to start express server run (first abort the `npm run dev` command):
 `npm run build`
 
@@ -27,8 +36,24 @@ http://localhost:1234/
 
 http://localhost:3000/
 
+
+##### Run in Docker(run in project root):
+`docker build -t messenger_nodejs197 .`
+
+`docker run --rm -d --name running_messenger -p 8081:3000 messenger_nodejs197`
+
+http://localhost:8081/
+
+###### to stop the container, run:
+`docker stop running_messenger`
+
+
+### To run tests(run in project root):
+`npm test`
+
 ##### Design [here](https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0%3A1&t=hIQYbJRUQXfQOe13-0)
 
 ### Pull Request [link](https://github.com/pellexa/middle.messenger.praktikum.yandex/pull/2) for sprint_1
 ### Pull Request [link](https://github.com/pellexa/middle.messenger.praktikum.yandex/pull/3) for sprint_2
 ### Pull Request [link](https://github.com/pellexa/middle.messenger.praktikum.yandex/pull/4) for sprint_3
+### Pull Request [link](https://github.com/pellexa/middle.messenger.praktikum.yandex/pull/5) for sprint_4

@@ -37,7 +37,7 @@ export default class HTTPTransport {
       xhr.timeout = options.timeout ? options.timeout : 5000
 
       if (!options.method) {
-        options.method === METHODS.GET
+        options.method = METHODS.GET
       }
 
       if (options.method === METHODS.GET && options.data) {

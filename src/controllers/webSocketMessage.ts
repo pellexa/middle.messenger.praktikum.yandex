@@ -32,7 +32,7 @@ export default class WebSocketMessage {
   private static instance: IWebSocketMessage
   private url = 'wss://ya-praktikum.tech/ws/chats'
   private socket: WebSocket | null
-  private timerId: number
+  private timerId: ReturnType<typeof setInterval>
 
   public static getInstance(): IWebSocketMessage {
     if (!WebSocketMessage.instance) {
