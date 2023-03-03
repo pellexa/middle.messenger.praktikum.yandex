@@ -56,3 +56,4 @@ http://localhost:8081/
 ### Pull Request [link](https://github.com/pellexa/middle.messenger.praktikum.yandex/pull/2) for sprint_1
 ### Pull Request [link](https://github.com/pellexa/middle.messenger.praktikum.yandex/pull/3) for sprint_2
 ### Pull Request [link](https://github.com/pellexa/middle.messenger.praktikum.yandex/pull/4) for sprint_3
+### Pull Request [link](https://github.com/pellexa/middle.messenger.praktikum.yandex/pull/5) for sprint_4
