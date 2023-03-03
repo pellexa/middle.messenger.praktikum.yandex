@@ -1,24 +1,17 @@
 import * as path from 'path'
-import * as webpack from 'webpack'
-import 'webpack-dev-server'
+import { Configuration } from 'webpack'
 
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
-const isProduction = process.env.NODE_ENV == 'production'
-
 const stylesHandler = MiniCssExtractPlugin.loader
 
-const config: webpack.Configuration = {
+const common: Configuration = {
   entry: './src/index.ts',
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, 'dist'),
-  },
-  devServer: {
-    open: true,
-    host: 'localhost',
-    historyApiFallback: true,
+    clean: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -55,20 +48,11 @@ const config: webpack.Configuration = {
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
+    extensions: ['.tsx', '.ts', '.jsx', '.js', 'json'],
     alias: {
       'handlebars': 'handlebars/dist/handlebars.js',
     },
   },
 }
 
-module.exports = () => {
-  if (isProduction) {
-    config.mode = 'production'
-  } else {
-    config.mode = 'development'
-  }
-  return config
-}
-
-export default config
+export default common
